@@ -8,9 +8,7 @@ require "database_cleaner/active_record"
 require_relative "support/active_record/models"
 require_relative "support/active_record/schema"
 
-Dotenv.load! if File.exists?(".env")
-
-# Establish a connection for testing
+ENV['PG_URI_TEST'] || Dotenv.load!
 
 ActiveRecord::Base.establish_connection(ENV['PG_URI_TEST'])
 Timescaledb.establish_connection(ENV['PG_URI_TEST'])
