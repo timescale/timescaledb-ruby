@@ -515,25 +515,65 @@ Timescaledb::SchemaDumper::IGNORE_SCHEMAS << "ignore_my_schema_too"
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install the development dependencies. Then, `bundle exec rake test:setup` to setup the test database and tables. Finally, run `bundle exec rake` to run the tests.
+After checking out the repo, run `bin/setup` to install the development dependencies.
+Then, `bundle exec rake test:setup` to setup the test database and tables.
+Finally, run `bundle exec rake` to run the tests matrix or `bundle exec rspec` to
+run the tests on a single instance.
 
-You can also run `tsdb` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### Setup the database for testing
 
-You can create a `.env` file locally to run tests locally. Make sure to put your
-own credentials there!
-
-```bash
-PG_URI_TEST="postgres://<user>@localhost:5432/<dbname>"
-```
-
-You can put some postgres URI directly as a parameter of
-`tsdb`. Here is an example from the console:
+If you don't have timescaledb running locally, just run it with docker:
 
 ```bash
-tsdb "postgres://<user>@localhost:5432/timescaledb_test"
+docker run -d --rm -it \
+  -e POSTGRES_HOST_AUTH_METHOD=trust \
+  -p 5432:5432 \
+  timescale/timescaledb-ha:pg16
 ```
+
+Then, use `createdb` to setup the database for the tests:
+
+```bash
+createdb -h localhost -U postgres timescaledb_test
+```
+
+Now, just define the .env file with the connection string:
+
+```bash
+export PG_URI_TEST="postgres://postgres@localhost:5432/timescaledb_test"
+```
+
+And run the tests:
+
+```bash
+bundle exec rake test
+```
+
+# Installing the gem locally
+
+To install this gem onto your local machine, run `bundle exec rake install`.
+To release a new version, update the version number in `version.rb`, and then run
+`bundle exec rake release`, which will create a git tag for the version, push
+git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+# Learning
+
+If you want to learn more about TimescaleDB, you can check the official
+[TimescaleDB](https://docs.timescale.com) documentation.
+
+I created several posts on my personal blog about TimescaleDB and how to use it
+with Ruby:
+
+* <https://ideia.me/using-the-timescale-gem-with-ruby>
+* <https://ideia.me/hierarchical-continuous-aggregates-with-ruby>
+* <https://ideia.me/timescale-continuous-aggregates-with-ruby>
+* <https://ideia.me/two-ways-to-notify-new-data-from-timescaledb-continuous-aggregates>
+* <https://ideia.me/my-first-contribution-to-rubygems>
+
+And the official docs for the gem:
+
+* https://jonatas.github.io/timescaledb/
 
 ## More resources
 
@@ -544,7 +584,6 @@ You can watch all episodes here:
 2. [Extending ActiveRecord with Timescale Helpers](https://www.youtube.com/watch?v=IEyJIHk1Clk).
 3. [Setup Hypertables for Rails testing environment](https://www.youtube.com/watch?v=wM6hVrZe7xA).
 4. [Packing the code to this repository](https://www.youtube.com/watch?v=CMdGAl_XlL4).
-4. [the code to this repository](https://www.youtube.com/watch?v=CMdGAl_XlL4).
 5. [Working with Timescale continuous aggregates](https://youtu.be/co4HnBkHzVw).
 6. [Creating the command-line application in Ruby to explore the Timescale API](https://www.youtube.com/watch?v=I3vM_q2m7T0).
 
