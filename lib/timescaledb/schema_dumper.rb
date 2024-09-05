@@ -154,7 +154,7 @@ module Timescaledb
     def timescale_continuous_aggregates(stream)
       return unless Timescaledb::ContinuousAggregates.table_exists?
 
-      Timescaledb::ContinuousAggregates.all.find_each do |aggregate|
+      Timescaledb::ContinuousAggregates.order(:view_name).find_each do |aggregate|
         refresh_policies_opts = if (refresh_policy = aggregate.jobs.refresh_continuous_aggregate.first)
           interval = timescale_interval(refresh_policy.schedule_interval)
           end_offset = timescale_interval(refresh_policy.config["end_offset"])
