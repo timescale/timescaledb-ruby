@@ -10,8 +10,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
     Event
       .from("event_counts")
       .select("time_bucket('1d', time) as time,
-              identifier as label,
-              sum(value) as value").group("1,2")
+              sum(value) as value").group("1")
   end
 
   context "schema" do
@@ -78,6 +77,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
   end
 
   it "dumps a create_continuous_aggregate for a view in the database" do
+    con.execute("DROP MATERIALIZED VIEW IF EXISTS event_daily_counts")
     con.execute("DROP MATERIALIZED VIEW IF EXISTS event_counts")
     con.create_continuous_aggregate(:event_counts, query, materialized_only: true, finalized: true)
     con.create_continuous_aggregate(:event_daily_counts, query_daily, materialized_only: true, finalized: true)

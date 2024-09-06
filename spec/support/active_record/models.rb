@@ -1,3 +1,5 @@
+ActiveRecord::Base.extend Timescaledb::ActsAsHypertable
+
 class Event < ActiveRecord::Base
   self.primary_key = "identifier"
 
