@@ -6,6 +6,13 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
                   identifier as label,
                   count(*) as value").group("1,2")
   end
+  let(:query_daily) do
+    Event
+      .from("event_counts")
+      .select("time_bucket('1d', time) as time,
+              identifier as label,
+              sum(value) as value").group("1,2")
+  end
 
   context "schema" do
     it "should include the timescaledb extension" do
@@ -73,6 +80,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
   it "dumps a create_continuous_aggregate for a view in the database" do
     con.execute("DROP MATERIALIZED VIEW IF EXISTS event_counts")
     con.create_continuous_aggregate(:event_counts, query, materialized_only: true, finalized: true)
+    con.create_continuous_aggregate(:event_daily_counts, query_daily, materialized_only: true, finalized: true)
 
     if defined?(Scenic)
       Scenic.load # Normally this happens in a railtie, but we aren't loading a full rails env here
@@ -93,6 +101,9 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
     caggs_creation = dump.index('create_continuous_aggregate("event_counts"')
 
     expect(hypertable_creation).to be < caggs_creation
+
+    caggs_dependent_creation = dump.index('create_continuous_aggregate("event_daily_counts"')
+    expect(caggs_creation).to be < caggs_dependent_creation
   end
 
   describe "dumping hypertable options" do
