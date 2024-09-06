@@ -62,4 +62,3 @@ module Timescaledb
   end
 end
 
-ActiveRecord::Base.extend Timescaledb::ActsAsHypertable

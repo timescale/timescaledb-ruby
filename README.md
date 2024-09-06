@@ -319,6 +319,12 @@ which will correctly handle schema dumping.
 
 ### Enable ActsAsHypertable
 
+Create your `config/initializers/timescaledb.rb` file and add the following line:
+
+```ruby
+ActiveRecord::Base.extend Timescaledb::ActsAsHypertable
+```
+
 You can declare a Rails model as a Hypertable by invoking the `acts_as_hypertable` macro. This macro extends your existing model with timescaledb-related functionality.
 model:
 
@@ -329,6 +335,39 @@ end
 ```
 
 By default, ActsAsHypertable assumes a record's _time_column_ is called `created_at`.
+
+You may isolate your hypertables in another database, so, creating an abstract
+layer for your hypertables is a good idea:
+
+```ruby
+class Hypertable < ActiveRecord::Base
+  self.abstract_class = true
+
+  extend Timescaledb::ActsAsHypertable
+
+  establish_connection :timescaledb
+end
+```
+
+And then, you can inherit from this model:
+
+```ruby
+class Event < Hypertable
+  acts_as_hypertable time_column: "time"
+end
+```
+
+Or you can include only when you're going to use them:
+
+```ruby
+class Event < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
+
+  establish_connection :timescaledb
+
+  acts_as_hypertable time_column: "time"
+end
+```
 
 ### Options
 
@@ -435,6 +474,7 @@ define in `spec/rspec_helper.rb`:
 
 ```ruby
 config.before(:suite) do
+
   hypertable_models = ActiveRecord::Base.descendants.select(&:acts_as_hypertable?)
 
   hypertable_models.each do |klass|
