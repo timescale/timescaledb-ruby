@@ -340,7 +340,7 @@ You may isolate your hypertables in another database, so, creating an abstract
 layer for your hypertables is a good idea:
 
 ```ruby
-class TimescaledbModel < ActiveRecord::Base
+class Hypertable < ActiveRecord::Base
   self.abstract_class = true
 
   extend Timescaledb::ActsAsHypertable
@@ -352,7 +352,19 @@ end
 And then, you can inherit from this model:
 
 ```ruby
-class Event < TimescaledbModel
+class Event < Hypertable
+  acts_as_hypertable time_column: "time"
+end
+```
+
+Or you can include only when you're going to use them:
+
+```ruby
+class Event < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
+
+  establish_connection :timescaledb
+
   acts_as_hypertable time_column: "time"
 end
 ```
