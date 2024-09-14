@@ -54,7 +54,7 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
     end
   end
 
-  describe ".create_continuous_aggregates" do
+  describe ".create_caggs" do
     let(:con) { ActiveRecord::Base.connection }
 
     before(:each) do
@@ -110,9 +110,9 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
     specify do
       expect do
         create_caggs
-      end.to change { model.continuous_aggregates.count }.from(0).to(1)
+      end.to change { model.caggs.count }.from(0).to(1)
 
-      expect(model.continuous_aggregates.first.jobs).to be_empty
+      expect(model.caggs.first.jobs).to be_empty
     end
 
     context 'when using refresh policies' do
@@ -130,9 +130,9 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
       specify do
         expect do
           create_caggs
-        end.to change { model.continuous_aggregates.count }.from(0).to(1)
+        end.to change { model.caggs.count }.from(0).to(1)
 
-        expect(model.continuous_aggregates.first.jobs).not_to be_empty
+        expect(model.caggs.first.jobs).not_to be_empty
       end
     end
 
@@ -152,7 +152,7 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
       specify do
         expect do
           create_caggs
-        end.to change { model.continuous_aggregates.count }.from(0).to(1)
+        end.to change { model.caggs.count }.from(0).to(1)
       end
 
       context 'when overriding WITH clause timescaledb.materialized_only' do
