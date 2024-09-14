@@ -15,6 +15,19 @@ module Timescaledb
         /percentile_agg\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'rollup(\3) as \3',
         /heartbeat_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
       }
+
+      scope :rollup, ->(interval) do
+        select_values = self.select_values.join(', ')
+        if select_values.include?('time_bucket(')
+          select_values = apply_rollup_rules(select_values)
+          select_values.gsub!(/time_bucket\((.+), (.+)\)/, "time_bucket(#{interval}, \2)")
+        end
+        group_values = self.group_values
+        where_values = self.where_values_hash
+        self.unscoped.select("time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_values}")
+          .where(where_values)
+          .group(1, *group_values)
+      end
     end
 
     class_methods do
@@ -77,14 +90,6 @@ module Timescaledb
         end
       end
 
-      def rollup(scope, interval)
-        select_values = scope.select_values.join(', ')
-        group_values = scope.group_values
-
-        self.select("time_bucket(#{interval}, #{@time_column}) as #{@time_column}, #{select_values}")
-            .group(1, *group_values)
-      end
-
       def apply_rollup_rules(select_values)
         rollup_rules.reduce(select_values) do |result, (pattern, replacement)|
           result.gsub(pattern, replacement)
@@ -111,28 +116,31 @@ module Timescaledb
             class_name = "#{aggregate_name}_per_#{timeframe}".classify
             const_set(class_name, Class.new(ActiveRecord::Base) do
               extend ActiveModel::Naming
+              include Timescaledb::ContinuousAggregatesHelper
 
               class << self
-                attr_accessor :config, :timeframe, :base_query, :base_model
+                attr_accessor :config, :timeframe, :base_query, :base_model, :time_column
               end
 
               self.table_name = _table_name
               self.config = config
               self.timeframe = timeframe
+              self.time_column = base_model.time_column
 
               interval = "'1 #{timeframe.to_s}'"
               self.base_model = base_model
               self.base_query =
                 if previous_timeframe
                   prev_klass = base_model.const_get("#{aggregate_name}_per_#{previous_timeframe}".classify)
+                  select_clause = base_model.apply_rollup_rules("#{config[:select]}")
                   prev_klass
-                    .select("time_bucket(#{interval}, #{base_model.instance_variable_get(:@time_column)}) as #{base_model.instance_variable_get(:@time_column)}, #{config[:select]}")
+                    .select("time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_clause}")
                     .group(1, *config[:group_by])
                 else
                   scope = base_model.public_send(config[:scope_name])
-                  config[:select] = base_model.apply_rollup_rules(scope.select_values.join(', '))
+                  config[:select] = scope.select_values.join(', ')
                   config[:group_by] = scope.group_values
-                  base_model.rollup(scope, interval)
+                  scope.rollup(interval)
                 end
 
               def self.refresh!

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 class Download < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
   include Timescaledb::ContinuousAggregatesHelper
 
   acts_as_hypertable time_column: 'ts'
@@ -82,6 +83,21 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       expect(test_class::DownloadsByGemPerMonth.table_name).to eq('downloads_by_gem_per_month')
     end
 
+    it 'setups up configuration for each aggregate' do
+      expected_config = {
+        scope_name: :total_downloads,
+        select: "count(*) as total",
+        group_by: [],
+        refresh_policy: {
+          minute: { start_offset: "10 minutes", end_offset: "1 minute", schedule_interval: "1 minute" },
+          hour:   { start_offset: "4 hour",     end_offset: "1 hour",   schedule_interval: "1 hour" },
+          day:    { start_offset: "3 day",      end_offset: "1 day",    schedule_interval: "1 hour" },
+          month:  { start_offset: "3 month",    end_offset: "1 hour",   schedule_interval: "1 hour" }
+        }
+      }
+      expect(test_class::TotalDownloadsPerMinute.config).to eq(expected_config)
+    end
+
     it 'defines rollup scope for aggregates' do
       test_class.create_continuous_aggregates
       aggregate_classes = [test_class::TotalDownloadsPerMinute, test_class::TotalDownloadsPerHour, test_class::TotalDownloadsPerDay, test_class::TotalDownloadsPerMonth]
@@ -100,6 +116,10 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       expect(test_class::DownloadsByGemPerMonth.base_query.to_sql).to eq("SELECT time_bucket('1 month', ts) as ts, gem_name, sum(total) as total FROM \"downloads_by_gem_per_day\" GROUP BY 1, \"downloads_by_gem_per_day\".\"gem_name\"")
       expect(test_class::DownloadsByGemPerDay.base_query.to_sql).to eq("SELECT time_bucket('1 day', ts) as ts, gem_name, sum(total) as total FROM \"downloads_by_gem_per_hour\" GROUP BY 1, \"downloads_by_gem_per_hour\".\"gem_name\"")
       expect(test_class::DownloadsByGemPerHour.base_query.to_sql).to eq("SELECT time_bucket('1 hour', ts) as ts, gem_name, sum(total) as total FROM \"downloads_by_gem_per_minute\" GROUP BY 1, \"downloads_by_gem_per_minute\".\"gem_name\"") 
+    end
+
+    it 'allows rollup on the base query' do
+      expect(test_class::TotalDownloadsPerMinute.select("sum(total) as total").rollup("'1 hour'").to_sql).to eq("SELECT time_bucket('1 hour', ts) as ts, sum(total) as total FROM \"total_downloads_per_minute\" GROUP BY 1")
     end
   end
 
@@ -154,7 +174,7 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
   end
 
   describe '.drop_continuous_aggregates' do
- before do
+    before do
       allow(ActiveRecord::Base.connection).to receive(:execute).and_call_original
     end
     it 'drops all continuous aggregates' do
