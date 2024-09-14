@@ -46,6 +46,7 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
 
   after(:all) do
     ActiveRecord::Base.connection.drop_table :downloads, if_exists: true
+    Object.send(:remove_const, :Download) if Object.const_defined?(:Download)
   end
 
   describe '.continuous_aggregates' do
