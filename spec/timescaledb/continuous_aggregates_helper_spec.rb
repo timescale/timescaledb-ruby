@@ -152,4 +152,27 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       end
     end
   end
+
+  describe '.drop_continuous_aggregates' do
+ before do
+      allow(ActiveRecord::Base.connection).to receive(:execute).and_call_original
+    end
+    it 'drops all continuous aggregates' do
+      test_class.drop_continuous_aggregates
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_month CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_day CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_hour CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_minute CASCADE/i)
+
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_month CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_day CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_hour CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_minute CASCADE/i)
+
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_month CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_day CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_hour CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_minute CASCADE/i)
+    end
+  end 
 end

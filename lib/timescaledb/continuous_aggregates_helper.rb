@@ -91,6 +91,15 @@ module Timescaledb
         end
       end
 
+      def drop_continuous_aggregates
+        @aggregates.each do |aggregate_name, _|
+          @timeframes.reverse_each do |timeframe|
+            view_name = "#{aggregate_name}_per_#{timeframe}"
+            connection.execute("DROP MATERIALIZED VIEW IF EXISTS #{view_name} CASCADE")
+          end
+        end
+      end
+
       private
 
       def define_continuous_aggregate_classes
