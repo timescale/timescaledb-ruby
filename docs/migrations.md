@@ -14,9 +14,9 @@ hypertable_options = {
 }
 
 create_table(:events, id: false, hypertable: hypertable_options) do |t|
+  t.datetime :created_at, null: false
   t.string :identifier, null: false
   t.jsonb :payload
-  t.timestamps
 end
 ```
 
@@ -95,6 +95,51 @@ function that can be reusing candlesticks from smaller timeframes.
       end
     end
     ```
+
+# Create a continuous aggregate using the macro
+
+To setup complex hierarchies of continuous aggregates, you can use the `continuous_aggregates` macro.
+
+This setup allows for creating multiple continuous aggregates with customizable refresh policies, making it ideal for complex aggregation and retention policies. 
+
+```ruby
+class Download < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
+  include Timescaledb::ContinuousAggregatesHelper
+
+  acts_as_hypertable time_column: 'ts'
+
+  scope :total_downloads, -> { select("count(*) as total") }
+  scope :downloads_by_gem, -> { select("gem_name, count(*) as total").group(:gem_name) }
+  scope :downloads_by_version, -> { select("gem_name, gem_version, count(*) as total").group(:gem_name, :gem_version) }
+
+  continuous_aggregates(
+    timeframes: [:minute, :hour, :day, :month],
+    scopes: [:total_downloads, :downloads_by_gem, :downloads_by_version],
+    refresh_policy: {
+      minute: { start_offset: "10 minutes", end_offset: "1 minute", schedule_interval: "1 minute" },
+      hour:   { start_offset: "4 hour",     end_offset: "1 hour",   schedule_interval: "1 hour" },
+      day:    { start_offset: "3 day",      end_offset: "1 day",    schedule_interval: "1 day" },
+      month:  { start_offset: "3 month",    end_offset: "1 day",  schedule_interval: "1 day" }
+  })
+end
+```
+
+Then edit the migration file to add the continuous aggregates:
+
+```ruby
+class CreateCaggs < ActiveRecord::Migration[7.0]
+  def up
+    Download.create_continuous_aggregates
+  end
+
+  def down
+    Download.drop_continuous_aggregates
+  end
+end
+```
+
+The convention of naming the scopes is important as they mix with the name of the continuous aggregate.
 
 
 [1]: https://ideia.me/timescale-continuous-aggregates-with-ruby
