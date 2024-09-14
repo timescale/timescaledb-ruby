@@ -36,7 +36,7 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
         compress_orderby: 'ts DESC',
       }
       create_table(:downloads, id: false, hypertable: hypertable_options) do |t|
-        t.timestamptz :ts, null: false
+        t.datetime :ts, null: false
         t.text :gem_name, :gem_version, null: false
         t.jsonb :payload
       end
