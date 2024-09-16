@@ -22,7 +22,7 @@ end
 
 ## The `create_continuous_aggregate` helper
 
-This example shows a ticks table grouping ticks as OHLCV histograms for every
+This goes in the model file.  This example shows a ticks table grouping ticks as OHLCV histograms for every
 minute.
 
 First make sure you have the model with the `acts_as_hypertable` method to be
@@ -138,6 +138,147 @@ class CreateCaggs < ActiveRecord::Migration[7.0]
   end
 end
 ```
+
+Here is the output of the migration:
+
+```sql
+CREATE MATERIALIZED VIEW IF NOT EXISTS total_downloads_per_minute
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 minute', ts) as ts, count(*) as total FROM "downloads" GROUP BY 1
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('total_downloads_per_minute',
+  start_offset => INTERVAL '10 minutes',
+  end_offset =>  INTERVAL '1 minute',
+  schedule_interval => INTERVAL '1 minute');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS total_downloads_per_hour
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 hour', ts) as ts, sum(total) as total FROM "total_downloads_per_minute" GROUP BY 1
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('total_downloads_per_hour',
+  start_offset => INTERVAL '4 hour',
+  end_offset =>  INTERVAL '1 hour',
+  schedule_interval => INTERVAL '1 hour');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS total_downloads_per_day
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 day', ts) as ts, sum(total) as total FROM "total_downloads_per_hour" GROUP BY 1
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('total_downloads_per_day',
+  start_offset => INTERVAL '3 day',
+  end_offset =>  INTERVAL '1 day',
+  schedule_interval => INTERVAL '1 day');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS total_downloads_per_month
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 month', ts) as ts, sum(total) as total FROM "total_downloads_per_day" GROUP BY 1
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('total_downloads_per_month',
+  start_offset => INTERVAL '3 month',
+  end_offset =>  INTERVAL '1 day',
+  schedule_interval => INTERVAL '1 day');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_gem_per_minute
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 minute', ts) as ts, gem_name, count(*) as total FROM "downloads" GROUP BY 1, "downloads"."gem_name"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_gem_per_minute',
+  start_offset => INTERVAL '10 minutes',
+  end_offset =>  INTERVAL '1 minute',
+  schedule_interval => INTERVAL '1 minute');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_gem_per_hour
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 hour', ts) as ts, gem_name, sum(total) as total FROM "downloads_by_gem_per_minute" GROUP BY 1, "downloads_by_gem_per_minute"."gem_name"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_gem_per_hour',
+  start_offset => INTERVAL '4 hour',
+  end_offset =>  INTERVAL '1 hour',
+  schedule_interval => INTERVAL '1 hour');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_gem_per_day
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 day', ts) as ts, gem_name, sum(total) as total FROM "downloads_by_gem_per_hour" GROUP BY 1, "downloads_by_gem_per_hour"."gem_name"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_gem_per_day',
+  start_offset => INTERVAL '3 day',
+  end_offset =>  INTERVAL '1 day',
+  schedule_interval => INTERVAL '1 day');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_gem_per_month
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 month', ts) as ts, gem_name, sum(total) as total FROM "downloads_by_gem_per_day" GROUP BY 1, "downloads_by_gem_per_day"."gem_name"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_gem_per_month',
+  start_offset => INTERVAL '3 month',
+  end_offset =>  INTERVAL '1 day',
+  schedule_interval => INTERVAL '1 day');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_version_per_minute
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 minute', ts) as ts, gem_name, gem_version, count(*) as total FROM "downloads" GROUP BY 1, "downloads"."gem_name", "downloads"."gem_version"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_version_per_minute',
+  start_offset => INTERVAL '10 minutes',
+  end_offset =>  INTERVAL '1 minute',
+  schedule_interval => INTERVAL '1 minute');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_version_per_hour
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 hour', ts) as ts, gem_name, gem_version, sum(total) as total FROM "downloads_by_version_per_minute" GROUP BY 1, "downloads_by_version_per_minute"."gem_name", "downloads_by_version_per_minute"."gem_version"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_version_per_hour',
+  start_offset => INTERVAL '4 hour',
+  end_offset =>  INTERVAL '1 hour',
+  schedule_interval => INTERVAL '1 hour');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_version_per_day
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 day', ts) as ts, gem_name, gem_version, sum(total) as total FROM "downloads_by_version_per_hour" GROUP BY 1, "downloads_by_version_per_hour"."gem_name", "downloads_by_version_per_hour"."gem_version"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_version_per_day',
+  start_offset => INTERVAL '3 day',
+  end_offset =>  INTERVAL '1 day',
+  schedule_interval => INTERVAL '1 day');
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS downloads_by_version_per_month
+WITH (timescaledb.continuous) AS
+SELECT time_bucket('1 month', ts) as ts, gem_name, gem_version, sum(total) as total FROM "downloads_by_version_per_day" GROUP BY 1, "downloads_by_version_per_day"."gem_name", "downloads_by_version_per_day"."gem_version"
+WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('downloads_by_version_per_month',
+  start_offset => INTERVAL '3 month',
+  end_offset =>  INTERVAL '1 day',
+  schedule_interval => INTERVAL '1 day');
+```
+
+When `drop_continuous_aggregates` is called, it considers the reverse order of creation.
+
+```sql
+DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_month CASCADE
+DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_day CASCADE
+DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_hour CASCADE
+DROP MATERIALIZED VIEW IF EXISTS total_downloads_per_minute CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_month CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_day CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_hour CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_gem_per_minute CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_month CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_day CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_hour CASCADE
+DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_minute CASCADE
+
 
 The convention of naming the scopes is important as they mix with the name of the continuous aggregate.
 
