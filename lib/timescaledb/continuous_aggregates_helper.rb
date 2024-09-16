@@ -8,6 +8,10 @@ module Timescaledb
         /sum\((\w+)\)\s+as\s+(\w+)/ => 'sum(\2) as \2',
         /min\((\w+)\)\s+as\s+(\w+)/ => 'min(\2) as \2',
         /max\((\w+)\)\s+as\s+(\w+)/ => 'max(\2) as \2',
+        /first\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'first(\3, \2) as \3',
+        /high\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'max(\1) as \1',
+        /low\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'min(\1) as \1',
+        /last\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'last(\3, \2) as \3',
         /candlestick_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
         /stats_agg\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'rollup(\3) as \3',
         /stats_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
@@ -32,7 +36,7 @@ module Timescaledb
 
     class_methods do
       def continuous_aggregates(options = {})
-        @time_column = options[:time_column] || 'ts'
+        @time_column = options[:time_column] || self.time_column
         @timeframes = options[:timeframes] || [:minute, :hour, :day, :week, :month, :year]
         
         scopes = options[:scopes] || []
@@ -53,7 +57,7 @@ module Timescaledb
         # Add custom rollup rules if provided
         self.rollup_rules.merge!(options[:custom_rollup_rules] || {})
 
-        define_continuous_aggregate_classes
+        define_continuous_aggregate_classes unless options[:skip_definition]
       end
 
       def refresh_aggregates(timeframes = nil)
@@ -114,18 +118,14 @@ module Timescaledb
           @timeframes.each do |timeframe|
             _table_name = "#{aggregate_name}_per_#{timeframe}"
             class_name = "#{aggregate_name}_per_#{timeframe}".classify
-            const_set(class_name, Class.new(ActiveRecord::Base) do
-              extend ActiveModel::Naming
-              include Timescaledb::ContinuousAggregatesHelper
-
+            const_set(class_name, Class.new(base_model) do
               class << self
-                attr_accessor :config, :timeframe, :base_query, :base_model, :time_column
+                attr_accessor :config, :timeframe, :base_query, :base_model
               end
 
               self.table_name = _table_name
               self.config = config
               self.timeframe = timeframe
-              self.time_column = base_model.time_column
 
               interval = "'1 #{timeframe.to_s}'"
               self.base_model = base_model
@@ -143,8 +143,12 @@ module Timescaledb
                   scope.rollup(interval)
                 end
 
-              def self.refresh!
-                connection.execute("CALL refresh_continuous_aggregate('#{table_name}', null, null);")
+              def self.refresh!(start_time = nil, end_time = nil)
+                if start_time && end_time
+                  connection.execute("CALL refresh_continuous_aggregate('#{table_name}', '#{start_time}', '#{end_time}')")
+                else
+                  connection.execute("CALL refresh_continuous_aggregate('#{table_name}', null, null)")
+                end
               end
 
               def readonly?
