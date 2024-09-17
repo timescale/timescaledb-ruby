@@ -20,27 +20,6 @@ def db(&block)
   ActiveRecord::Base.logger = nil
 end
 
-db do
-  if true 
-    drop_table :ticks, if_exists: true, force: :cascade
-
-    hypertable_options = {
-      time_column: "time",
-      chunk_time_interval: "1 day",
-      compress_segmentby: "symbol",
-      compress_orderby: "time",
-      compression_interval: "1 week"
-    }
-    create_table :ticks, id: false, hypertable: hypertable_options, if_not_exists: true do |t|
-      t.timestamp :time, null: false
-      t.string :symbol, null: false
-      t.decimal :price
-      t.integer :volume
-    end
-
-    add_index :ticks, [:time, :symbol], if_not_exists: true
-  end
-end
 
 
 class Tick < ActiveRecord::Base
@@ -59,20 +38,20 @@ class Tick < ActiveRecord::Base
             last(price, time) as close,
             sum(volume) as volume").group("symbol")
   end
-  # scope :plotly_candlestick, -> (from: nil) do
-  #   data = attributes
-  #   {
-  #     type: 'candlestick',
-  #     xaxis: 'x',
-  #     yaxis: 'y',
-  #     x: data.map(&:time),
-  #     open: data.map(&:open),
-  #     high: data.map(&:high),
-  #     low: data.map(&:low),
-  #     close: data.map(&:close),
-  #     volume: data.map(&:volume)
-  #   }
-  # end
+  scope :plotly_candlestick, -> (from: nil) do
+    data = all.to_a
+    {
+      type: 'candlestick',
+      xaxis: 'x',
+      yaxis: 'y',
+      x: data.map(&:time),
+      open: data.map(&:open),
+      high: data.map(&:high),
+      low: data.map(&:low),
+      close: data.map(&:close),
+      volume: data.map(&:volume)
+    }
+  end
 
   continuous_aggregates(
     timeframes: [:minute, :hour, :day, :month],
@@ -89,6 +68,26 @@ end
 
 
 db do
+  if true 
+    Tick.drop_continuous_aggregates
+    drop_table :ticks, if_exists: true, force: :cascade
+
+    hypertable_options = {
+      time_column: "time",
+      chunk_time_interval: "1 day",
+      compress_segmentby: "symbol",
+      compress_orderby: "time",
+      compression_interval: "1 week"
+    }
+    create_table :ticks, id: false, hypertable: hypertable_options, if_not_exists: true do |t|
+      t.timestamp :time, null: false
+      t.string :symbol, null: false
+      t.decimal :price
+      t.integer :volume
+    end
+
+    add_index :ticks, [:time, :symbol], if_not_exists: true
+  end
   execute(ActiveRecord::Base.sanitize_sql_for_conditions( [<<~SQL, {from: 1.week.ago.to_date, to: 1.day.from_now.to_date}]))
     INSERT INTO ticks
     SELECT time, 'SYMBOL', 1 + (random()*30)::int, 100*(random()*10)::int
@@ -119,13 +118,13 @@ class App < Sinatra::Base
   get '/daily_close_price' do
     json({
       title: "Daily",
-      data: Tick::OhlcvPerMinute.last_week.plotly_candlestick
+      data: Tick::OhlcvPerDay.previous_week.plotly_candlestick
     })
   end
   get '/candlestick_1m' do
     json({
       title: "Candlestick 1 minute last hour",
-      data: Candlestick1m.today.plotly_candlestick
+      data: Tick::OhlcvPerMinute.last_hour.plotly_candlestick
     })
   end
 
@@ -140,7 +139,7 @@ class App < Sinatra::Base
   get '/candlestick_1d' do
     json({
       title: "Candlestick daily this month",
-      data: Candlestick1d.previous_week.plotly_candlestick
+      data: Tick::OhlcvPerDay.previous_week.plotly_candlestick
     })
   end
 
