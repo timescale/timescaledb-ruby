@@ -78,7 +78,7 @@ module Timescaledb
             connection.execute <<~SQL
               CREATE MATERIALIZED VIEW IF NOT EXISTS #{klass.table_name}
               WITH (timescaledb.continuous) AS
-              #{klass.base_query.to_sql}
+              #{klass.base_query}
               #{with_data ? 'WITH DATA' : 'WITH NO DATA'};
             SQL
 
@@ -129,19 +129,16 @@ module Timescaledb
 
               interval = "'1 #{timeframe.to_s}'"
               self.base_model = base_model
-              self.base_query =
-                if previous_timeframe
-                  prev_klass = base_model.const_get("#{aggregate_name}_per_#{previous_timeframe}".classify)
-                  select_clause = base_model.apply_rollup_rules("#{config[:select]}")
-                  prev_klass
-                    .select("time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_clause}")
-                    .group(1, *config[:group_by])
-                else
-                  scope = base_model.public_send(config[:scope_name])
-                  config[:select] = scope.select_values.join(', ')
-                  config[:group_by] = scope.group_values
-                  scope.rollup(interval)
-                end
+              if previous_timeframe
+                prev_klass = base_model.const_get("#{aggregate_name}_per_#{previous_timeframe}".classify)
+                select_clause = base_model.apply_rollup_rules("#{config[:select]}")
+                self.base_query = "SELECT time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_clause} FROM #{prev_klass.table_name} GROUP BY #{[1, *config[:group_by]].join(', ')}"
+              else
+                scope = base_model.public_send(config[:scope_name])
+                config[:select] = scope.select_values.join(', ')
+                config[:group_by] = scope.group_values
+                self.base_query = scope.rollup(interval).to_sql
+              end
 
               def self.refresh!(start_time = nil, end_time = nil)
                 if start_time && end_time
