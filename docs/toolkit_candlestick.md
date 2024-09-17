@@ -240,20 +240,20 @@ It will generate the following SQL:
 ```sql
  SELECT symbol,
     "time",
-    toolkit_experimental.open(candlestick),
-    toolkit_experimental.high(candlestick),
-    toolkit_experimental.low(candlestick),
-    toolkit_experimental.close(candlestick),
-    toolkit_experimental.open_time(candlestick),
-    toolkit_experimental.high_time(candlestick),
-    toolkit_experimental.low_time(candlestick),
-    toolkit_experimental.close_time(candlestick),
-    toolkit_experimental.volume(candlestick),
-    toolkit_experimental.vwap(candlestick)
+    open(candlestick),
+    high(candlestick),
+    low(candlestick),
+    close(candlestick),
+    open_time(candlestick),
+    high_time(candlestick),
+    low_time(candlestick),
+    close_time(candlestick),
+    volume(candlestick),
+    vwap(candlestick)
 FROM (
     SELECT time_bucket('1m', time) as time,
       "ticks"."symbol",
-      toolkit_experimental.candlestick(time, price, volume)
+      candlestick_agg(time, price, volume) as candlestick
     FROM "ticks" GROUP BY 1, 2 ORDER BY 1)
 AS candlestick
 ```
@@ -269,7 +269,8 @@ Tick.yesterday
   .candlestick(timeframe: '1m')
 ```
 
-The `yesterday` scope is automatically included because of the `acts_as_hypertable` macro. And it will be combining with other where clauses.
+The `yesterday` scope is automatically included because of the `acts_as_hypertable` macro.
+And it will be combining with other where clauses.
 
 ## Continuous aggregates
 

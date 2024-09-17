@@ -20,8 +20,6 @@ def db(&block)
   ActiveRecord::Base.logger = nil
 end
 
-
-
 class Tick < ActiveRecord::Base
   extend Timescaledb::ActsAsHypertable
   extend Timescaledb::ActsAsTimeVector
@@ -63,7 +61,7 @@ class Tick < ActiveRecord::Base
       month:  { start_offset: "3 month",    end_offset: "1 day",  schedule_interval: "1 day" }
   })
 
-  descendants.each{|e|e.time_vector_options[:value_column] = :close}
+  descendants.each{|e|e.time_vector_options = time_vector_options.merge(value_column: :close)}
 end
 
 

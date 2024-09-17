@@ -1,13 +1,9 @@
 # OHLC / Candlesticks
 
 
-!!!warning
-
-    OHLC is deprecated and will be replaced by [candlestick](/toolkit_candlestick).
-
 Candlesticks are a popular tool in technical analysis, used by traders to determine potential market movements.
 
-The toolkit also allows you to compute candlesticks with the [ohlc][1] function.
+The toolkit also allows you to compute candlesticks with the [candlestick][1] function.
 
 Candlesticks are a type of price chart that displays the high, low, open, and close prices of a security for a specific period. They can be useful because they can provide information about market trends and reversals. For example, if you see that the stock has been trading in a range for a while, it may be worth considering buying or selling when the price moves outside of this range. Additionally, candlesticks can be used in conjunction with other technical indicators to make trading decisions.
 
@@ -61,19 +57,19 @@ The candlestick will split the timeframe by the `time_column` and use the `price
 
 If you need to generate some data for your table, please check [this post][2].
 
-## The `ohlc` scope
+## The 'candlestick' scope
 
 When the `acts_as_time_vector` method is used in the model, it will inject
 several scopes from the toolkit to easily have access to functions like the
-ohlc.
+candlestick.
 
-The `ohlc` scope is available with a few parameters that inherits the
+The `candlestick` scope is available with a few parameters that inherits the
 configuration from the `acts_as_time_vector` declared previously.
 
 The simplest query is:
 
 ```ruby
-Tick.ohlc(timeframe: '1m')
+Tick.candlestick(timeframe: '1m', price: :price, volume: :volume)
 ```
 
 It will generate the following SQL:
@@ -81,18 +77,18 @@ It will generate the following SQL:
 ```sql
  SELECT symbol,
     "time",
-    toolkit_experimental.open(ohlc),
-    toolkit_experimental.high(ohlc),
-    toolkit_experimental.low(ohlc),
-    toolkit_experimental.close(ohlc),
-    toolkit_experimental.open_time(ohlc),
-    toolkit_experimental.high_time(ohlc),
-    toolkit_experimental.low_time(ohlc),
-    toolkit_experimental.close_time(ohlc)
+    open(ohlc),
+    high(ohlc),
+    low(ohlc),
+    close(ohlc),
+    open_time(ohlc),
+    high_time(ohlc),
+    low_time(ohlc),
+    close_time(ohlc)
 FROM (
     SELECT time_bucket('1m', time) as time,
       "ticks"."symbol",
-      toolkit_experimental.ohlc(time, price)
+      candlestick_agg(time, price, volume)
     FROM "ticks" GROUP BY 1, 2 ORDER BY 1)
 AS ohlc
 ```
