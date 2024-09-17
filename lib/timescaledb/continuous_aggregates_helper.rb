@@ -74,7 +74,6 @@ module Timescaledb
         @aggregates.each do |aggregate_name, config|
           @timeframes.each do |timeframe|
             klass = const_get("#{aggregate_name}_per_#{timeframe}".classify)
-
             connection.execute <<~SQL
               CREATE MATERIALIZED VIEW IF NOT EXISTS #{klass.table_name}
               WITH (timescaledb.continuous) AS
@@ -132,12 +131,12 @@ module Timescaledb
               if previous_timeframe
                 prev_klass = base_model.const_get("#{aggregate_name}_per_#{previous_timeframe}".classify)
                 select_clause = base_model.apply_rollup_rules("#{config[:select]}")
-                self.base_query = "SELECT time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_clause} FROM #{prev_klass.table_name} GROUP BY #{[1, *config[:group_by]].join(', ')}"
+                self.base_query = "SELECT time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_clause} FROM \"#{prev_klass.table_name}\" GROUP BY #{[1, *config[:group_by]].join(', ')}"
               else
                 scope = base_model.public_send(config[:scope_name])
                 config[:select] = scope.select_values.join(', ')
                 config[:group_by] = scope.group_values
-                self.base_query = scope.rollup(interval).to_sql
+                self.base_query = "SELECT time_bucket(#{interval}, #{time_column}) as #{time_column}, #{config[:select]} FROM \"#{scope.table_name}\" GROUP BY #{[1, *config[:group_by]].join(', ')}"
               end
 
               def self.refresh!(start_time = nil, end_time = nil)
