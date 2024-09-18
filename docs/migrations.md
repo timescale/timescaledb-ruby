@@ -98,7 +98,7 @@ function that can be reusing candlesticks from smaller timeframes.
 
 # Create a continuous aggregate using the macro
 
-To setup complex hierarchies of continuous aggregates, you can use the `continuous_aggregates` macro.
+To setup complex [hierarchies][hierarchical] of continuous aggregates, you can use the `continuous_aggregates` macro.
 
 This setup allows for creating multiple continuous aggregates with customizable refresh policies, making it ideal for complex aggregation and retention policies. 
 
@@ -278,9 +278,11 @@ DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_month CASCADE
 DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_day CASCADE
 DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_hour CASCADE
 DROP MATERIALIZED VIEW IF EXISTS downloads_by_version_per_minute CASCADE
+```
 
 
 The convention of naming the scopes is important as they mix with the name of the continuous aggregate.
 
 
 [1]: https://ideia.me/timescale-continuous-aggregates-with-ruby
+[hierarchical]: https://docs.timescale.com/use-timescale/latest/continuous-aggregates/hierarchical-continuous-aggregates/
