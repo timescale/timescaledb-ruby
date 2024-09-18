@@ -1,5 +1,5 @@
 module Timescaledb
-  class ContinuousAggregate < ::Timescaledb::ApplicationRecord
+  class ContinuousAggregates < ::Timescaledb::ApplicationRecord
     self.table_name = "timescaledb_information.continuous_aggregates"
     self.primary_key = 'materialization_hypertable_name'
 
@@ -39,5 +39,4 @@ module Timescaledb
       end
     end
   end
-  ContinuousAggregates = ContinuousAggregate
 end

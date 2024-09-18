@@ -35,7 +35,7 @@ module Timescaledb
             CompressionSettings.where(hypertable_name: table_name)
           end
 
-          scope :continuous_aggregates, -> do
+          scope :caggs, -> do
             ContinuousAggregates.where(hypertable_name: table_name)
           end
         end

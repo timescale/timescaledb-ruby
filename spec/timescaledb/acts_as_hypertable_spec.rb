@@ -21,7 +21,7 @@ RSpec.describe Timescaledb::ActsAsHypertable do
         expect(Event).to respond_to(:jobs)
         expect(Event).to respond_to(:job_stats)
         expect(Event).to respond_to(:compression_settings)
-        expect(Event).to respond_to(:continuous_aggregates)
+        expect(Event).to respond_to(:caggs)
       end
     end
     context "when model skips association scopes" do
