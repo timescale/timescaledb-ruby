@@ -15,4 +15,3 @@ module Timescaledb
     end
   end
 end
-ActiveRecord::Base.extend Timescaledb::ActsAsTimeVector

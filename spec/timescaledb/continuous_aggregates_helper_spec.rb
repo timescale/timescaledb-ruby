@@ -80,20 +80,20 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       test_class.create_continuous_aggregates
       aggregate_classes = [test_class::TotalPerMinute, test_class::TotalPerHour, test_class::TotalPerDay, test_class::TotalPerMonth]
 
-      expect(test_class::TotalPerMinute.base_query).to eq("SELECT time_bucket('1 minute', ts) as ts, count(*) as total FROM \"hypertable_with_continuous_aggregates\" GROUP BY 1")  
-      expect(test_class::TotalPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, sum(total) as total FROM \"total_per_day\" GROUP BY 1")
-      expect(test_class::TotalPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, sum(total) as total FROM \"total_per_hour\" GROUP BY 1")
-      expect(test_class::TotalPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, sum(total) as total FROM \"total_per_minute\" GROUP BY 1")
+      expect(test_class::TotalPerMinute.base_query).to eq("SELECT time_bucket('1 minute', ts) as ts, count(*) as total FROM \"hypertable_with_continuous_aggregates\" GROUP BY time_bucket('1 minute', ts)")
+      expect(test_class::TotalPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, sum(total) as total FROM \"total_per_day\" GROUP BY time_bucket('1 month', ts)")
+      expect(test_class::TotalPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, sum(total) as total FROM \"total_per_hour\" GROUP BY time_bucket('1 day', ts)")
+      expect(test_class::TotalPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, sum(total) as total FROM \"total_per_minute\" GROUP BY time_bucket('1 hour', ts)")
 
-      expect(test_class::ByVersionPerMinute.base_query).to eq("SELECT time_bucket('1 minute', ts) as ts, identifier, version, count(*) as total FROM \"hypertable_with_continuous_aggregates\" GROUP BY 1, identifier, version")
-      expect(test_class::ByVersionPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, identifier, version, sum(total) as total FROM \"by_version_per_day\" GROUP BY 1, identifier, version")
-      expect(test_class::ByVersionPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, identifier, version, sum(total) as total FROM \"by_version_per_hour\" GROUP BY 1, identifier, version")
-      expect(test_class::ByVersionPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, identifier, version, sum(total) as total FROM \"by_version_per_minute\" GROUP BY 1, identifier, version")
+      expect(test_class::ByVersionPerMinute.base_query).to eq("SELECT time_bucket('1 minute', ts) as ts, identifier, version, count(*) as total FROM \"hypertable_with_continuous_aggregates\" GROUP BY time_bucket('1 minute', ts), identifier, version")
+      expect(test_class::ByVersionPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, identifier, version, sum(total) as total FROM \"by_version_per_day\" GROUP BY time_bucket('1 month', ts), identifier, version")
+      expect(test_class::ByVersionPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, identifier, version, sum(total) as total FROM \"by_version_per_hour\" GROUP BY time_bucket('1 day', ts), identifier, version")
+      expect(test_class::ByVersionPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, identifier, version, sum(total) as total FROM \"by_version_per_minute\" GROUP BY time_bucket('1 hour', ts), identifier, version")
 
-      expect(test_class::ByIdentifierPerMinute.base_query).to eq("SELECT time_bucket('1 minute', ts) as ts, identifier, count(*) as total FROM \"hypertable_with_continuous_aggregates\" GROUP BY 1, identifier")
-      expect(test_class::ByIdentifierPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_day\" GROUP BY 1, identifier")
-      expect(test_class::ByIdentifierPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_hour\" GROUP BY 1, identifier")
-      expect(test_class::ByIdentifierPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_minute\" GROUP BY 1, identifier") 
+      expect(test_class::ByIdentifierPerMinute.base_query).to eq("SELECT time_bucket('1 minute', ts) as ts, identifier, count(*) as total FROM \"hypertable_with_continuous_aggregates\" GROUP BY time_bucket('1 minute', ts), identifier")
+      expect(test_class::ByIdentifierPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_day\" GROUP BY time_bucket('1 month', ts), identifier")
+      expect(test_class::ByIdentifierPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_hour\" GROUP BY time_bucket('1 day', ts), identifier")
+      expect(test_class::ByIdentifierPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_minute\" GROUP BY time_bucket('1 hour', ts), identifier") 
     end
   end
 
@@ -114,7 +114,7 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS by_version_per_minute/i)
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS by_identifier_per_month/i)
 
-      expect(test_class::TotalPerMinute.select("sum(total) as total").rollup("'1 hour'").to_sql).to eq("SELECT time_bucket('1 hour', ts) as ts, sum(total) as total FROM \"total_per_minute\" GROUP BY 1")
+      expect(test_class::TotalPerMinute.select("sum(total) as total").rollup("'1 hour'").to_sql).to eq("SELECT time_bucket('1 hour', ts) as ts, identifier, sum(total) as total FROM \"total_per_minute\" GROUP BY time_bucket('1 hour', ts), \"identifier\"")
     end
 
     it 'sets up refresh policies for each aggregate' do

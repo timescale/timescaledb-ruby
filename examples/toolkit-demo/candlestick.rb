@@ -28,16 +28,9 @@ class Tick < ActiveRecord::Base
   acts_as_hypertable time_column: "time"
   acts_as_time_vector segment_by: "symbol", value_column: "price"
 
-  scope :ohlcv, -> do
-    select("symbol,
-            first(price, time) as open,
-            max(price) as high,
-            min(price) as low,
-            last(price, time) as close,
-            sum(volume) as volume").group("symbol")
-  end
+ 
   scope :plotly_candlestick, -> (from: nil) do
-    data = all.to_a
+    data = ohlcv.to_a
     {
       type: 'candlestick',
       xaxis: 'x',
@@ -50,18 +43,49 @@ class Tick < ActiveRecord::Base
       volume: data.map(&:volume)
     }
   end
+  scope :ohlcv, -> do
+    select("symbol,
+            first(price, time) as open,
+            max(price) as high,
+            min(price) as low,
+            last(price, time) as close,
+            sum(volume) as volume")
+  end
 
   continuous_aggregates(
     timeframes: [:minute, :hour, :day, :month],
-    scopes: [:ohlcv],
-    refresh_policy: {
-      minute: { start_offset: "10 minutes", end_offset: "1 minute", schedule_interval: "1 minute" },
-      hour:   { start_offset: "4 hour",     end_offset: "1 hour",   schedule_interval: "1 hour" },
-      day:    { start_offset: "3 day",      end_offset: "1 day",    schedule_interval: "1 day" },
-      month:  { start_offset: "3 month",    end_offset: "1 day",  schedule_interval: "1 day" }
-  })
+    scopes: [:_candlestick]
+  )
 
-  descendants.each{|e|e.time_vector_options = time_vector_options.merge(value_column: :close)}
+  descendants.each do |cagg|
+    cagg.class_eval do
+      self.time_vector_options = time_vector_options.merge(value_column: :close)
+      [:open, :high, :low, :close].each do |attr|
+        attribute attr, :decimal, precision: 10, scale: 2
+      end
+      [:volume, :vwap].each do |attr|
+        attribute attr, :integer
+      end
+      [:open_time, :high_time, :low_time, :close_time].each do |attr|
+        attribute attr, :time
+      end
+      scope :ohlcv, -> do 
+        unscoped
+              .from("(#{to_sql}) AS candlestick")
+              .select(time_column, *segment_by_column,
+               "open(candlestick),
+                high(candlestick),
+                low(candlestick),
+                close(candlestick),
+                open_time(candlestick),
+                high_time(candlestick),
+                low_time(candlestick),
+                close_time(candlestick),
+                volume(candlestick),
+                vwap(candlestick)")
+      end
+    end
+  end
 end
 
 
@@ -78,7 +102,7 @@ db do
       compression_interval: "1 week"
     }
     create_table :ticks, id: false, hypertable: hypertable_options, if_not_exists: true do |t|
-      t.timestamp :time, null: false
+      t.timestamptz :time, null: false
       t.string :symbol, null: false
       t.decimal :price
       t.integer :volume
@@ -116,20 +140,20 @@ class App < Sinatra::Base
   get '/daily_close_price' do
     json({
       title: "Daily",
-      data: Tick::OhlcvPerDay.previous_week.plotly_candlestick
+      data: Tick::CandlestickPerDay.previous_week.plotly_candlestick
     })
   end
   get '/candlestick_1m' do
     json({
       title: "Candlestick 1 minute last hour",
-      data: Tick::OhlcvPerMinute.last_hour.plotly_candlestick
+      data: Tick::CandlestickPerMinute.last_hour.plotly_candlestick
     })
   end
 
   get '/candlestick_1h' do
     json({
       title: "Candlestick yesterday hourly",
-      data:Tick::OhlcvPerHour.yesterday.plotly_candlestick
+      data:Tick::CandlestickPerHour.yesterday.plotly_candlestick
     })
 
   end
@@ -137,7 +161,7 @@ class App < Sinatra::Base
   get '/candlestick_1d' do
     json({
       title: "Candlestick daily this month",
-      data: Tick::OhlcvPerDay.previous_week.plotly_candlestick
+      data: Tick::CandlestickPerDay.previous_week.plotly_candlestick
     })
   end
 
