@@ -33,18 +33,21 @@ end
 
 def setup size: :small
   file = "weather_#{size}.tar.gz"
-  download_weather_dataset(size: size)# unless File.exists? file
+  download_weather_dataset(size: size) unless File.exists? file
   puts "extracting #{file}"
   system "tar -xvzf #{file} "
   puts "creating data structures"
   system "psql #{PG_URI} < weather.sql"
-  system %|psql #{PG_URI} -c "\\COPY locations FROM weather_#{size}_locations.csv CSV"|
   system %|psql #{PG_URI} -c "\\COPY conditions FROM weather_#{size}_conditions.csv CSV"|
+  system %|psql #{PG_URI} -c "\\COPY locations FROM weather_#{size}_locations.csv CSV"|
 end
 
 ActiveRecord::Base.establish_connection(PG_URI)
 
 class Condition < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
+  extend Timescaledb::ActsAsTimeVector
+
   acts_as_hypertable time_column: "time"
   acts_as_time_vector value_column: "temperature", segment_by: "device_id"
 end
