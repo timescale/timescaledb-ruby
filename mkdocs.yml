@@ -1,5 +1,5 @@
 site_name: The Timescaledb gem
-repo_url: https://github.com/jonatas/timescaledb
+repo_url: https://github.com/timescale/timescaledb-ruby
 edit_uri: edit/master/docs/
 extra:
   analytics:

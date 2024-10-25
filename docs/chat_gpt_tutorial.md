@@ -463,4 +463,4 @@ If you want to try it, this example is available on
 [examples/chatgpt/openai-cli.rb][open-api-cli] and you can follow the
 instructions in the folder how to use it.
 
-[open-api-cli]: https://github.com/jonatas/timescaledb/blob/main/examples/chatgpt/openai-cli.rb
+[open-api-cli]: https://github.com/timescale/timescaledb-ruby/blob/main/examples/chatgpt/openai-cli.rb

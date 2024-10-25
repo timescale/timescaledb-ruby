@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{TimescaleDB helpers for Ruby ecosystem.}
   spec.description   = %q{Functions from timescaledb available in the ActiveRecord models.}
-  spec.homepage      = "https://github.com/jonatas/timescaledb"
+  spec.homepage      = "https://github.com/timescale/timescaledb-ruby"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 

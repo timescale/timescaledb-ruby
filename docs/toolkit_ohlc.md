@@ -311,6 +311,6 @@ If you have any questions or concerns, feel free to reach me ([@jonatasdp][7]) i
 [2]: https://ideia.me/timescale-continuous-aggregates-with-ruby
 [3]: https://github.com/timescale/timescaledb-toolkit/blob/cbbca7b2e69968e585c845924e7ed7aff1cea20a/extension/src/ohlc.rs#L20-L24
 [4]: https://github.com/timescale/timescaledb/pull/4668
-[5]: https://github.com/jonatas/timescaledb/tree/master/examples/toolkit-demo
+[5]: https://github.com/timescale/timescaledb-ruby/tree/master/examples/toolkit-demo
 [6]: https://timescale.com/community
 [7]: https://twitter.com/jonatasdp
