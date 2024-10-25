@@ -322,7 +322,7 @@ which will correctly handle schema dumping.
 Create your `config/initializers/timescaledb.rb` file and add the following line:
 
 ```ruby
-ActiveRecord::Base.extend Timescaledb::ActsAsHypertable
+ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
 ```
 
 You can declare a Rails model as a Hypertable by invoking the `acts_as_hypertable` macro. This macro extends your existing model with timescaledb-related functionality.
