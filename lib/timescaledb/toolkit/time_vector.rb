@@ -23,9 +23,9 @@ module Timescaledb
         protected
 
         def define_default_scopes
-          scope :volatility, -> (segment_by: segment_by_column) do
+          scope :volatility, -> (segment_by: segment_by_column, value: value_column) do
             select([*segment_by,
-               "timevector(#{time_column}, #{value_column}) -> sort() -> delta() -> abs() -> sum() as volatility"
+               "timevector(#{time_column}, #{value}) -> sort() -> delta() -> abs() -> sum() as volatility"
             ].join(", ")).group(segment_by)
           end
 
@@ -36,11 +36,15 @@ module Timescaledb
               .group(segment_by)
           end
 
-          scope :lttb, -> (threshold:, segment_by: segment_by_column, time: time_column, value: value_column) do
+          scope :lttb, -> (threshold:, segment_by: segment_by_column, time: time_column, value: value_column, value_exp: value_column) do
+            if value =~ /(.*)\bas\b(.*)/
+              value_exp = $1
+              value = $2
+            end
             lttb_query = <<~SQL
-              WITH x AS ( #{select(*segment_by, time_column, value_column).to_sql})
+              WITH x AS ( #{select(*segment_by, time_column, value_exp || value).to_sql})
               SELECT #{"x.#{segment_by}," if segment_by}
-                (lttb( x.#{time_column}, x.#{value_column}, #{threshold}) -> unnest()).*
+                (lttb( x.#{time_column}, x.#{value}, #{threshold}) -> unnest()).*
               FROM x
               #{"GROUP BY #{segment_by}" if segment_by}
             SQL

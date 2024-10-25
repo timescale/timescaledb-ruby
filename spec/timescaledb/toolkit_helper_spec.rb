@@ -38,6 +38,8 @@ RSpec.describe Timescaledb::Toolkit::Helpers, database_cleaner_strategy: :trunca
 
     let(:model) do
       Measurement = Class.new(ActiveRecord::Base) do
+        extend Timescaledb::ActsAsHypertable
+        extend Timescaledb::ActsAsTimeVector
         self.table_name = 'measurements'
         self.primary_key = nil
 
@@ -207,6 +209,8 @@ SQL
 
     let(:model) do
       Measurement = Class.new(ActiveRecord::Base) do
+        extend Timescaledb::ActsAsHypertable
+        extend Timescaledb::ActsAsTimeVector
         self.table_name = 'measurements'
         self.primary_key = nil
 
@@ -297,6 +301,8 @@ SQL
 
     let(:model) do
       Tick = Class.new(ActiveRecord::Base) do
+        extend Timescaledb::ActsAsTimeVector
+        extend Timescaledb::ActsAsHypertable
         self.table_name = 'ticks'
         self.primary_key = nil
 

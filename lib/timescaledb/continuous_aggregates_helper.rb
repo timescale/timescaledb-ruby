@@ -12,7 +12,7 @@ module Timescaledb
         /high\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'max(\1) as \1',
         /low\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'min(\1) as \1',
         /last\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'last(\3, \2) as \3',
-        /candlestick_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
+        /candlestick_agg\((\w+),\s*(\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'rollup(\4) as \4',
         /stats_agg\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'rollup(\3) as \3',
         /stats_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
         /state_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
@@ -21,16 +21,27 @@ module Timescaledb
       }
 
       scope :rollup, ->(interval) do
-        select_values = self.select_values.join(', ')
-        if select_values.include?('time_bucket(')
+        select_values = (self.select_values - ["time"]).select{|e|!e.downcase.start_with?("time_bucket")}
+        if self.select_values.any?{|e|e.downcase.start_with?('time_bucket(')} || self.select_values.include?('time')
           select_values = apply_rollup_rules(select_values)
           select_values.gsub!(/time_bucket\((.+), (.+)\)/, "time_bucket(#{interval}, \2)")
+          select_values.gsub!(/\btime\b/, "time_bucket(#{interval}, time) as time")
         end
-        group_values = self.group_values
+        group_values = self.group_values.dup
+
+        if self.segment_by_column
+          if !group_values.include?(self.segment_by_column)
+            group_values << self.segment_by_column
+          end
+          if !select_values.include?(self.segment_by_column.to_s)
+            select_values.insert(0, self.segment_by_column.to_s)
+          end
+        end
         where_values = self.where_values_hash
-        self.unscoped.select("time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_values}")
+        tb = "time_bucket(#{interval}, #{time_column})"
+        self.unscoped.select("#{tb} as #{time_column}, #{select_values.join(', ')}")
           .where(where_values)
-          .group(1, *group_values)
+          .group(tb, *group_values)
       end
     end
 
@@ -94,9 +105,13 @@ module Timescaledb
       end
 
       def apply_rollup_rules(select_values)
-        rollup_rules.reduce(select_values) do |result, (pattern, replacement)|
-          result.gsub(pattern, replacement)
+        result = select_values.dup
+        rollup_rules.each do |pattern, replacement|
+          result.gsub!(pattern, replacement)
         end
+        # Remove any remaining time_bucket
+        result.gsub!(/time_bucket\(.+?\)( as \w+)?/, '')
+        result
       end
 
       def drop_continuous_aggregates
@@ -128,15 +143,16 @@ module Timescaledb
 
               interval = "'1 #{timeframe.to_s}'"
               self.base_model = base_model
+              tb = "time_bucket(#{interval}, #{time_column})"
               if previous_timeframe
                 prev_klass = base_model.const_get("#{aggregate_name}_per_#{previous_timeframe}".classify)
                 select_clause = base_model.apply_rollup_rules("#{config[:select]}")
-                self.base_query = "SELECT time_bucket(#{interval}, #{time_column}) as #{time_column}, #{select_clause} FROM \"#{prev_klass.table_name}\" GROUP BY #{[1, *config[:group_by]].join(', ')}"
+                self.base_query = "SELECT #{tb} as #{time_column}, #{select_clause} FROM \"#{prev_klass.table_name}\" GROUP BY #{[tb, *config[:group_by]].join(', ')}"
               else
                 scope = base_model.public_send(config[:scope_name])
-                config[:select] = scope.select_values.join(', ')
+                config[:select] = scope.select_values.select{|e|!e.downcase.start_with?("time_bucket")}.join(', ')
                 config[:group_by] = scope.group_values
-                self.base_query = "SELECT time_bucket(#{interval}, #{time_column}) as #{time_column}, #{config[:select]} FROM \"#{scope.table_name}\" GROUP BY #{[1, *config[:group_by]].join(', ')}"
+                self.base_query = "SELECT #{tb} as #{time_column}, #{config[:select]} FROM \"#{scope.table_name}\" GROUP BY #{[tb, *config[:group_by]].join(', ')}"
               end
 
               def self.refresh!(start_time = nil, end_time = nil)
