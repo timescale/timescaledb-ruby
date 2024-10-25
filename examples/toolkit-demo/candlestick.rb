@@ -43,14 +43,7 @@ class Tick < ActiveRecord::Base
       volume: data.map(&:volume)
     }
   end
-  scope :ohlcv, -> do
-    select("symbol,
-            first(price, time) as open,
-            max(price) as high,
-            min(price) as low,
-            last(price, time) as close,
-            sum(volume) as volume")
-  end
+  
 
   continuous_aggregates(
     timeframes: [:minute, :hour, :day, :month],
@@ -91,8 +84,8 @@ end
 
 db do
   if true 
-    Tick.drop_continuous_aggregates
-    drop_table :ticks, if_exists: true, force: :cascade
+    #Tick.drop_continuous_aggregates
+    #drop_table :ticks, if_exists: true, force: :cascade
 
     hypertable_options = {
       time_column: "time",
@@ -158,12 +151,6 @@ class App < Sinatra::Base
 
   end
 
-  get '/candlestick_1d' do
-    json({
-      title: "Candlestick daily this month",
-      data: Tick::CandlestickPerDay.previous_week.plotly_candlestick
-    })
-  end
 
   get '/' do
     <<~HTML
