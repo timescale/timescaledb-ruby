@@ -522,7 +522,7 @@ Downsampling it in the front end would save bandwidth from your server and memor
  You can still run this code from the official repository if you haven't followed the step-by-step tutorial. Check this out:
 
 ```bash
-git clone https://github.com/jonatas/timescaledb.git
+git clone https://github.com/timescale/timescaledb-ruby.git
 cd timescaledb
 bundle install
 cd examples/toolkit-demo
@@ -536,12 +536,12 @@ If you have any comments, feel free to drop a message to me at the [Timescale Co
 
 [1]: https://github.com/timescale/timescaledb-toolkit/blob/main/docs/lttb.md
 [2]: https://github.com/Jubke/lttb
-[3]: https://github.com/jonatas/timescaledb/blob/master/examples/toolkit-demo/lttb
+[3]: https://github.com/timescale/timescaledb-ruby/blob/master/examples/toolkit-demo/lttb
 [4]: https://docs.timescale.com/timescaledb/latest/tutorials/sample-datasets/#weather-datasets
 [5]: https://www.timescale.com/community
-[6]: https://github.com/jonatas/timescaledb/pulls
-[7]: https://github.com/jonatas/timescaledb/issues
-[8]: https://github.com/jonatas/timescaledb
+[6]: https://github.com/timescale/timescaledb-ruby/pulls
+[7]: https://github.com/timescale/timescaledb-ruby/issues
+[8]: https://github.com/timescale/timescaledb-ruby
 [9]: http://pry.github.io
 [10]: https://github.com/Jubke/lttb
 [11]: https://chartkick.com

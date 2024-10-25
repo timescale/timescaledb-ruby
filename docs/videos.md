@@ -13,4 +13,4 @@ You can watch all episodes here:
 
 
 If you create any content related to how to use the Timescale Gem, please open a
-[Pull Request](https://github.com/jonatas/timescaledb/pulls).
+[Pull Request](https://github.com/timescale/timescaledb-ruby/pulls).

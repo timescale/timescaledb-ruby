@@ -342,10 +342,10 @@ That's all for today folks!
 
 
 [1]: /toolkit_lttb_tutorial
-[2]: https://github.com/jonatas/timescaledb/blob/master/examples/toolkit-demo/lttb_zoom
+[2]: https://github.com/timescale/timescaledb-ruby/blob/master/examples/toolkit-demo/lttb_zoom
 [3]: https://docs.timescale.com/api/latest/hyperfunctions/downsample/lttb/
 [4]: https://docs.timescale.com/timescaledb/latest/how-to-guides/hyperfunctions/function-pipelines/
-[5]: https://github.com/jonatas/timescaledb
+[5]: https://github.com/timescale/timescaledb-ruby
 [6]: http://pry.github.io
 [7]: http://sinatrarb.com
 [8]: https://docs.timescale.com/timescaledb/latest/tutorials/sample-datasets/#weather-datasets

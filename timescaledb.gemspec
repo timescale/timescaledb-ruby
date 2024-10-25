@@ -4,18 +4,18 @@ Gem::Specification.new do |spec|
   spec.name          = "timescaledb"
   spec.version       = Timescaledb::VERSION
   spec.authors       = ["Jônatas Davi Paganini"]
-  spec.email         = ["jonatasdp@gmail.com"]
+  spec.email         = ["jonatas@timescale.com"]
 
   spec.summary       = %q{TimescaleDB helpers for Ruby ecosystem.}
   spec.description   = %q{Functions from timescaledb available in the ActiveRecord models.}
-  spec.homepage      = "https://github.com/jonatas/timescaledb"
+  spec.homepage      = "https://github.com/timescale/timescaledb-ruby"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  #spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
+  spec.metadata["homepage_uri"] = "https://timescale.github.io/timescaledb-ruby/"
+  spec.metadata["source_code_uri"] = spec.homepage
   #spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
   # Specify which files should be added to the gem when it is released.

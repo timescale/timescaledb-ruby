@@ -32,4 +32,4 @@ FROM plays
 GROUP BY game_id, bucket;
 ```
 
-Check out the source code of the [full example](https://github.com/jonatas/timescaledb/tree/master/examples/ranking).
+Check out the source code of the [full example](https://github.com/timescale/timescaledb-ruby/tree/master/examples/ranking).
