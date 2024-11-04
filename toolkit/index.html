@@ -8,8 +8,15 @@
       
       
       
+      
+        <link rel="prev" href="../models/">
+      
+      
+        <link rel="next" href="../toolkit_lttb_tutorial/">
+      
+      
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
@@ -17,19 +24,17 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
-        
-          
-          
-          <meta name="theme-color" content="#4051b5">
-        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
+
     
+    
+      
     
     
       
@@ -41,7 +46,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -50,9 +55,7 @@
   
   
 
-
-  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-9B2BMB0TNQ"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-9B2BMB0TNQ",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-9B2BMB0TNQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
-
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9B2BMB0TNQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9B2BMB0TNQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9B2BMB0TNQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
   
@@ -68,9 +71,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="pink">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -90,16 +92,19 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="The Timescaledb gem" class="md-header__button md-logo" aria-label="The Timescaledb gem" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -118,10 +123,14 @@
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -129,24 +138,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -155,10 +167,10 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/jonatas/timescaledb" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/timescale/timescaledb-ruby" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -188,22 +200,23 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="The Timescaledb gem" class="md-nav__button md-logo" aria-label="The Timescaledb gem" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     The Timescaledb gem
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/jonatas/timescaledb" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/timescale/timescaledb-ruby" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -215,14 +228,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Introduction
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
       </a>
     </li>
   
@@ -230,14 +248,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../migrations/" class="md-nav__link">
-        Migrations
+        
+  
+  <span class="md-ellipsis">
+    Migrations
+  </span>
+  
+
       </a>
     </li>
   
@@ -245,14 +268,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../scenic_views/" class="md-nav__link">
-        Scenic Views
+        
+  
+  <span class="md-ellipsis">
+    Scenic Views
+  </span>
+  
+
       </a>
     </li>
   
@@ -260,14 +288,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../models/" class="md-nav__link">
-        Models
+        
+  
+  <span class="md-ellipsis">
+    Models
+  </span>
+  
+
       </a>
     </li>
   
@@ -275,28 +308,39 @@
     
       
       
-      
-
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Toolkit Integration
+          
+  
+  <span class="md-ellipsis">
+    Toolkit Integration
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Toolkit Integration
+        
+  
+  <span class="md-ellipsis">
+    Toolkit Integration
+  </span>
+  
+
       </a>
       
         
@@ -316,42 +360,54 @@
       
         <li class="md-nav__item">
   <a href="#the-add_toolkit_to_search_path-helper" class="md-nav__link">
-    The add_toolkit_to_search_path! helper
+    <span class="md-ellipsis">
+      The add_toolkit_to_search_path! helper
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#example-from-scratch-to-use-the-toolkit-functions" class="md-nav__link">
-    Example from scratch to use the Toolkit functions
+    <span class="md-ellipsis">
+      Example from scratch to use the Toolkit functions
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#seeding-some-data" class="md-nav__link">
-    Seeding some data
+    <span class="md-ellipsis">
+      Seeding some data
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#adding-the-acts_as_time_vector-macro" class="md-nav__link">
-    Adding the acts_as_time_vector macro
+    <span class="md-ellipsis">
+      Adding the acts_as_time_vector macro
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#comparing-with-ruby-version" class="md-nav__link">
-    Comparing with Ruby version
+    <span class="md-ellipsis">
+      Comparing with Ruby version
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#seeding-massive-data" class="md-nav__link">
-    Seeding massive data
+    <span class="md-ellipsis">
+      Seeding massive data
+    </span>
   </a>
   
 </li>
@@ -366,14 +422,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../toolkit_lttb_tutorial/" class="md-nav__link">
-        Toolkit LTTB Tutorial
+        
+  
+  <span class="md-ellipsis">
+    Toolkit LTTB Tutorial
+  </span>
+  
+
       </a>
     </li>
   
@@ -381,14 +442,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../chat_gpt_tutorial/" class="md-nav__link">
-        Open AI Long Term Storage Tutorial
+        
+  
+  <span class="md-ellipsis">
+    Open AI Long Term Storage Tutorial
+  </span>
+  
+
       </a>
     </li>
   
@@ -396,14 +462,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../toolkit_lttb_zoom/" class="md-nav__link">
-        Zooming with High Resolution
+        
+  
+  <span class="md-ellipsis">
+    Zooming with High Resolution
+  </span>
+  
+
       </a>
     </li>
   
@@ -411,14 +482,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../toolkit_candlestick/" class="md-nav__link">
-        Toolkit Candlesticks tutorial
+        
+  
+  <span class="md-ellipsis">
+    Toolkit Candlesticks tutorial
+  </span>
+  
+
       </a>
     </li>
   
@@ -426,14 +502,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../command_line/" class="md-nav__link">
-        Command Line
+        
+  
+  <span class="md-ellipsis">
+    Command Line
+  </span>
+  
+
       </a>
     </li>
   
@@ -441,14 +522,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../videos/" class="md-nav__link">
-        Videos
+        
+  
+  <span class="md-ellipsis">
+    Videos
+  </span>
+  
+
       </a>
     </li>
   
@@ -482,42 +568,54 @@
       
         <li class="md-nav__item">
   <a href="#the-add_toolkit_to_search_path-helper" class="md-nav__link">
-    The add_toolkit_to_search_path! helper
+    <span class="md-ellipsis">
+      The add_toolkit_to_search_path! helper
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#example-from-scratch-to-use-the-toolkit-functions" class="md-nav__link">
-    Example from scratch to use the Toolkit functions
+    <span class="md-ellipsis">
+      Example from scratch to use the Toolkit functions
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#seeding-some-data" class="md-nav__link">
-    Seeding some data
+    <span class="md-ellipsis">
+      Seeding some data
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#adding-the-acts_as_time_vector-macro" class="md-nav__link">
-    Adding the acts_as_time_vector macro
+    <span class="md-ellipsis">
+      Adding the acts_as_time_vector macro
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#comparing-with-ruby-version" class="md-nav__link">
-    Comparing with Ruby version
+    <span class="md-ellipsis">
+      Comparing with Ruby version
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#seeding-massive-data" class="md-nav__link">
-    Seeding massive data
+    <span class="md-ellipsis">
+      Seeding massive data
+    </span>
   </a>
   
 </li>
@@ -536,10 +634,8 @@
                 
                   
 
-  <a href="https://github.com/jonatas/timescaledb/edit/master/docs/toolkit.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
 
 
 <h1 id="the-timescaledb-toolkit">The TimescaleDB Toolkit<a class="headerlink" href="#the-timescaledb-toolkit" title="Permanent link">&para;</a></h1>
@@ -571,17 +667,17 @@ path aside of the <code>public</code> and the <code>$user</code> variable path.<
 <p>The statement can be placed right before your usage of the toolkit. For example,
 if a single controller in your Rails app will be using it, you can create a
 <a href="https://guides.rubyonrails.org/action_controller_overview.html#filters">filter</a> in the controller to set up it before the use of your action.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span> <span class="nc">StatisticsController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  <span class="n">before_action</span> <span class="ss">:add_timescale_toolkit</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:complex_query</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">StatisticsController</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="n">before_action</span><span class="w"> </span><span class="ss">:add_timescale_toolkit</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="ss">:complex_query</span><span class="o">]</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  <span class="k">def</span> <span class="nf">complex_query</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="c1"># some code that uses the toolkit functions</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  <span class="k">end</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">complex_query</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="c1"># some code that uses the toolkit functions</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  <span class="kp">protected</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  <span class="k">def</span> <span class="nf">add_timescale_toolkit</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">add_toolkit_to_search_path!</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  <span class="k">end</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="kp">protected</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">add_timescale_toolkit</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">add_toolkit_to_search_path!</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="k">end</span>
 </code></pre></div>
 <h2 id="example-from-scratch-to-use-the-toolkit-functions">Example from scratch to use the Toolkit functions<a class="headerlink" href="#example-from-scratch-to-use-the-toolkit-functions" title="Permanent link">&para;</a></h2>
 <p>Let's start by working on some example about the <a href="https://en.wikipedia.org/wiki/Volatility_(finance)">volatility</a> algorithm.
@@ -595,28 +691,28 @@ and will give you more insights on how to apply and use time vectors that
 is our next topic.</p>
 </div>
 <p>Let's start by creating the <code>measurements</code> hypertable using a regular migration:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span> <span class="nc">CreateMeasurements</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  <span class="k">def</span> <span class="nf">change</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">hypertable_options</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>      <span class="ss">time_column</span><span class="p">:</span> <span class="s1">&#39;ts&#39;</span><span class="p">,</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>      <span class="ss">chunk_time_interval</span><span class="p">:</span> <span class="s1">&#39;1 day&#39;</span><span class="p">,</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="p">}</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">create_table</span> <span class="ss">:measurements</span><span class="p">,</span> <span class="ss">hypertable</span><span class="p">:</span> <span class="n">hypertable_options</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="kp">false</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:device_id</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>      <span class="n">t</span><span class="o">.</span><span class="n">decimal</span> <span class="ss">:val</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>      <span class="n">t</span><span class="o">.</span><span class="n">timestamp</span> <span class="ss">:ts</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="k">end</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>  <span class="k">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">CreateMeasurements</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">change</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">hypertable_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;ts&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="ss">chunk_time_interval</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;1 day&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">create_table</span><span class="w"> </span><span class="ss">:measurements</span><span class="p">,</span><span class="w"> </span><span class="ss">hypertable</span><span class="p">:</span><span class="w"> </span><span class="n">hypertable_options</span><span class="p">,</span><span class="w"> </span><span class="nb">id</span><span class="p">:</span><span class="w"> </span><span class="kp">false</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">t</span><span class="o">|</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="n">t</span><span class="o">.</span><span class="n">integer</span><span class="w"> </span><span class="ss">:device_id</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="n">t</span><span class="o">.</span><span class="n">decimal</span><span class="w"> </span><span class="ss">:val</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="n">t</span><span class="o">.</span><span class="n">timestamp</span><span class="w"> </span><span class="ss">:ts</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="k">end</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="k">end</span>
 </code></pre></div>
 <p>In this example, we just have a hypertable with no compression options. Every
 <code>1 day</code> a new child table aka <a href="https://docs.timescale.com/timescaledb/latest/overview/core-concepts/hypertables-and-chunks/#partitioning-in-hypertables-with-chunks">chunk</a> will be generated. No compression
 options for now.</p>
 <p>Now, let's add the model <code>app/models/measurement.rb</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span> <span class="nc">Measurement</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  <span class="nb">self</span><span class="o">.</span><span class="n">primary_key</span> <span class="o">=</span> <span class="kp">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Measurement</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nb">self</span><span class="o">.</span><span class="n">primary_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">nil</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  <span class="n">acts_as_hypertable</span> <span class="ss">time_column</span><span class="p">:</span> <span class="s2">&quot;ts&quot;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="n">acts_as_hypertable</span><span class="w"> </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ts&quot;</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">end</span>
 </code></pre></div>
 <p>At this moment, you can jump into the Rails console and start testing the model.</p>
@@ -624,66 +720,66 @@ options for now.</p>
 <p>Before we build a very complex example, let's build something that is easy to
 follow and comprehend. Let's create 3 records for the same device, representing
 a hourly measurement of some sensor.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">yesterday</span> <span class="o">=</span> <span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">ago</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">v</span><span class="p">,</span><span class="n">i</span><span class="o">|</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="no">Measurement</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">device_id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">ts</span><span class="p">:</span> <span class="n">yesterday</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="ss">val</span><span class="p">:</span> <span class="n">v</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">yesterday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">ago</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">each_with_index</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">v</span><span class="p">,</span><span class="n">i</span><span class="o">|</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="no">Measurement</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">device_id</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">ts</span><span class="p">:</span><span class="w"> </span><span class="n">yesterday</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="ss">val</span><span class="p">:</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">end</span>
 </code></pre></div>
 <p>Every value is a progression from 1 to 3. Now, we can build a query to get the
 values and let's build the example using plain Ruby.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">values</span> <span class="o">=</span> <span class="no">Measurement</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="ss">:ts</span><span class="p">)</span><span class="o">.</span><span class="n">pluck</span><span class="p">(</span><span class="ss">:val</span><span class="p">)</span> <span class="c1"># =&gt; [1,2,3]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="ss">:ts</span><span class="p">)</span><span class="o">.</span><span class="n">pluck</span><span class="p">(</span><span class="ss">:val</span><span class="p">)</span><span class="w"> </span><span class="c1"># =&gt; [1,2,3]</span>
 </code></pre></div>
 <p>Using plain Ruby, we can build this example with a few lines of code:</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">previous</span> <span class="o">=</span> <span class="kp">nil</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">volatilities</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="k">if</span> <span class="n">previous</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">previous</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">volatility</span> <span class="o">=</span> <span class="n">delta</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  <span class="k">end</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>  <span class="n">previous</span> <span class="o">=</span> <span class="n">value</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>  <span class="n">volatility</span>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">previous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">nil</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">volatilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="o">.</span><span class="n">map</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">value</span><span class="o">|</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">previous</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">previous</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="n">volatility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delta</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="k">end</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="n">previous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="n">volatility</span>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">end</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># volatilities =&gt; [nil, 1, 1]</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">volatility</span> <span class="o">=</span> <span class="n">volatilities</span><span class="o">.</span><span class="n">compact</span><span class="o">.</span><span class="n">sum</span> <span class="c1"># =&gt; 2</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">volatility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">volatilities</span><span class="o">.</span><span class="n">compact</span><span class="o">.</span><span class="n">sum</span><span class="w"> </span><span class="c1"># =&gt; 2</span>
 </code></pre></div>
 Compact can be skipped and we can also build the sum in the same loop. So, a
 refactored version would be:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">previous</span> <span class="o">=</span> <span class="kp">nil</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">volatility</span> <span class="o">=</span> <span class="mi">0</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">values</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  <span class="k">if</span> <span class="n">previous</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">previous</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="n">volatility</span> <span class="o">+=</span> <span class="n">delta</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  <span class="k">end</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  <span class="n">previous</span> <span class="o">=</span> <span class="n">value</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">previous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">nil</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">volatility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">values</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">value</span><span class="o">|</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">previous</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="n">delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">previous</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="n">volatility</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">delta</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="k">end</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="n">previous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span>
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="k">end</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">volatility</span> <span class="c1"># =&gt; 2</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">volatility</span><span class="w"> </span><span class="c1"># =&gt; 2</span>
 </code></pre></div>
 <p>Now, it's time to move it to a database level calculating the volatility using
 plain postgresql. A subquery is required to build the calculated delta, so it
 seems a bit more confusing:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">delta</span> <span class="o">=</span> <span class="no">Measurement</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;device_id, abs(val - lag(val) OVER (PARTITION BY device_id ORDER BY ts)) as abs_delta&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;device_id, abs(val - lag(val) OVER (PARTITION BY device_id ORDER BY ts)) as abs_delta&quot;</span><span class="p">)</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="no">Measurement</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;device_id, sum(abs_delta) as volatility&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  <span class="o">.</span><span class="n">from</span><span class="p">(</span><span class="s2">&quot;(</span><span class="si">#{</span><span class="n">delta</span><span class="o">.</span><span class="n">to_sql</span><span class="si">}</span><span class="s2">) as calc_delta&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  <span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;device_id&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;device_id, sum(abs_delta) as volatility&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="o">.</span><span class="n">from</span><span class="p">(</span><span class="s2">&quot;(</span><span class="si">#{</span><span class="n">delta</span><span class="o">.</span><span class="n">to_sql</span><span class="si">}</span><span class="s2">) as calc_delta&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;device_id&#39;</span><span class="p">)</span>
 </code></pre></div>
 <p>The final query for the example above looks like this:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">device_id</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">abs_delta</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">volatility</span><span class="w"></span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">device_id</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="k">ABS</span><span class="p">(</span><span class="w"></span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="n">val</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">LAG</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">device_id</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ts</span><span class="p">)</span><span class="w"></span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">abs_delta</span><span class="w"></span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;measurements&quot;</span><span class="w"></span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">calc_delta</span><span class="w"></span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">device_id</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">device_id</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">abs_delta</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">volatility</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">device_id</span><span class="p">,</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="k">ABS</span><span class="p">(</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="n">val</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">LAG</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">device_id</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ts</span><span class="p">)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">abs_delta</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;measurements&quot;</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">calc_delta</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">device_id</span>
 </code></pre></div>
 <p>It's much harder to understand the actual example then go with plain SQL and now
 let's reproduce the same example using the toolkit pipelines:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="no">Measurement</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">&lt;&lt;-</span><span class="dl">SQL</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">&lt;&lt;-</span><span class="dl">SQL</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="sh">    device_id,</span>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="sh">    timevector(ts, val)</span>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="sh">      -&gt; sort()</span>
@@ -698,29 +794,29 @@ a look in how we can generate the queries using the scopes injected by the
 <h2 id="adding-the-acts_as_time_vector-macro">Adding the <code>acts_as_time_vector</code> macro<a class="headerlink" href="#adding-the-acts_as_time_vector-macro" title="Permanent link">&para;</a></h2>
 <p>Let's start changing the model to add the <code>acts_as_time_vector</code> that is
 here to allow us to not repeat the parameters of the <code>timevector(ts, val)</code> call.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span> <span class="nc">Measurement</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  <span class="nb">self</span><span class="o">.</span><span class="n">primary_key</span> <span class="o">=</span> <span class="kp">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Measurement</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nb">self</span><span class="o">.</span><span class="n">primary_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">nil</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  <span class="n">acts_as_hypertable</span> <span class="ss">time_column</span><span class="p">:</span> <span class="s2">&quot;ts&quot;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="n">acts_as_hypertable</span><span class="w"> </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ts&quot;</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>  <span class="n">acts_as_time_vector</span> <span class="ss">segment_by</span><span class="p">:</span> <span class="s2">&quot;device_id&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="ss">value_column</span><span class="p">:</span> <span class="s2">&quot;val&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="ss">time_column</span><span class="p">:</span> <span class="s2">&quot;ts&quot;</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>  <span class="k">end</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="n">acts_as_time_vector</span><span class="w"> </span><span class="ss">segment_by</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;device_id&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="ss">value_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;val&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ts&quot;</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="k">end</span>
 </code></pre></div>
 <p>If you skip the <code>time_column</code> option in the <code>acts_as_time_vector</code> it will
 inherit the same value from the <code>acts_as_hypertable</code>. I'm making it explicit
 here for the sake of making the macros independent.</p>
 <p>Now, that we have it, let's create a scope for it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">class</span> <span class="nc">Measurement</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  <span class="n">acts_as_hypertable</span> <span class="ss">time_column</span><span class="p">:</span> <span class="s2">&quot;ts&quot;</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  <span class="n">acts_as_time_vector</span> <span class="ss">segment_by</span><span class="p">:</span> <span class="s2">&quot;device_id&quot;</span><span class="p">,</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="ss">value_column</span><span class="p">:</span> <span class="s2">&quot;val&quot;</span><span class="p">,</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="ss">time_column</span><span class="p">:</span> <span class="s2">&quot;ts&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Measurement</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">acts_as_hypertable</span><span class="w"> </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ts&quot;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="n">acts_as_time_vector</span><span class="w"> </span><span class="ss">segment_by</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;device_id&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="ss">value_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;val&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ts&quot;</span>
 <a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  <span class="n">scope</span> <span class="ss">:volatility</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="k">do</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="nb">select</span><span class="p">(</span><span class="o">&lt;&lt;-</span><span class="dl">SQL</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="n">scope</span><span class="w"> </span><span class="ss">:volatility</span><span class="p">,</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="nb">select</span><span class="p">(</span><span class="o">&lt;&lt;-</span><span class="dl">SQL</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span>
 <a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="sh">      device_id,</span>
 <a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="sh">      timevector(#{time_column}, #{value_column})</span>
 <a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="sh">        -&gt; sort()</span>
@@ -728,7 +824,7 @@ here for the sake of making the macros independent.</p>
 <a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="sh">        -&gt; abs()</span>
 <a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="sh">        -&gt; sum() as volatility</span>
 <a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="dl">    SQL</span>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>  <span class="k">end</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="k">end</span>
 </code></pre></div>
 <p>Now, we have created the volatility scope, grouping by device_id always.</p>
@@ -737,25 +833,25 @@ segmentation based in the <code>segment_by</code> configuration done through the
 macro. A method <code>segment_by_column</code> is added to access this configuration, so we
 can make a small change that makes you completely understand the volatility
 macro.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">class</span> <span class="nc">Measurement</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  <span class="c1"># ... Skipping previous code to focus in the example</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Measurement</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="c1"># ... Skipping previous code to focus in the example</span>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>  <span class="n">acts_as_time_vector</span> <span class="ss">segment_by</span><span class="p">:</span> <span class="s2">&quot;device_id&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="ss">value_column</span><span class="p">:</span> <span class="s2">&quot;val&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="ss">time_column</span><span class="p">:</span> <span class="s2">&quot;ts&quot;</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="n">acts_as_time_vector</span><span class="w"> </span><span class="ss">segment_by</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;device_id&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="ss">value_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;val&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ts&quot;</span>
 <a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>  <span class="n">scope</span> <span class="ss">:volatility</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">segment_by_column</span><span class="p">)</span> <span class="k">do</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="n">_scope</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="o">[*</span><span class="n">columns</span><span class="p">,</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>        <span class="s2">&quot;timevector(</span><span class="si">#{</span><span class="n">time_column</span><span class="si">}</span><span class="s2">,</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="n">scope</span><span class="w"> </span><span class="ss">:volatility</span><span class="p">,</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">segment_by_column</span><span class="p">)</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="n">_scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">select</span><span class="p">(</span><span class="o">[*</span><span class="n">columns</span><span class="p">,</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">        </span><span class="s2">&quot;timevector(</span><span class="si">#{</span><span class="n">time_column</span><span class="si">}</span><span class="s2">,</span>
 <a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="s2">        </span><span class="si">#{</span><span class="n">value_column</span><span class="si">}</span><span class="s2">)</span>
 <a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="s2">           -&gt; sort()</span>
 <a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="s2">           -&gt; delta()</span>
 <a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="s2">           -&gt; abs()</span>
 <a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="s2">           -&gt; sum() as volatility&quot;</span>
-<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>    <span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">))</span>
-<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>    <span class="n">_scope</span> <span class="o">=</span> <span class="n">_scope</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span> <span class="k">if</span> <span class="n">columns</span>
-<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>    <span class="n">_scope</span>
-<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>  <span class="k">end</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">    </span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">))</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">    </span><span class="n">_scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_scope</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">columns</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="w">    </span><span class="n">_scope</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="k">end</span>
 </code></pre></div>
 <p>Testing the method:</p>
@@ -764,22 +860,22 @@ macro.</p>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># =&gt; [{&quot;device_id&quot;=&gt;1, &quot;volatility&quot;=&gt;8.0}]</span>
 </code></pre></div>
 <p>Let's add a few more records with random values:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">yesterday</span> <span class="o">=</span> <span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">ago</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="p">(</span><span class="mi">2</span><span class="o">..</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">d</span><span class="o">|</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">j</span><span class="o">|</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="no">Measurement</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">device_id</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="ss">ts</span><span class="p">:</span> <span class="n">yesterday</span> <span class="o">+</span> <span class="n">j</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="ss">val</span><span class="p">:</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  <span class="k">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">yesterday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">ago</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="p">(</span><span class="mi">2</span><span class="o">..</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">d</span><span class="o">|</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">j</span><span class="o">|</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="no">Measurement</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">device_id</span><span class="p">:</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="ss">ts</span><span class="p">:</span><span class="w"> </span><span class="n">yesterday</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="ss">val</span><span class="p">:</span><span class="w"> </span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="k">end</span>
 </code></pre></div>
 <p>Testing all the values:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a> <span class="no">Measurement</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">volatility</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:attributes</span><span class="p">)</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a> <span class="c1"># DEBUG -- : Measurement Load (1.3ms)  SELECT device_id, timevector(ts, val) -&gt; sort() -&gt; delta() -&gt; abs() -&gt; sum() as volatility FROM &quot;measurements&quot; GROUP BY &quot;measurements&quot;.&quot;device_id&quot; ORDER BY device_id</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="o">=&gt;</span> <span class="o">[</span><span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">8</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a> <span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">24</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a> <span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">30</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a> <span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">32</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a> <span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">44</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a> <span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">23</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">volatility</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:attributes</span><span class="p">)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w"> </span><span class="c1"># DEBUG -- : Measurement Load (1.3ms)  SELECT device_id, timevector(ts, val) -&gt; sort() -&gt; delta() -&gt; abs() -&gt; sum() as volatility FROM &quot;measurements&quot; GROUP BY &quot;measurements&quot;.&quot;device_id&quot; ORDER BY device_id</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">8</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w"> </span><span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">24</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w"> </span><span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">30</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w"> </span><span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">32</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w"> </span><span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">44</span><span class="o">.</span><span class="mi">0</span><span class="p">},</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w"> </span><span class="p">{</span><span class="s2">&quot;device_id&quot;</span><span class="o">=&gt;</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;volatility&quot;</span><span class="o">=&gt;</span><span class="mi">23</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="o">]</span>
 </code></pre></div>
 <p>If the parameter is explicit <code>nil</code> it will not group by:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="no">Measurement</span><span class="o">.</span><span class="n">volatility</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:attributes</span><span class="p">)</span>
@@ -789,25 +885,25 @@ macro.</p>
 <h2 id="comparing-with-ruby-version">Comparing with Ruby version<a class="headerlink" href="#comparing-with-ruby-version" title="Permanent link">&para;</a></h2>
 <p>Now, it's time to benchmark and compare Ruby vs PostgreSQL solutions, verifying
 which is faster:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">class</span> <span class="nc">Measurement</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  <span class="c1"># code you already know</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  <span class="n">scope</span> <span class="ss">:volatility_by_device_id</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    <span class="n">volatility</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>    <span class="n">previous</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    <span class="n">find_all</span> <span class="k">do</span> <span class="o">|</span><span class="n">measurement</span><span class="o">|</span>
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>      <span class="n">device_id</span> <span class="o">=</span> <span class="n">measurement</span><span class="o">.</span><span class="n">device_id</span>
-<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>      <span class="k">if</span> <span class="n">previous</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span>
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>        <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">measurement</span><span class="o">.</span><span class="n">val</span> <span class="o">-</span> <span class="n">previous</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
-<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>        <span class="n">volatility</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span> <span class="o">+=</span> <span class="n">delta</span>
-<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>      <span class="k">end</span>
-<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>      <span class="n">previous</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span> <span class="o">=</span> <span class="n">measurement</span><span class="o">.</span><span class="n">val</span>
-<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>    <span class="k">end</span>
-<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    <span class="n">volatility</span>
-<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>  <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Measurement</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="c1"># code you already know</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="n">scope</span><span class="w"> </span><span class="ss">:volatility_by_device_id</span><span class="p">,</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="n">volatility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="n">previous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Hash</span><span class="o">.</span><span class="n">new</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="n">find_all</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">measurement</span><span class="o">|</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">      </span><span class="n">device_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">measurement</span><span class="o">.</span><span class="n">device_id</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">previous</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">        </span><span class="n">delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">measurement</span><span class="o">.</span><span class="n">val</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">previous</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">        </span><span class="n">volatility</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">delta</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">      </span><span class="k">end</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">      </span><span class="n">previous</span><span class="o">[</span><span class="n">device_id</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">measurement</span><span class="o">.</span><span class="n">val</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">    </span><span class="k">end</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">    </span><span class="n">volatility</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="k">end</span>
 </code></pre></div>
 <p>Now, benchmarking the real time to compute it on Ruby in milliseconds.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="no">Benchmark</span><span class="o">.</span><span class="n">measure</span> <span class="p">{</span> <span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_by_device_id</span> <span class="p">}</span><span class="o">.</span><span class="n">real</span> <span class="o">*</span> <span class="mi">1000</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="no">Benchmark</span><span class="o">.</span><span class="n">measure</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_by_device_id</span><span class="w"> </span><span class="p">}</span><span class="o">.</span><span class="n">real</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span>
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># =&gt; 3.021999917924404</span>
 </code></pre></div>
 <h2 id="seeding-massive-data">Seeding massive data<a class="headerlink" href="#seeding-massive-data" title="Permanent link">&para;</a></h2>
@@ -817,7 +913,7 @@ the database and make it full of records.</p>
 5 devices emitting values every 5 minutes, which will generate around 50k
 records.</p>
 <p>Let's use some plain SQL to insert the records now:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO measurements (ts, device_id, val)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;INSERT INTO measurements (ts, device_id, val)</span>
 <a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="s2">SELECT ts, device_id, random()*80</span>
 <a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="s2">FROM generate_series(TIMESTAMP &#39;2022-01-01 00:00:00&#39;,</span>
 <a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="s2">                   TIMESTAMP &#39;2022-02-01 00:00:00&#39;,</span>
@@ -831,9 +927,9 @@ records.</p>
 <a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1"># =&gt; #&lt;PG::Result:0x00007f8152034168 status=PGRES_COMMAND_OK ntuples=0 nfields=0 cmd_tuples=53574&gt;</span>
 </code></pre></div>
 <p>Now, let's measure compare the time to process the volatility:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;ruby&quot;</span><span class="p">)</span>  <span class="p">{</span> <span class="n">pp</span> <span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_by_device_id</span> <span class="p">}</span>
-<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="n">pp</span> <span class="no">Measurement</span><span class="o">.</span><span class="n">volatility</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:attributes</span><span class="p">)</span> <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">x</span><span class="o">|</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;ruby&quot;</span><span class="p">)</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">pp</span><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_by_device_id</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span><span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pp</span><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">volatility</span><span class="p">(</span><span class="s2">&quot;device_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:attributes</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
 <a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="k">end</span>
 <a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="c1">#           user     system      total        real</span>
 <a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="c1"># ruby    0.612439   0.061890   0.674329 (  0.727590)</span>
@@ -859,48 +955,48 @@ fetch the data and also consuming most of the time here. It’s also fetching
 the data and converting it to ActiveRecord model which has thousands of methods.</p>
 <p>It’s very comfortable but just need the attributes to make it.</p>
 <p>Let’s optimize it by plucking an array of values grouped by device.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">class</span> <span class="nc">Measurement</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  <span class="c1"># ...</span>
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>  <span class="n">scope</span> <span class="ss">:values_from_devices</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span>
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>    <span class="n">ordered_values</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="ss">:val</span><span class="p">,</span> <span class="ss">:device_id</span><span class="p">)</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="ss">:ts</span><span class="p">)</span>
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>    <span class="no">Hash</span><span class="o">[</span>
-<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>      <span class="n">from</span><span class="p">(</span><span class="n">ordered_values</span><span class="p">)</span>
-<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>      <span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="ss">:device_id</span><span class="p">)</span>
-<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>      <span class="o">.</span><span class="n">pluck</span><span class="p">(</span><span class="s2">&quot;device_id, array_agg(val)&quot;</span><span class="p">)</span>
-<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    <span class="o">]</span>
-<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>  <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Measurement</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="c1"># ...</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="n">scope</span><span class="w"> </span><span class="ss">:values_from_devices</span><span class="p">,</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="n">ordered_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">select</span><span class="p">(</span><span class="ss">:val</span><span class="p">,</span><span class="w"> </span><span class="ss">:device_id</span><span class="p">)</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="ss">:ts</span><span class="p">)</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">    </span><span class="no">Hash</span><span class="o">[</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">      </span><span class="n">from</span><span class="p">(</span><span class="n">ordered_values</span><span class="p">)</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">      </span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="ss">:device_id</span><span class="p">)</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">      </span><span class="o">.</span><span class="n">pluck</span><span class="p">(</span><span class="s2">&quot;device_id, array_agg(val)&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">    </span><span class="o">]</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="k">end</span>
 </code></pre></div>
 <p>Now, let's create a method for processing volatility.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">class</span> <span class="nc">Volatility</span>
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">process</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    <span class="n">previous</span> <span class="o">=</span> <span class="kp">nil</span>
-<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    <span class="n">deltas</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
-<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>      <span class="k">if</span> <span class="n">previous</span>
-<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>        <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">previous</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
-<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>        <span class="n">volatility</span> <span class="o">=</span> <span class="n">delta</span>
-<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>      <span class="k">end</span>
-<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>      <span class="n">previous</span> <span class="o">=</span> <span class="n">value</span>
-<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>      <span class="n">volatility</span>
-<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>    <span class="k">end</span>
-<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>    <span class="c1">#deltas =&gt; [nil, 1, 1]</span>
-<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>    <span class="n">deltas</span><span class="o">.</span><span class="n">shift</span>
-<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>    <span class="n">volatility</span> <span class="o">=</span> <span class="n">deltas</span><span class="o">.</span><span class="n">sum</span>
-<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>  <span class="k">end</span>
-<a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">process_values</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
-<a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>    <span class="n">map</span><span class="o">.</span><span class="n">transform_values</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:process</span><span class="p">))</span>
-<a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>  <span class="k">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Volatility</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nc">self</span><span class="o">.</span><span class="nf">process</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="n">previous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">nil</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="n">deltas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="o">.</span><span class="n">map</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">value</span><span class="o">|</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">previous</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">        </span><span class="n">delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">previous</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">        </span><span class="n">volatility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delta</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">      </span><span class="k">end</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">      </span><span class="n">previous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="w">      </span><span class="n">volatility</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="w">    </span><span class="k">end</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="w">    </span><span class="c1">#deltas =&gt; [nil, 1, 1]</span>
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="w">    </span><span class="n">deltas</span><span class="o">.</span><span class="n">shift</span>
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="w">    </span><span class="n">volatility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deltas</span><span class="o">.</span><span class="n">sum</span>
+<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="w">  </span><span class="k">end</span>
+<a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nc">self</span><span class="o">.</span><span class="nf">process_values</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
+<a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a><span class="w">    </span><span class="n">map</span><span class="o">.</span><span class="n">transform_values</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:process</span><span class="p">))</span>
+<a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a><span class="k">end</span>
 </code></pre></div>
 <p>Now, let's change the benchmark to expose the time for fetching and processing:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">volatilities</span> <span class="o">=</span> <span class="kp">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">volatilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">nil</span>
 <a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
-<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="kp">nil</span>
-<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;ruby&quot;</span><span class="p">)</span>  <span class="p">{</span> <span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_ruby</span> <span class="p">}</span>
-<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_sql</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:attributes</span><span class="p">)</span>  <span class="p">}</span>
-<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;fetch&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="n">volatilities</span> <span class="o">=</span>  <span class="no">Measurement</span><span class="o">.</span><span class="n">values_from_devices</span> <span class="p">}</span>
-<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;process&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="no">Volatility</span><span class="o">.</span><span class="n">process_values</span><span class="p">(</span><span class="n">volatilities</span><span class="p">)</span> <span class="p">}</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">nil</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">x</span><span class="o">|</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">  </span><span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;ruby&quot;</span><span class="p">)</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_ruby</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">  </span><span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="no">Measurement</span><span class="o">.</span><span class="n">volatility_sql</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:attributes</span><span class="p">)</span><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">  </span><span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;fetch&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">volatilities</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="no">Measurement</span><span class="o">.</span><span class="n">values_from_devices</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">  </span><span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s2">&quot;process&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="no">Volatility</span><span class="o">.</span><span class="n">process_values</span><span class="p">(</span><span class="n">volatilities</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
 <a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="k">end</span>
 </code></pre></div>
 <p>Checking the results:</p>
@@ -913,14 +1009,14 @@ process  0.067643   0.006473   0.074116 (  0.074122)
 
 <p>Much better, now we can see only 200ms difference between real time which means ~36% more.</p>
 <p>If we try to break down a bit more of the SQL part, we can see that the </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">ANALYSE</span><span class="w"></span>
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">device_id</span><span class="p">,</span><span class="w"> </span><span class="n">array_agg</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="w"></span>
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">device_id</span><span class="w"></span>
-<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">measurements</span><span class="w"></span>
-<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ts</span><span class="w"> </span><span class="k">ASC</span><span class="w"></span>
-<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">subquery</span><span class="w"></span>
-<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">device_id</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">ANALYSE</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">device_id</span><span class="p">,</span><span class="w"> </span><span class="n">array_agg</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">device_id</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">measurements</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ts</span><span class="w"> </span><span class="k">ASC</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">subquery</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">device_id</span><span class="p">;</span>
 </code></pre></div>
 <p>We can check the execution time and make it clear how much time is necessary
 just for the processing part, isolating network and the ActiveRecord layer.</p>
@@ -930,6 +1026,13 @@ just for the processing part, isolating network and the ActiveRecord layer.</p>
 
 <p>So, it means that from the <strong>116ms</strong> to fetch the data, only <strong>54ms</strong> was used from the DB
 and the remaining <strong>62ms</strong> was consumed by network + ORM.</p>
+
+
+
+
+
+
+
 
 
   
@@ -942,47 +1045,12 @@ and the remaining <strong>62ms</strong> was consumed by network + ORM.</p>
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../models/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Models" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Models
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../toolkit_lttb_tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: Toolkit LTTB Tutorial" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Toolkit LTTB Tutorial
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1005,10 +1073,11 @@ and the remaining <strong>62ms</strong> was consumed by network + ORM.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   </body>

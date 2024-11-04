@@ -8,8 +8,15 @@
       
       
       
+      
+        <link rel="prev" href="../chat_gpt_tutorial/">
+      
+      
+        <link rel="next" href="../toolkit_candlestick/">
+      
+      
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
@@ -17,19 +24,17 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
-        
-          
-          
-          <meta name="theme-color" content="#4051b5">
-        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
+
     
+    
+      
     
     
       
@@ -41,7 +46,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -50,9 +55,7 @@
   
   
 
-
-  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-9B2BMB0TNQ"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-9B2BMB0TNQ",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-9B2BMB0TNQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
-
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9B2BMB0TNQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9B2BMB0TNQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9B2BMB0TNQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
   
@@ -68,9 +71,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="pink">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -90,16 +92,19 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="The Timescaledb gem" class="md-header__button md-logo" aria-label="The Timescaledb gem" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -118,10 +123,14 @@
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -129,24 +138,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -155,10 +167,10 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/jonatas/timescaledb" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/timescale/timescaledb-ruby" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -188,22 +200,23 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="The Timescaledb gem" class="md-nav__button md-logo" aria-label="The Timescaledb gem" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     The Timescaledb gem
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/jonatas/timescaledb" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/timescale/timescaledb-ruby" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -215,14 +228,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Introduction
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
       </a>
     </li>
   
@@ -230,14 +248,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../migrations/" class="md-nav__link">
-        Migrations
+        
+  
+  <span class="md-ellipsis">
+    Migrations
+  </span>
+  
+
       </a>
     </li>
   
@@ -245,14 +268,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../scenic_views/" class="md-nav__link">
-        Scenic Views
+        
+  
+  <span class="md-ellipsis">
+    Scenic Views
+  </span>
+  
+
       </a>
     </li>
   
@@ -260,14 +288,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../models/" class="md-nav__link">
-        Models
+        
+  
+  <span class="md-ellipsis">
+    Models
+  </span>
+  
+
       </a>
     </li>
   
@@ -275,14 +308,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../toolkit/" class="md-nav__link">
-        Toolkit Integration
+        
+  
+  <span class="md-ellipsis">
+    Toolkit Integration
+  </span>
+  
+
       </a>
     </li>
   
@@ -290,14 +328,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../toolkit_lttb_tutorial/" class="md-nav__link">
-        Toolkit LTTB Tutorial
+        
+  
+  <span class="md-ellipsis">
+    Toolkit LTTB Tutorial
+  </span>
+  
+
       </a>
     </li>
   
@@ -305,14 +348,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../chat_gpt_tutorial/" class="md-nav__link">
-        Open AI Long Term Storage Tutorial
+        
+  
+  <span class="md-ellipsis">
+    Open AI Long Term Storage Tutorial
+  </span>
+  
+
       </a>
     </li>
   
@@ -320,28 +368,39 @@
     
       
       
-      
-
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Zooming with High Resolution
+          
+  
+  <span class="md-ellipsis">
+    Zooming with High Resolution
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Zooming with High Resolution
+        
+  
+  <span class="md-ellipsis">
+    Zooming with High Resolution
+  </span>
+  
+
       </a>
       
         
@@ -361,7 +420,9 @@
       
         <li class="md-nav__item">
   <a href="#preparing-the-back-end" class="md-nav__link">
-    Preparing the Back end
+    <span class="md-ellipsis">
+      Preparing the Back end
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Preparing the Back end">
@@ -369,7 +430,9 @@
         
           <li class="md-nav__item">
   <a href="#set-up-dependencies" class="md-nav__link">
-    Set up dependencies
+    <span class="md-ellipsis">
+      Set up dependencies
+    </span>
   </a>
   
 </li>
@@ -381,7 +444,9 @@
       
         <li class="md-nav__item">
   <a href="#setup-database" class="md-nav__link">
-    Setup database
+    <span class="md-ellipsis">
+      Setup database
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Setup database">
@@ -389,49 +454,63 @@
         
           <li class="md-nav__item">
   <a href="#establishing-the-connection" class="md-nav__link">
-    Establishing the connection
+    <span class="md-ellipsis">
+      Establishing the connection
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#downloading-the-dataset" class="md-nav__link">
-    Downloading the dataset
+    <span class="md-ellipsis">
+      Downloading the dataset
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#declaring-the-models" class="md-nav__link">
-    Declaring the models
+    <span class="md-ellipsis">
+      Declaring the models
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#putting-all-together" class="md-nav__link">
-    Putting all together
+    <span class="md-ellipsis">
+      Putting all together
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#filtering-data" class="md-nav__link">
-    Filtering data
+    <span class="md-ellipsis">
+      Filtering data
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#downsampling-data" class="md-nav__link">
-    Downsampling data
+    <span class="md-ellipsis">
+      Downsampling data
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#exposing-endpoints" class="md-nav__link">
-    Exposing endpoints
+    <span class="md-ellipsis">
+      Exposing endpoints
+    </span>
   </a>
   
 </li>
@@ -443,7 +522,9 @@
       
         <li class="md-nav__item">
   <a href="#front-end" class="md-nav__link">
-    Front end
+    <span class="md-ellipsis">
+      Front end
+    </span>
   </a>
   
 </li>
@@ -458,14 +539,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../toolkit_candlestick/" class="md-nav__link">
-        Toolkit Candlesticks tutorial
+        
+  
+  <span class="md-ellipsis">
+    Toolkit Candlesticks tutorial
+  </span>
+  
+
       </a>
     </li>
   
@@ -473,14 +559,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../command_line/" class="md-nav__link">
-        Command Line
+        
+  
+  <span class="md-ellipsis">
+    Command Line
+  </span>
+  
+
       </a>
     </li>
   
@@ -488,14 +579,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../videos/" class="md-nav__link">
-        Videos
+        
+  
+  <span class="md-ellipsis">
+    Videos
+  </span>
+  
+
       </a>
     </li>
   
@@ -529,7 +625,9 @@
       
         <li class="md-nav__item">
   <a href="#preparing-the-back-end" class="md-nav__link">
-    Preparing the Back end
+    <span class="md-ellipsis">
+      Preparing the Back end
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Preparing the Back end">
@@ -537,7 +635,9 @@
         
           <li class="md-nav__item">
   <a href="#set-up-dependencies" class="md-nav__link">
-    Set up dependencies
+    <span class="md-ellipsis">
+      Set up dependencies
+    </span>
   </a>
   
 </li>
@@ -549,7 +649,9 @@
       
         <li class="md-nav__item">
   <a href="#setup-database" class="md-nav__link">
-    Setup database
+    <span class="md-ellipsis">
+      Setup database
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Setup database">
@@ -557,49 +659,63 @@
         
           <li class="md-nav__item">
   <a href="#establishing-the-connection" class="md-nav__link">
-    Establishing the connection
+    <span class="md-ellipsis">
+      Establishing the connection
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#downloading-the-dataset" class="md-nav__link">
-    Downloading the dataset
+    <span class="md-ellipsis">
+      Downloading the dataset
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#declaring-the-models" class="md-nav__link">
-    Declaring the models
+    <span class="md-ellipsis">
+      Declaring the models
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#putting-all-together" class="md-nav__link">
-    Putting all together
+    <span class="md-ellipsis">
+      Putting all together
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#filtering-data" class="md-nav__link">
-    Filtering data
+    <span class="md-ellipsis">
+      Filtering data
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#downsampling-data" class="md-nav__link">
-    Downsampling data
+    <span class="md-ellipsis">
+      Downsampling data
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#exposing-endpoints" class="md-nav__link">
-    Exposing endpoints
+    <span class="md-ellipsis">
+      Exposing endpoints
+    </span>
   </a>
   
 </li>
@@ -611,7 +727,9 @@
       
         <li class="md-nav__item">
   <a href="#front-end" class="md-nav__link">
-    Front end
+    <span class="md-ellipsis">
+      Front end
+    </span>
   </a>
   
 </li>
@@ -630,10 +748,8 @@
                 
                   
 
-  <a href="https://github.com/jonatas/timescaledb/edit/master/docs/toolkit_lttb_zoom.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
 
 
 <h1 id="downsampling-and-zooming">Downsampling and zooming<a class="headerlink" href="#downsampling-and-zooming" title="Permanent link">&para;</a></h1>
@@ -649,20 +765,20 @@
 <p>The focus of this example is to show how you can build a recursive process to just downsample the data to keep it with a good resolution.</p>
 <p>The image bellow corresponds to the step by step guide provided here.</p>
 <p><img alt="LTTB Zoomable Example" src="https://jonatas.github.io/timescaledb/img/lttb_zoom.gif" /></p>
-<p>If you want to just go and run it directly, you can fetch the complete example <a href="https://github.com/jonatas/timescaledb/blob/master/examples/toolkit-demo/lttb_zoom">here</a>.</p>
+<p>If you want to just go and run it directly, you can fetch the complete example <a href="https://github.com/timescale/timescaledb-ruby/blob/master/examples/toolkit-demo/lttb_zoom">here</a>.</p>
 <p>Now, we'll split the work in two main sessions: preparing the back-end and front-end.</p>
 <h2 id="preparing-the-back-end">Preparing the Back end<a class="headerlink" href="#preparing-the-back-end" title="Permanent link">&para;</a></h2>
 <p>The back-end will be a Ruby script to fetch the dataset and prepare the database in case it's not ready. It will also offer the JSON endpoint with the downsampled data that will be consumed by the front-end.</p>
 <h3 id="set-up-dependencies">Set up dependencies<a class="headerlink" href="#set-up-dependencies" title="Permanent link">&para;</a></h3>
 <p>The example is using Bundler inline, as it avoids the creation of the <code>Gemfile</code>.  It's very handy for prototyping code that you can ship in a single file.  You can declare all the gems in the <code>gemfile</code> code block, and Bundler will install them dynamically.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">require</span> <span class="s1">&#39;bundler/inline&#39;</span> <span class="c1">#require only what you need</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">require</span><span class="w"> </span><span class="s1">&#39;bundler/inline&#39;</span><span class="w"> </span><span class="c1">#require only what you need</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">gemfile</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span> <span class="k">do</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  <span class="n">gem</span> <span class="s1">&#39;timescaledb&#39;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  <span class="n">gem</span> <span class="s1">&#39;pry&#39;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  <span class="n">gem</span> <span class="s1">&#39;sinatra&#39;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  <span class="n">gem</span> <span class="s1">&#39;sinatra-reloader&#39;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  <span class="n">gem</span> <span class="s1">&#39;sinatra-cross_origin&#39;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">gemfile</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="n">gem</span><span class="w"> </span><span class="s1">&#39;timescaledb&#39;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="n">gem</span><span class="w"> </span><span class="s1">&#39;pry&#39;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="n">gem</span><span class="w"> </span><span class="s1">&#39;sinatra&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">require</span><span class="p">:</span><span class="w"> </span><span class="kp">false</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="n">gem</span><span class="w"> </span><span class="s1">&#39;sinatra-reloader&#39;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="n">gem</span><span class="w"> </span><span class="s1">&#39;sinatra-cross_origin&#39;</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">end</span>
 </code></pre></div>
 <p>The Timescale gem doesn't require the toolkit by default, so you must specify it to use.</p>
@@ -677,50 +793,50 @@
 </ul>
 <p>Only for development purposes we also have:</p>
 <ol>
-<li>The <a href="https://github.com/jonatas/timescaledb">pry</a> library is widely adopted to debug any Ruby code. It can facilitate to explore the app and easily troubleshoot any issues you find.  </li>
+<li>The <a href="https://github.com/timescale/timescaledb-ruby">pry</a> library is widely adopted to debug any Ruby code. It can facilitate to explore the app and easily troubleshoot any issues you find.  </li>
 <li>The <code>sinatra-cross_origin</code> allow the application to use javascript directly from foreign servers without denying the access.</li>
 <li>The <code>sinatra-reloader</code> is very convenient to keep updating the code examples without the need to restart the ruby process.</li>
 </ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">require</span> <span class="s1">&#39;sinatra/json&#39;</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">require</span> <span class="s1">&#39;sinatra/contrib&#39;</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">require</span> <span class="s1">&#39;timescaledb/toolkit&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">require</span><span class="w"> </span><span class="s1">&#39;sinatra&#39;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">require</span><span class="w"> </span><span class="s1">&#39;sinatra/json&#39;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">require</span><span class="w"> </span><span class="s1">&#39;sinatra/contrib&#39;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">require</span><span class="w"> </span><span class="s1">&#39;timescaledb/toolkit&#39;</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">register</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Reloader</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">register</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Contrib</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">register</span><span class="w"> </span><span class="no">Sinatra</span><span class="o">::</span><span class="no">Reloader</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">register</span><span class="w"> </span><span class="no">Sinatra</span><span class="o">::</span><span class="no">Contrib</span>
 </code></pre></div>
 <h2 id="setup-database">Setup database<a class="headerlink" href="#setup-database" title="Permanent link">&para;</a></h2>
 <p>Now, it's time to set up the database for this application. Make sure you have TimescaleDB installed or <a href="[13]:">learn how to install TimescaleDB here</a>.</p>
 <h3 id="establishing-the-connection">Establishing the connection<a class="headerlink" href="#establishing-the-connection" title="Permanent link">&para;</a></h3>
 <p>The next step is to connect to the database so that we will run this example with the PostgreSQL URI as the last argument of the command line.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="no">PG_URI</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">last</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="no">PG_URI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">ARGV</span><span class="o">.</span><span class="n">last</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">establish_connection</span><span class="p">(</span><span class="no">PG_URI</span><span class="p">)</span>
 </code></pre></div>
 <p>If this line works, it means your connection is good.</p>
 <h3 id="downloading-the-dataset">Downloading the dataset<a class="headerlink" href="#downloading-the-dataset" title="Permanent link">&para;</a></h3>
 <p>The data comes from a real scenario. The data loaded in the example comes from the <a href="https://docs.timescale.com/timescaledb/latest/tutorials/sample-datasets/#weather-datasets">weather dataset</a> and contains several profiles with more or less data and with a reasonable resolution for the actual example.</p>
 <p>Here is small automation to make it run smoothly with small, medium, and big data sets.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="no">VALID_SIZES</span> <span class="o">=</span> <span class="o">%</span><span class="n">i</span><span class="o">[</span><span class="n">small</span> <span class="n">med</span> <span class="n">big</span><span class="o">]</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span> <span class="nf">download_weather_dataset</span> <span class="ss">size</span><span class="p">:</span> <span class="ss">:small</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  <span class="k">unless</span> <span class="no">VALID_SIZES</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="nb">fail</span> <span class="s2">&quot;Invalid size: </span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2">. Valid are </span><span class="si">#{</span><span class="no">VALID_SIZES</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  <span class="k">end</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://timescaledata.blob.core.windows.net/datasets/weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2">.tar.gz&quot;</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  <span class="nb">puts</span> <span class="s2">&quot;fetching </span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2"> weather dataset...&quot;</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  <span class="nb">system</span> <span class="s2">&quot;wget </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">url</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>  <span class="nb">puts</span> <span class="s2">&quot;done!&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="no">VALID_SIZES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">i</span><span class="o">[</span><span class="n">small</span><span class="w"> </span><span class="n">med</span><span class="w"> </span><span class="n">big</span><span class="o">]</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">download_weather_dataset</span><span class="w"> </span><span class="ss">size</span><span class="p">:</span><span class="w"> </span><span class="ss">:small</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">unless</span><span class="w"> </span><span class="no">VALID_SIZES</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nb">fail</span><span class="w"> </span><span class="s2">&quot;Invalid size: </span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2">. Valid are </span><span class="si">#{</span><span class="no">VALID_SIZES</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="k">end</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://timescaledata.blob.core.windows.net/datasets/weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2">.tar.gz&quot;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;fetching </span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2"> weather dataset...&quot;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nb">system</span><span class="w"> </span><span class="s2">&quot;wget </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">url</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;done!&quot;</span>
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="k">end</span>
 </code></pre></div>
 <p>Now, let's create the setup method to verify if the database is created and have the data loaded, and fetch it if necessary.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span> <span class="nf">setup</span> <span class="ss">size</span><span class="p">:</span> <span class="ss">:small</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2">.tar.gz&quot;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="n">download_weather_dataset</span> <span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">exists?</span> <span class="n">file</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  <span class="nb">puts</span> <span class="s2">&quot;extracting </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  <span class="nb">system</span> <span class="s2">&quot;tar -xvzf </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2"> &quot;</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  <span class="nb">puts</span> <span class="s2">&quot;creating data structures&quot;</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  <span class="nb">system</span> <span class="s2">&quot;psql </span><span class="si">#{</span><span class="no">PG_URI</span><span class="si">}</span><span class="s2"> &lt; weather.sql&quot;</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  <span class="nb">system</span> <span class="sx">%|psql </span><span class="si">#{</span><span class="no">PG_URI</span><span class="si">}</span><span class="sx"> -c &quot;\\COPY locations FROM weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="sx">_locations.csv CSV&quot;|</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  <span class="nb">system</span> <span class="sx">%|psql </span><span class="si">#{</span><span class="no">PG_URI</span><span class="si">}</span><span class="sx"> -c &quot;\\COPY conditions FROM weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="sx">_conditions.csv CSV&quot;|</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="w"> </span><span class="ss">size</span><span class="p">:</span><span class="w"> </span><span class="ss">:small</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="s2">.tar.gz&quot;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="n">download_weather_dataset</span><span class="w"> </span><span class="k">unless</span><span class="w"> </span><span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="w"> </span><span class="n">file</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;extracting </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nb">system</span><span class="w"> </span><span class="s2">&quot;tar -xvzf </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2"> &quot;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;creating data structures&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="nb">system</span><span class="w"> </span><span class="s2">&quot;psql </span><span class="si">#{</span><span class="no">PG_URI</span><span class="si">}</span><span class="s2"> &lt; weather.sql&quot;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nb">system</span><span class="w"> </span><span class="sx">%|psql </span><span class="si">#{</span><span class="no">PG_URI</span><span class="si">}</span><span class="sx"> -c &quot;\\COPY locations FROM weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="sx">_locations.csv CSV&quot;|</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="nb">system</span><span class="w"> </span><span class="sx">%|psql </span><span class="si">#{</span><span class="no">PG_URI</span><span class="si">}</span><span class="sx"> -c &quot;\\COPY conditions FROM weather_</span><span class="si">#{</span><span class="n">size</span><span class="si">}</span><span class="sx">_conditions.csv CSV&quot;|</span>
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">end</span>
 </code></pre></div>
 <div class="admonition info">
@@ -730,78 +846,78 @@
 <h3 id="declaring-the-models">Declaring the models<a class="headerlink" href="#declaring-the-models" title="Permanent link">&para;</a></h3>
 <p>Now, let's declare the ActiveRecord models. The location is an auxiliary table
 to control the placement of the device.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span> <span class="nc">Location</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  <span class="nb">self</span><span class="o">.</span><span class="n">primary_key</span> <span class="o">=</span> <span class="s2">&quot;device_id&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Location</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nb">self</span><span class="o">.</span><span class="n">primary_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;device_id&quot;</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  <span class="n">has_many</span> <span class="ss">:conditions</span><span class="p">,</span> <span class="ss">foreign_key</span><span class="p">:</span> <span class="s2">&quot;device_id&quot;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="n">has_many</span><span class="w"> </span><span class="ss">:conditions</span><span class="p">,</span><span class="w"> </span><span class="ss">foreign_key</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;device_id&quot;</span>
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">end</span>
 </code></pre></div>
 <p>Every location emits weather conditions with <code>temperature</code> and <code>humidity</code> every X minutes.</p>
 <p>The <code>conditions</code> is the time-series data we'll refer to here.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span> <span class="nc">Condition</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="n">acts_as_hypertable</span> <span class="ss">time_column</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="n">acts_as_time_vector</span> <span class="ss">value_column</span><span class="p">:</span> <span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="ss">segment_by</span><span class="p">:</span> <span class="s2">&quot;device_id&quot;</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  <span class="n">belongs_to</span> <span class="ss">:location</span><span class="p">,</span> <span class="ss">foreign_key</span><span class="p">:</span> <span class="s2">&quot;device_id&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Condition</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="n">acts_as_hypertable</span><span class="w"> </span><span class="ss">time_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;time&quot;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="n">acts_as_time_vector</span><span class="w"> </span><span class="ss">value_column</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">segment_by</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;device_id&quot;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="n">belongs_to</span><span class="w"> </span><span class="ss">:location</span><span class="p">,</span><span class="w"> </span><span class="ss">foreign_key</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;device_id&quot;</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">end</span>
 </code></pre></div>
 <h3 id="putting-all-together">Putting all together<a class="headerlink" href="#putting-all-together" title="Permanent link">&para;</a></h3>
 <p>Now it's time to call the methods we implemented before. So, let's set up a logger to print the data to the standard output (STDOUT) to confirm the steps and add the toolkit to the search path.</p>
 <p>Similar to database migration, we need to verify if the table exists, set up the hypertable and load the data if necessary.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">instance_exec</span> <span class="k">do</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">STDOUT</span><span class="p">)</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  <span class="n">add_toolkit_to_search_path!</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">instance_exec</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">STDOUT</span><span class="p">)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="n">add_toolkit_to_search_path!</span>
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  <span class="k">unless</span> <span class="no">Condition</span><span class="o">.</span><span class="n">table_exists?</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="n">setup</span> <span class="ss">size</span><span class="p">:</span> <span class="ss">:small</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  <span class="k">end</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="k">unless</span><span class="w"> </span><span class="no">Condition</span><span class="o">.</span><span class="n">table_exists?</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="n">setup</span><span class="w"> </span><span class="ss">size</span><span class="p">:</span><span class="w"> </span><span class="ss">:small</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="k">end</span>
 <a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">end</span>
 </code></pre></div>
 <p>The <code>setup</code> method also can fetch different datasets and you'll need to manually drop the <code>conditions</code> and <code>locations</code> tables to reload it.</p>
 <h3 id="filtering-data">Filtering data<a class="headerlink" href="#filtering-data" title="Permanent link">&para;</a></h3>
 <p>We'll have two main scenarios to plot the data. When the user is not filtering any data and when the user is filtering during a zoom phase.</p>
 <p>To simplify the example, we're going to use only the <code>weather-pro-000001</code> device_id to make it easier to follow:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span> <span class="nf">filter_by_request_params</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="n">filter</span><span class="o">=</span> <span class="p">{</span><span class="ss">device_id</span><span class="p">:</span> <span class="s2">&quot;weather-pro-000001&quot;</span><span class="p">}</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  <span class="k">if</span> <span class="n">params</span><span class="o">[</span><span class="ss">:filter</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">params</span><span class="o">[</span><span class="ss">:filter</span><span class="o">]</span> <span class="o">!=</span> <span class="s2">&quot;null&quot;</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">from</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:filter</span><span class="o">].</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="no">Time</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="ss">:parse</span><span class="p">))</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="n">filter</span><span class="o">[</span><span class="ss">:time</span><span class="o">]</span> <span class="o">=</span> <span class="n">from</span><span class="o">..</span><span class="n">to</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  <span class="k">end</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  <span class="n">filter</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">filter_by_request_params</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="n">filter</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="ss">device_id</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;weather-pro-000001&quot;</span><span class="p">}</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:filter</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:filter</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:filter</span><span class="o">].</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="no">Time</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="ss">:parse</span><span class="p">))</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="n">filter</span><span class="o">[</span><span class="ss">:time</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">from</span><span class="o">..</span><span class="n">to</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="k">end</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="n">filter</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="k">end</span>
 </code></pre></div>
 <p>The method is just building the proper where clause using the ActiveRecord style to be filtering the conditions we want to use for the example. Now, let's use the previous method defining the scope of the data that will be downsampled from the database.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span> <span class="nf">conditions</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  <span class="no">Condition</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">filter_by_request_params</span><span class="p">)</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">conditions</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="no">Condition</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">filter_by_request_params</span><span class="p">)</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">end</span>
 </code></pre></div>
 <h3 id="downsampling-data">Downsampling data<a class="headerlink" href="#downsampling-data" title="Permanent link">&para;</a></h3>
 <p>The threshold can be defined as a method as it can also be used further in the front-end for rendering the initial template values.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span> <span class="nf">threshold</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="n">params</span><span class="o">[</span><span class="ss">:threshold</span><span class="o">]&amp;.</span><span class="n">to_i</span> <span class="o">||</span> <span class="mi">50</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">threshold</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="n">params</span><span class="o">[</span><span class="ss">:threshold</span><span class="o">]&amp;.</span><span class="n">to_i</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mi">50</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">end</span>
 </code></pre></div>
 <p>Now, the most important method of this example, the call to the <a href="https://docs.timescale.com/api/latest/hyperfunctions/downsample/lttb/">lttb</a> function that is responsible for the downsampling algorithm. It also reuses all previous logic built here.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">def</span> <span class="nf">downsampled</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  <span class="n">conditions</span><span class="o">.</span><span class="n">lttb</span><span class="p">(</span><span class="ss">threshold</span><span class="p">:</span> <span class="n">threshold</span><span class="p">,</span> <span class="ss">segment_by</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">downsampled</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="n">conditions</span><span class="o">.</span><span class="n">lttb</span><span class="p">(</span><span class="ss">threshold</span><span class="p">:</span><span class="w"> </span><span class="n">threshold</span><span class="p">,</span><span class="w"> </span><span class="ss">segment_by</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">end</span>
 </code></pre></div>
 <p>The <code>segment_by</code> keyword explicit <code>nil</code> because we have the <code>segment_by</code> explicit in the <code>acts_as_time_vector</code> macro in the model that is being inherited here. As the filter is specifying a <code>device_id</code>, we can skip this option to simplify the data coming from lttb.</p>
 <div class="admonition info">
 <p class="admonition-title">The lttb scope</p>
 <p>The <code>lttb</code> method call in reality is a ActiveRecord scope. It is encapsulating all the logic behind the library. The SQL code is not big, but there's some caveats involved here. So, behind the scenes the following SQL query is executed:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">time</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">time</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temperature</span><span class="w"></span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="k">WITH</span><span class="w"> </span><span class="n">ordered</span><span class="w"> </span><span class="k">AS</span><span class="w"></span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;time&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">      </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;temperature&quot;</span><span class="w"></span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span><span class="w"></span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">      </span><span class="k">WHERE</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;device_id&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;weather-pro-000001&#39;</span><span class="w"></span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">      </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">time</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;time&quot;</span><span class="w"> </span><span class="k">ASC</span><span class="p">)</span><span class="w"></span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="n">lttb</span><span class="p">(</span><span class="w"> </span><span class="n">ordered</span><span class="p">.</span><span class="k">time</span><span class="p">,</span><span class="w"> </span><span class="n">ordered</span><span class="p">.</span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="n">toolkit_experimental</span><span class="p">.</span><span class="k">unnest</span><span class="p">()</span><span class="w"></span>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">  </span><span class="p">).</span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ordered</span><span class="w"></span>
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ordered</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">time</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">time</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temperature</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="k">WITH</span><span class="w"> </span><span class="n">ordered</span><span class="w"> </span><span class="k">AS</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;time&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">      </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;temperature&quot;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">      </span><span class="k">WHERE</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;device_id&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;weather-pro-000001&#39;</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">      </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">time</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;conditions&quot;</span><span class="p">.</span><span class="ss">&quot;time&quot;</span><span class="w"> </span><span class="k">ASC</span><span class="p">)</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="n">lttb</span><span class="p">(</span><span class="w"> </span><span class="n">ordered</span><span class="p">.</span><span class="k">time</span><span class="p">,</span><span class="w"> </span><span class="n">ordered</span><span class="p">.</span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="n">toolkit_experimental</span><span class="p">.</span><span class="k">unnest</span><span class="p">()</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">  </span><span class="p">).</span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ordered</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ordered</span>
 </code></pre></div>
 <p>The <code>acts_as_time_vector</code> macro makes the <code>lttb</code> scope available in the ActiveRecord scopes allowing to mix conditions in advance and nest the queries in the way that it can process the LTTB and unnest it properly.</p>
 <p>Also, note that it's using the <code>-&gt;</code> pipeline operator to unnest the timevector and transform the data in tupples again.</p>
@@ -810,20 +926,20 @@ to control the placement of the device.</p>
 <p>Now, let's start with the web part using the sinatra macros. First, let's
 configure the server to allow cross origin requests and fetch the javascripts
 libraries directly from their official website.</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">configure</span> <span class="k">do</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  <span class="n">enable</span> <span class="ss">:cross_origin</span>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">configure</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="n">enable</span><span class="w"> </span><span class="ss">:cross_origin</span>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="k">end</span>
 </code></pre></div>
 Now, let's declare the root endpoint that will render the index template and
 the JSON endpoint that will return the downsampled data.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  <span class="n">erb</span> <span class="ss">:index</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">get</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="n">erb</span><span class="w"> </span><span class="ss">:index</span>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">end</span>
 </code></pre></div>
 <p>Note that the erb template should be on <code>views/index.erb</code> and will be covered in
 the front end section soon.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">get</span> <span class="s2">&quot;/lttb_sql&quot;</span> <span class="k">do</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  <span class="n">json</span> <span class="n">downsampled</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">get</span><span class="w"> </span><span class="s2">&quot;/lttb_sql&quot;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="n">downsampled</span>
 <a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">end</span>
 </code></pre></div>
 <h2 id="front-end">Front end<a class="headerlink" href="#front-end" title="Permanent link">&para;</a></h2>
@@ -860,26 +976,33 @@ downsampled data.</p>
 <p>Now, it's time to declare the div that will receive the plot component and
 declare the method to fetch data and create the chart.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;container&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">chart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;container&#39;</span><span class="p">);</span><span class="w"></span>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">filter</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="w"></span>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">      </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="sb">`/lttb_sql?threshold=&lt;%= threshold %&gt;&amp;filter=</span><span class="si">${</span><span class="nx">filter</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">      </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">e</span><span class="p">[</span><span class="mf">0</span><span class="p">]);</span><span class="w"></span>
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">e</span><span class="p">[</span><span class="mf">1</span><span class="p">]));</span><span class="w"></span>
-<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">        </span><span class="nx">Plotly</span><span class="p">.</span><span class="nx">newPlot</span><span class="p">(</span><span class="nx">chart</span><span class="p">,</span><span class="w"> </span><span class="p">[{</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">}]);</span><span class="w"></span>
-<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">        </span><span class="nx">chart</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;plotly_relayout&#39;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">          </span><span class="kd">function</span><span class="p">(</span><span class="nx">eventdata</span><span class="p">){</span><span class="w"></span>
-<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">            </span><span class="nx">fetch</span><span class="p">([</span><span class="nx">eventdata</span><span class="p">[</span><span class="s1">&#39;xaxis.range[0]&#39;</span><span class="p">],</span><span class="w"> </span><span class="nx">eventdata</span><span class="p">[</span><span class="s1">&#39;xaxis.range[1]&#39;</span><span class="p">]]);</span><span class="w"></span>
-<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">          </span><span class="p">});</span><span class="w"></span>
-<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">      </span><span class="p">}});</span><span class="w"></span>
-<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span><span class="p">}</span><span class="w"></span>
-<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">chart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;container&#39;</span><span class="p">);</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">filter</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">      </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="sb">`/lttb_sql?threshold=&lt;%= threshold %&gt;&amp;filter=</span><span class="si">${</span><span class="nx">filter</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">      </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">e</span><span class="p">[</span><span class="mf">0</span><span class="p">]);</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">e</span><span class="p">[</span><span class="mf">1</span><span class="p">]));</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">        </span><span class="nx">Plotly</span><span class="p">.</span><span class="nx">newPlot</span><span class="p">(</span><span class="nx">chart</span><span class="p">,</span><span class="w"> </span><span class="p">[{</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">}]);</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">        </span><span class="nx">chart</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;plotly_relayout&#39;</span><span class="p">,</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">          </span><span class="kd">function</span><span class="p">(</span><span class="nx">eventdata</span><span class="p">){</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">            </span><span class="nx">fetch</span><span class="p">([</span><span class="nx">eventdata</span><span class="p">[</span><span class="s1">&#39;xaxis.range[0]&#39;</span><span class="p">],</span><span class="w"> </span><span class="nx">eventdata</span><span class="p">[</span><span class="s1">&#39;xaxis.range[1]&#39;</span><span class="p">]]);</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">          </span><span class="p">});</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">      </span><span class="p">}});</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 <a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>That's all for today folks!</p>
 <p><a href="https://docs.timescale.com/timescaledb/latest/how-to-guides/hyperfunctions/function-pipelines/">4</a>:</p>
+
+
+
+
+
+
+
 
 
   
@@ -892,47 +1015,12 @@ declare the method to fetch data and create the chart.</p>
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../chat_gpt_tutorial/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Open AI Long Term Storage Tutorial" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Open AI Long Term Storage Tutorial
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../toolkit_candlestick/" class="md-footer__link md-footer__link--next" aria-label="Next: Toolkit Candlesticks tutorial" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Toolkit Candlesticks tutorial
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -955,10 +1043,11 @@ declare the method to fetch data and create the chart.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   </body>
