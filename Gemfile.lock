@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    timescaledb (0.3.0)
+    timescaledb (0.3.1)
       activerecord
       activesupport
+      ostruct
       pg (~> 1.2)
 
 GEM
@@ -32,6 +33,7 @@ GEM
       concurrent-ruby (~> 1.0)
     method_source (1.0.0)
     minitest (5.18.0)
+    ostruct (0.6.1)
     pg (1.5.8)
     pry (0.14.2)
       coderay (~> 1.1)

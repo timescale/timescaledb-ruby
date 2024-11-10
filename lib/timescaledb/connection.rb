@@ -1,4 +1,5 @@
 require 'singleton'
+require 'ostruct'
 
 module Timescaledb
   # Minimal connection setup for Timescaledb directly with the PG.
