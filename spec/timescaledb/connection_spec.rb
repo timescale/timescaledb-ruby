@@ -1,3 +1,5 @@
+require 'ostruct'
+
 RSpec.describe Timescaledb do
   describe '.establish_connection' do
     it 'returns a PG::Connection object' do
