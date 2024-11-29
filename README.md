@@ -250,7 +250,7 @@ hypertable_options = {
   time_column: 'created_at',
   chunk_time_interval: '1 min',
   compress_segmentby: 'identifier',
-  compression_interval: '7 days'
+  compress_after: '7 days'
 }
 
 create_table(:events, id: false, hypertable: hypertable_options) do |t|
@@ -271,7 +271,7 @@ hypertable_options = {
   chunk_time_interval: '1 min',
   compress_segmentby: 'symbol',
   compress_orderby: 'created_at',
-  compression_interval: '7 days'
+  compress_after: '7 days'
 }
 create_table :ticks, hypertable: hypertable_options, id: false do |t|
   t.string :symbol

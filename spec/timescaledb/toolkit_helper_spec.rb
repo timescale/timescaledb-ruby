@@ -9,7 +9,7 @@ RSpec.describe Timescaledb::Toolkit::Helpers, database_cleaner_strategy: :trunca
       chunk_time_interval: '1 day',
       compress_segmentby: 'device_id',
       compress_orderby: 'ts',
-      compression_interval: '7 days'
+      compress_after: '7 days'
     }
   end
 

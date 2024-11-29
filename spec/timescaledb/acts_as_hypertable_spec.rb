@@ -94,36 +94,35 @@ RSpec.describe Timescaledb::ActsAsHypertable do
         Event.create!(
           identifier: "last_month",
           payload: {name: "bar", value: 2},
-          created_at: Date.today.last_month
+          created_at: 1.month.ago
         )
       }
       let(:event_one_day_outside_window) {
         Event.create!(
           identifier: "one_day_outside_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.last_month.beginning_of_month - 1.day
+          created_at: 1.month.ago.beginning_of_month - 1.day
         )
       }
       let(:event_at_edge_of_window) {
         Event.create!(
           identifier: "at_edge_of_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.last_month.end_of_month
+          created_at: 1.month.ago.end_of_month
         )
       }
       let(:event_this_month) {
         Event.create!(
           identifier: "this_month",
           payload: {name: "bax", value: 2},
-          created_at: Date.today
+          created_at: Time.now
         )
       }
-
       it "returns all the records that were created in the previous month" do
         aggregate_failures do
-          expect(Event.previous_month).to match_array([event_last_month, event_at_edge_of_window])
+          expect(Event.previous_month).to match_array([event_last_month])
           expect(Event.previous_month)
-            .not_to include(event_one_day_outside_window, event_this_month)
+            .not_to include(event_one_day_outside_window, event_this_month, event_at_edge_of_window)
         end
       end
     end
@@ -141,36 +140,36 @@ RSpec.describe Timescaledb::ActsAsHypertable do
         Event.create!(
           identifier: "last_week",
           payload: {name: "bar", value: 2},
-          created_at: Date.today.last_week
+          created_at: 1.week.ago
         )
       }
       let(:event_one_day_outside_window) {
         Event.create!(
           identifier: "one_day_outside_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.last_week.beginning_of_week - 1.day
+          created_at: 1.week.ago.beginning_of_week - 1.day
         )
       }
       let(:event_at_edge_of_window) {
         Event.create!(
           identifier: "at_edge_of_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.last_week.end_of_week
+          created_at: 1.week.ago.end_of_week
         )
       }
       let(:event_this_week) {
         Event.create!(
           identifier: "this_week",
           payload: {name: "bax", value: 2},
-          created_at: Date.today
+          created_at: Time.now
         )
       }
 
       it "returns all the records that were created in the previous week" do
         aggregate_failures do
-          expect(Event.previous_week).to match_array([event_last_week, event_at_edge_of_window])
+          expect(Event.previous_week).to match_array([event_last_week])
           expect(Event.previous_week)
-            .not_to include(event_one_day_outside_window, event_this_week)
+            .not_to include(event_one_day_outside_window, event_this_week, event_at_edge_of_window)
         end
       end
     end
@@ -188,43 +187,43 @@ RSpec.describe Timescaledb::ActsAsHypertable do
         Event.create!(
           identifier: "this_month",
           payload: {name: "bar", value: 2},
-          created_at: Date.today.beginning_of_month
+          created_at: Time.now.beginning_of_month
         )
       }
       let(:event_one_day_outside_window) {
         Event.create!(
           identifier: "one_day_outside_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.beginning_of_month - 1.day
+          created_at: Time.now.beginning_of_month - 1.day
         )
       }
       let(:event_at_edge_of_window) {
         Event.create!(
           identifier: "at_edge_of_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.end_of_month
+          created_at: Time.now.end_of_month
         )
       }
       let(:event_last_month) {
         Event.create!(
           identifier: "last_month",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.last_month
+          created_at: 1.month.ago
         )
       }
       let(:event_next_month) {
         Event.create!(
-          identifier: "next_week",
+          identifier: "next_month",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.next_month
+          created_at: 1.month.from_now
         )
       }
 
       it "returns all the records that were created this month" do
         aggregate_failures do
-          expect(Event.this_month).to match_array([event_this_month, event_at_edge_of_window])
+          expect(Event.this_month).to match_array([event_this_month])
           expect(Event.this_month)
-            .not_to include(event_one_day_outside_window, event_last_month, event_next_month)
+            .not_to include(event_one_day_outside_window, event_last_month, event_next_month, event_at_edge_of_window)
         end
       end
     end
@@ -242,35 +241,35 @@ RSpec.describe Timescaledb::ActsAsHypertable do
         Event.create!(
           identifier: "this_week",
           payload: {name: "bar", value: 2},
-          created_at: Date.today
+          created_at: Time.now
         )
       }
       let(:event_one_day_outside_window) {
         Event.create!(
           identifier: "one_day_outside_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.beginning_of_week - 1.day
+          created_at: 1.week.ago.beginning_of_week - 1.day
         )
       }
       let(:event_at_edge_of_window) {
         Event.create!(
           identifier: "at_edge_of_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.end_of_week
+          created_at: 1.week.ago.end_of_week - 1.minute
         )
       }
       let(:event_last_week) {
         Event.create!(
           identifier: "last_week",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.last_week
+          created_at: 1.week.ago
         )
       }
       let(:event_next_week) {
         Event.create!(
           identifier: "next_week",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.next_week
+          created_at: 1.week.from_now
         )
       }
 
@@ -296,28 +295,28 @@ RSpec.describe Timescaledb::ActsAsHypertable do
         Event.create!(
           identifier: "yesterday",
           payload: {name: "bar", value: 2},
-          created_at: Date.yesterday
+          created_at: 1.day.ago
         )
       }
       let(:event_one_day_outside_window) {
         Event.create!(
           identifier: "one_day_outside_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.yesterday - 1.day
+          created_at: 2.days.ago
         )
       }
       let(:event_at_edge_of_window) {
         Event.create!(
           identifier: "at_edge_of_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.yesterday.midnight
+          created_at: 1.day.ago.midnight
         )
       }
       let(:event_today) {
         Event.create!(
           identifier: "today",
           payload: {name: "bax", value: 2},
-          created_at: Date.today
+          created_at: Time.now
         )
       }
 
@@ -343,28 +342,28 @@ RSpec.describe Timescaledb::ActsAsHypertable do
         Event.create!(
           identifier: "today",
           payload: {name: "bar", value: 2},
-          created_at: Date.today
+          created_at: 1.minute.ago
         )
       }
       let(:event_one_day_outside_window) {
         Event.create!(
           identifier: "one_day_outside_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.yesterday
+          created_at: 2.days.ago
         )
       }
       let(:event_at_edge_of_window) {
         Event.create!(
           identifier: "at_edge_of_window",
           payload: {name: "bax", value: 2},
-          created_at: Date.today.midnight
+          created_at: Time.now.end_of_day - 1.minute
         )
       }
 
       it "returns all the records that were created today" do
         aggregate_failures do
-          expect(Event.today).to match_array([event_today, event_at_edge_of_window])
-          expect(Event.today).not_to include(event_one_day_outside_window)
+          expect(Event.today).to match_array([event_today])
+          expect(Event.today).not_to include(event_one_day_outside_window, event_at_edge_of_window)
         end
       end
     end

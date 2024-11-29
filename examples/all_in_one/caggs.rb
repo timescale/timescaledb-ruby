@@ -36,7 +36,7 @@ ActiveRecord::Base.connection.instance_exec do
     chunk_time_interval: '1 day',
     compress_segmentby: 'symbol',
     compress_orderby: 'time',
-    compression_interval: '7 days'
+    compress_after: '7 days'
   }
 
   create_table :ticks, hypertable: hypertable_options, id: false do |t|

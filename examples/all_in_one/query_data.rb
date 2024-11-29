@@ -34,7 +34,7 @@ ActiveRecord::Base.connection.instance_exec do
     time_column: 'created_at',
     chunk_time_interval: '7 day',
     compress_segmentby: 'identifier',
-    compression_interval: '7 days'
+    compress_after: '7 days'
   }
 
   create_table(:events, id: false, hypertable: hypertable_options) do |t|
