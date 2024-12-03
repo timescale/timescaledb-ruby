@@ -8,7 +8,7 @@ require "database_cleaner/active_record"
 require_relative "support/active_record/models"
 require_relative "support/active_record/schema"
 
-Dotenv.load! if File.exists?(".env")
+Dotenv.load! if File.exist?(".env")
 
 # Establish a connection for testing
 

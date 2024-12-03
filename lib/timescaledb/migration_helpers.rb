@@ -38,24 +38,29 @@ module Timescaledb
     # @see create_table with the hypertable options.
     def create_hypertable(table_name,
                           time_column: 'created_at',
-                          by_range: :created_at,
                           chunk_time_interval: '1 week',
                           compress_segmentby: nil,
                           compress_orderby: 'created_at',
                           compress_after: nil,
                           drop_after: nil,
+                          partition_column: nil,
+                          number_partitions: nil,
                           **hypertable_options)
 
       original_logger = ActiveRecord::Base.logger
       ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-      arguments = [
-        quote(table_name),
-        "by_range(#{quote(time_column)}, #{parse_interval(chunk_time_interval)})",
+      dimension = "by_range(#{quote(time_column)}, #{parse_interval(chunk_time_interval)})"
+
+      arguments = [ quote(table_name), dimension,
         *hypertable_options.map { |k, v| "#{k} => #{quote(v)}" }
       ]
 
       execute "SELECT create_hypertable(#{arguments.compact.join(', ')})"
+
+      if partition_column && number_partitions
+        execute "SELECT add_dimension('#{table_name}', by_hash(#{quote(partition_column)}, #{number_partitions}))"
+      end
 
       if compress_segmentby || compress_after
         add_compression_policy(table_name, orderby: compress_orderby, segmentby: compress_segmentby, compress_after: compress_after)

@@ -55,7 +55,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
     context "with retention policies" do
       before do
-        con.create_retention_policy("events", interval: "1 week")
+        con.create_retention_policy("events", drop_after: "1 week")
       end
       after do
         con.remove_retention_policy("events")
@@ -108,42 +108,45 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
   describe "dumping hypertable options" do
     before(:each) do
-      con.drop_table :schema_tests, force: :cascade if con.table_exists?(:schema_tests)
+      con.drop_table :partition_by_hash_tests, force: :cascade, if_exists: true
+      con.drop_table :partition_by_range_tests, force: :cascade, if_exists: true
+      con.drop_table :partition_by_integer_tests, force: :cascade, if_exists: true
     end
 
-    it "extracts spatial partition options" do
-      options = { partition_column: "category", number_partitions: 3 }
-      con.create_table :schema_tests, hypertable: options, id: false do |t|
+    it "extracts by_hash options" do
+      options = { partition_column: "category", number_partitions: 3, create_default_indexes: false }
+
+      con.create_table :partition_by_hash_tests, id: false, hypertable: options do |t|
         t.string :category
-        t.timestamps
+        t.timestamptz :created_at, default: -> { "now()" }
+        t.index [:category, :created_at], unique: true, name: "index_partition_by_hash_tests_on_category_and_created_at"
       end
 
       dump = dump_output
 
-      expect(dump).to include 'partition_column: "category"'
-      expect(dump).to include "number_partitions: 3"
+      expect(dump).to include 'create_hypertable "partition_by_hash_tests", time_column: "created_at", chunk_time_interval: "7 days", partition_column: "category", number_partitions: 3, create_default_indexes: false'
     end
 
     it "extracts index options" do
       options = { create_default_indexes: false }
-      con.create_table :schema_tests, hypertable: options, id: false do |t|
+      con.create_table :partition_by_range_tests, id: false, hypertable: options do |t|
         t.timestamps
       end
 
       dump = dump_output
 
-      expect(dump).to include "create_default_indexes: false"
+      expect(dump).to include 'create_hypertable "partition_by_range_tests", time_column: "created_at", chunk_time_interval: "7 days"'
     end
 
     it "extracts integer chunk_time_interval" do
       options = { time_column: :id, chunk_time_interval: 10000 }
-      con.create_table :schema_tests, hypertable: options do |t|
+      con.create_table :partition_by_integer_tests, hypertable: options do |t|
         t.timestamps
       end
 
       dump = dump_output
 
-      expect(dump).to include "chunk_time_interval: 10000"
+      expect(dump).to include 'create_hypertable "partition_by_integer_tests", time_column: "id", chunk_time_interval: 10000'
     end
 
     context "compress_segmentby" do
@@ -161,7 +164,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
         dump = dump_output
 
-        expect(dump).to include 'compress_segmentby: "identifier, second_identifier"'
+        expect(dump).to include 'create_hypertable "segmentby_tests", time_column: "created_at", chunk_time_interval: "7 days", compress_segmentby: "identifier, second_identifier", compress_orderby: "created_at ASC"'
       end
     end
 
@@ -181,13 +184,13 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
             dump = dump_output
 
-            expect(dump).to include 'compress_orderby: "created_at ASC NULLS FIRST"'
+            expect(dump).to include 'create_hypertable "orderby_tests", time_column: "created_at", chunk_time_interval: "7 days", compress_segmentby: "identifier", compress_orderby: "created_at ASC NULLS FIRST"'
           end
         end
 
         context "nulls last" do
           it "extracts compress_orderby correctly" do
-            options = { compress_segmentby: "identifier", compress_orderby: "created_at ASC NULLS LAST" }
+            options = { compress_segmentby: "identifier", compress_orderby: "created_at DESC NULLS LAST" }
             con.create_table :orderby_tests, hypertable: options, id: false do |t|
               t.string :identifier
               t.timestamps
@@ -195,7 +198,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
             dump = dump_output
 
-            expect(dump).to include 'compress_orderby: "created_at ASC"'
+            expect(dump).to include 'create_hypertable "orderby_tests", time_column: "created_at", chunk_time_interval: "7 days", compress_segmentby: "identifier", compress_orderby: "created_at DESC NULLS LAST"'
           end
         end
       end
@@ -225,7 +228,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
             dump = dump_output
 
-            expect(dump).to include 'compress_orderby: "created_at DESC NULLS LAST"'
+            expect(dump).to include 'create_hypertable "orderby_tests", time_column: "created_at", chunk_time_interval: "7 days", compress_segmentby: "identifier", compress_orderby: "created_at DESC NULLS LAST"'
           end
         end
       end
