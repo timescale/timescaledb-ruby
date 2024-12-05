@@ -117,7 +117,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
       con.create_table :partition_by_hash_tests, id: false, hypertable: options do |t|
         t.string :category
-        t.timestamptz :created_at, default: -> { "now()" }
+        t.datetime :created_at, default: -> { "now()" }
         t.index [:category, :created_at], unique: true, name: "index_partition_by_hash_tests_on_category_and_created_at"
       end
 
