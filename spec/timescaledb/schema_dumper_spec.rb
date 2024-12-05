@@ -36,8 +36,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
   context "hypertables" do
     let(:sorted_hypertables) do
-      %w[events hypertable_with_custom_time_column hypertable_with_no_options
-      hypertable_with_options migration_tests]
+      %w[events hypertable_with_options migration_tests]
     end
 
     it "dump the create_table sorted by hypertable_name" do
