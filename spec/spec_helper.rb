@@ -46,7 +46,17 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    DatabaseCleaner.clean
+    retries = 3
+    begin
+      DatabaseCleaner.clean
+    rescue ActiveRecord::StatementInvalid => e
+      if e.message =~ /deadlock detected/ && (retries -= 1) > 0
+        sleep 0.1
+        retry
+      else
+        raise
+      end
+    end
   end
 
   config.include ActiveSupport::Testing::TimeHelpers
