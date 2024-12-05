@@ -245,12 +245,16 @@ to the function call while also using `create_table` method:
 
 #### create_table with `:hypertable`
 
+You can just pass the options to the `hypertable` keyword:
+
 ```ruby
 hypertable_options = {
   time_column: 'created_at',
   chunk_time_interval: '1 min',
   compress_segmentby: 'identifier',
-  compression_interval: '7 days'
+  compress_after: '7 days',
+  compress_orderby: 'created_at DESC NULLS LAST',
+  drop_after: '6 months'
 }
 
 create_table(:events, id: false, hypertable: hypertable_options) do |t|
@@ -258,6 +262,27 @@ create_table(:events, id: false, hypertable: hypertable_options) do |t|
   t.jsonb :payload
   t.timestamps
 end
+```
+
+And the code above will create a hypertable with the following options:
+
+```sql
+CREATE TABLE events (
+  identifier text NOT NULL,
+  payload jsonb,
+  created_at timestamp with time zone NOT NULL,
+  updated_at timestamp with time zone NOT NULL
+)
+SELECT create_hypertable('events', by_range('created_at', INTERVAL '1 min');
+ALTER TABLE events SET (
+  timescaledb.compress,
+  timescaledb.compress_segmentby = 'identifier',
+  timescaledb.compress_orderby = 'created_at DESC NULLS LAST',
+  timescaledb.drop_after = INTERVAL '6 months'
+);
+
+SELECT add_compression_policy('events', INTERVAL '7 days');
+SELECT add_retention_policy('events', INTERVAL '6 months');
 ```
 
 #### create_continuous_aggregate
@@ -271,7 +296,7 @@ hypertable_options = {
   chunk_time_interval: '1 min',
   compress_segmentby: 'symbol',
   compress_orderby: 'created_at',
-  compression_interval: '7 days'
+  compress_after: '7 days'
 }
 create_table :ticks, hypertable: hypertable_options, id: false do |t|
   t.string :symbol

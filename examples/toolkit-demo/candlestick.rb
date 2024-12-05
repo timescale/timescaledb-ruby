@@ -92,7 +92,7 @@ db do
       chunk_time_interval: "1 day",
       compress_segmentby: "symbol",
       compress_orderby: "time",
-      compression_interval: "1 week"
+      compress_after: "1 week"
     }
     create_table :ticks, id: false, hypertable: hypertable_options, if_not_exists: true do |t|
       t.timestamptz :time, null: false

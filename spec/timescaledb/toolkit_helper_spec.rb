@@ -1,4 +1,3 @@
-
 RSpec.describe Timescaledb::Toolkit::Helpers, database_cleaner_strategy: :truncation do
   let(:con) { ActiveRecord::Base.connection }
 
@@ -9,7 +8,7 @@ RSpec.describe Timescaledb::Toolkit::Helpers, database_cleaner_strategy: :trunca
       chunk_time_interval: '1 day',
       compress_segmentby: 'device_id',
       compress_orderby: 'ts',
-      compression_interval: '7 days'
+      compress_after: '7 days'
     }
   end
 
@@ -27,7 +26,9 @@ RSpec.describe Timescaledb::Toolkit::Helpers, database_cleaner_strategy: :trunca
     before(:each) do
       con.add_toolkit_to_search_path!
       if con.table_exists?(:measurements)
-        con.drop_table :measurements, force: :cascade
+        # We need to truncate to avoid foreign key constraint errors + deadlocks
+        con.execute("TRUNCATE measurements CASCADE")
+        con.execute("DROP TABLE IF EXISTS measurements CASCADE")
       end
       con.create_table :measurements, hypertable: hypertable_options, id: false do |t|
         t.integer :device_id
@@ -198,12 +199,13 @@ SQL
     before(:each) do
       con.add_toolkit_to_search_path!
       if con.table_exists?(:measurements)
-        con.drop_table :measurements, force: :cascade
+        con.execute("TRUNCATE measurements CASCADE")
+        con.execute("DROP TABLE IF EXISTS measurements CASCADE")
       end
       con.create_table :measurements, hypertable: hypertable_options, id: false do |t|
         t.integer :device_id
         t.decimal :val
-        t.timestamp :ts
+        t.datetime :ts
       end
     end
 
@@ -280,13 +282,14 @@ SQL
     before(:each) do
       con.add_toolkit_to_search_path!
       if con.table_exists?(:ticks)
-        con.drop_table :ticks, force: :cascade
+        con.execute("TRUNCATE ticks CASCADE")
+        con.execute("DROP TABLE IF EXISTS ticks CASCADE")
       end
       con.create_table :ticks, hypertable: hypertable_options, id: false do |t|
         t.text :symbol
         t.decimal :price
         t.decimal :volume
-        t.timestamp :time
+        t.datetime :time
       end
     end
 

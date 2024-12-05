@@ -6,7 +6,7 @@ class CreatePlays < ActiveRecord::Migration[7.0]
         chunk_time_interval: '1 day',
         compress_segmentby: 'game_id',
         compress_orderby: 'created_at',
-        compression_interval: '7 days'
+        compress_after: '7 days'
     }
     create_table :plays, hypertable: hypertable_options, id: false do |t|
       t.references :game, null: false, foreign_key: false

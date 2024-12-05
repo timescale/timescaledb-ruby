@@ -22,7 +22,7 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
         chunk_time_interval: '1 min',
         compress_segmentby: 'identifier',
         compress_orderby: 'created_at',
-        compression_interval: '7 days'
+        compress_after: '7 days'
       }
     end
 
@@ -79,7 +79,7 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
         chunk_time_interval: '1 min',
         compress_segmentby: 'symbol',
         compress_orderby: 'created_at',
-        compression_interval: '7 days'
+        compress_after: '7 days'
       }
     end
 

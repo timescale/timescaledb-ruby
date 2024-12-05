@@ -144,7 +144,7 @@ ActiveRecord::Schema[7.1].define(version: 0) do
   create_hypertable "network_device_data", time_column: "time", chunk_time_interval: "7 days"
   create_hypertable "pages", time_column: "time", chunk_time_interval: "1 day"
   create_hypertable "sample", time_column: "time", chunk_time_interval: "7 days"
-  create_hypertable "ticks", time_column: "time", chunk_time_interval: "1 day", compress_segmentby: "symbol", compress_orderby: "time ASC", compression_interval: "7 days"
+  create_hypertable "ticks", time_column: "time", chunk_time_interval: "1 day", compress_segmentby: "symbol", compress_orderby: "time ASC", compress_after: "7 days"
   create_continuous_aggregate("network_data_agg_1min", <<-SQL, , materialized_only: true, finalized: true)
     SELECT time_bucket('PT1M'::interval, "time") AS bucket,
       device,

@@ -22,7 +22,7 @@ hypertable_options = {
   chunk_time_interval: '1 week',
   compress_segmentby: 'symbol',
   compress_orderby: 'time',
-  compression_interval: '1 month'
+  compress_after: '1 month'
 }
 create_table :ticks, hypertable: hypertable_options, id: false do |t|
   t.timestampt :time

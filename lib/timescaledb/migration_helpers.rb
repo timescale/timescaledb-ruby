@@ -16,7 +16,7 @@ module Timescaledb
     #    chunk_time_interval: '1 min',
     #    compress_segmentby: 'identifier',
     #    compress_orderby: 'created_at',
-    #    compression_interval: '7 days'
+    #    compress_after: '7 days'
     #  }
     #
     #  create_table(:events, id: false, hypertable: options) do |t|
@@ -41,7 +41,8 @@ module Timescaledb
                           chunk_time_interval: '1 week',
                           compress_segmentby: nil,
                           compress_orderby: 'created_at',
-                          compression_interval: nil,
+                          compress_after: nil,
+                          drop_after: nil,
                           partition_column: nil,
                           number_partitions: nil,
                           **hypertable_options)
@@ -49,30 +50,24 @@ module Timescaledb
       original_logger = ActiveRecord::Base.logger
       ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-      options = ["chunk_time_interval => #{chunk_time_interval_clause(chunk_time_interval)}"]
-      options += hypertable_options.map { |k, v| "#{k} => #{quote(v)}" }
+      dimension = "by_range(#{quote(time_column)}, #{parse_interval(chunk_time_interval)})"
 
-      arguments = [
-        quote(table_name),
-        quote(time_column),
-        (quote(partition_column) if partition_column),
-        (number_partitions if partition_column),
-        *options
+      arguments = [ quote(table_name), dimension,
+        *hypertable_options.map { |k, v| "#{k} => #{quote(v)}" }
       ]
 
       execute "SELECT create_hypertable(#{arguments.compact.join(', ')})"
 
-      if compress_segmentby
-        execute <<~SQL
-          ALTER TABLE #{table_name} SET (
-            timescaledb.compress,
-            timescaledb.compress_orderby = '#{compress_orderby}',
-            timescaledb.compress_segmentby = '#{compress_segmentby}'
-          )
-        SQL
+      if partition_column && number_partitions
+        execute "SELECT add_dimension('#{table_name}', by_hash(#{quote(partition_column)}, #{number_partitions}))"
       end
-      if compression_interval
-        execute "SELECT add_compression_policy('#{table_name}', INTERVAL '#{compression_interval}')"
+
+      if compress_segmentby || compress_after
+        add_compression_policy(table_name, orderby: compress_orderby, segmentby: compress_segmentby, compress_after: compress_after)
+      end
+
+      if drop_after
+        add_retention_policy(table_name, drop_after: drop_after)
       end
     ensure
       ActiveRecord::Base.logger = original_logger if original_logger
@@ -146,12 +141,38 @@ module Timescaledb
       execute "SELECT remove_continuous_aggregate_policy('#{table_name}')"
     end
 
-    def create_retention_policy(table_name, interval:)
-      execute "SELECT add_retention_policy('#{table_name}', INTERVAL '#{interval}')"
+    def create_retention_policy(table_name, drop_after:)
+      execute "SELECT add_retention_policy('#{table_name}', drop_after => #{parse_interval(drop_after)})"
     end
+
+    alias_method :add_retention_policy, :create_retention_policy
 
     def remove_retention_policy(table_name)
       execute "SELECT remove_retention_policy('#{table_name}')"
+    end
+
+
+    # Enable compression policy.
+    #
+    # @param table_name [String] The name of the table.
+    # @param orderby [String] The column to order by.
+    # @param segmentby [String] The column to segment by.
+    # @param compress_after [String] The interval to compress after.
+    # @param compression_chunk_time_interval [String] In case to merge chunks.
+    #
+    # @see https://docs.timescale.com/api/latest/compression/add_compression_policy/
+    def add_compression_policy(table_name, orderby:, segmentby:, compress_after: nil, compression_chunk_time_interval: nil)
+      options = []
+      options << 'timescaledb.compress'
+      options << "timescaledb.compress_orderby = '#{orderby}'" if orderby
+      options << "timescaledb.compress_segmentby = '#{segmentby}'" if segmentby
+      options << "timescaledb.compression_chunk_time_interval = INTERVAL '#{compression_chunk_time_interval}'" if compression_chunk_time_interval
+      execute <<~SQL
+        ALTER TABLE #{table_name} SET (
+          #{options.join(',')}
+        )
+      SQL
+      execute "SELECT add_compression_policy('#{table_name}', compress_after => INTERVAL '#{compress_after}')" if compress_after
     end
 
     private
@@ -166,11 +187,11 @@ module Timescaledb
       ",timescaledb.#{option_key}=#{value}"
     end
 
-    def chunk_time_interval_clause(chunk_time_interval)
-      if chunk_time_interval.is_a?(Numeric)
-        chunk_time_interval
+    def parse_interval(interval)
+      if interval.is_a?(Numeric)
+        interval
       else
-        "INTERVAL '#{chunk_time_interval}'"
+        "INTERVAL '#{interval}'"
       end
     end
   end
