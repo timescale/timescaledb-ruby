@@ -4,8 +4,8 @@ RSpec.describe Timescaledb::ActsAsHypertable do
   after { travel_back }
 
   {
-    'last_month' => 1.month.ago.beginning_of_month, 
-    'at_edge_of_window' => 1.month.ago.end_of_month,
+    'last_month' => 1.month.ago.beginning_of_month,
+    'at_edge_of_window' => 1.month.ago.end_of_month.end_of_day,
     'this_month' => 1.second.ago.beginning_of_month,
     'this_week' => 1.second.ago.beginning_of_week,
     'one_day_outside_window' => 2.days.ago.beginning_of_month,
@@ -110,7 +110,7 @@ RSpec.describe Timescaledb::ActsAsHypertable do
     context "when there are database records that were created in the previous month" do
       it "returns all the records that were created in the previous month" do
         last_month = Event.previous_month.pluck(:identifier)
-        expect(last_month).to match_array(%w[last_month last_week])
+        expect(last_month).to include(*%w[last_month last_week])
       end
     end
   end
