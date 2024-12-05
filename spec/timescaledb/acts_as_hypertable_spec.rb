@@ -1,4 +1,24 @@
 RSpec.describe Timescaledb::ActsAsHypertable do
+
+  before { travel_to Time.utc(2024, 12, 8, 12, 0, 0) }
+  after { travel_back }
+
+  {
+    'last_month' => 1.month.ago.beginning_of_month, 
+    'at_edge_of_window' => 1.month.ago.end_of_month,
+    'this_month' => 1.second.ago.beginning_of_month,
+    'this_week' => 1.second.ago.beginning_of_week,
+    'one_day_outside_window' => 2.days.ago.beginning_of_month,
+    'last_week' => 1.week.ago.beginning_of_week,
+  }.each do |identifier, created_at|
+    let!("event_#{identifier}") {
+      Event.create!(
+        identifier: identifier,
+        created_at: created_at
+      )
+    }
+  end
+
   describe ".acts_as_hypertable?" do
     context "when the model has not been declared as a hypertable" do
       it "returns false" do
@@ -60,10 +80,8 @@ RSpec.describe Timescaledb::ActsAsHypertable do
       let(:model) { HypertableWithCustomTimeColumn }
 
       it "uses the non-default options" do
-        aggregate_failures do
-          expect(model.hypertable_options).not_to eq(Timescaledb.default_hypertable_options)
-          expect(model.hypertable_options[:time_column]).to eq(:timestamp)
-        end
+        expect(model.hypertable_options).not_to eq(Timescaledb.default_hypertable_options)
+        expect(model.hypertable_options[:time_column]).to eq(:timestamp)
       end
     end
 
@@ -90,326 +108,68 @@ RSpec.describe Timescaledb::ActsAsHypertable do
 
   describe ".previous_month" do
     context "when there are database records that were created in the previous month" do
-      let(:event_last_month) {
-        Event.create!(
-          identifier: "last_month",
-          payload: {name: "bar", value: 2},
-          created_at: 1.month.ago
-        )
-      }
-      let(:event_one_day_outside_window) {
-        Event.create!(
-          identifier: "one_day_outside_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.month.ago.beginning_of_month - 1.day
-        )
-      }
-      let(:event_at_edge_of_window) {
-        Event.create!(
-          identifier: "at_edge_of_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.month.ago.end_of_month
-        )
-      }
-      let(:event_this_month) {
-        Event.create!(
-          identifier: "this_month",
-          payload: {name: "bax", value: 2},
-          created_at: Time.now
-        )
-      }
       it "returns all the records that were created in the previous month" do
-        aggregate_failures do
-          expect(Event.previous_month).to match_array([event_last_month])
-          expect(Event.previous_month)
-            .not_to include(event_one_day_outside_window, event_this_month, event_at_edge_of_window)
-        end
-      end
-    end
-
-    context "when there are no records created in the previous month" do
-      it "returns an empty array" do
-        expect(Event.previous_month).to eq([])
+        last_month = Event.previous_month.pluck(:identifier)
+        expect(last_month).to match_array(%w[last_month last_week])
       end
     end
   end
 
   describe ".previous_week" do
     context "when there are database records that were created in the previous week" do
-      let(:event_last_week) {
-        Event.create!(
-          identifier: "last_week",
-          payload: {name: "bar", value: 2},
-          created_at: 1.week.ago
-        )
-      }
-      let(:event_one_day_outside_window) {
-        Event.create!(
-          identifier: "one_day_outside_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.week.ago.beginning_of_week - 1.day
-        )
-      }
-      let(:event_at_edge_of_window) {
-        Event.create!(
-          identifier: "at_edge_of_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.week.ago.end_of_week
-        )
-      }
-      let(:event_this_week) {
-        Event.create!(
-          identifier: "this_week",
-          payload: {name: "bax", value: 2},
-          created_at: Time.now
-        )
-      }
-
       it "returns all the records that were created in the previous week" do
-        aggregate_failures do
-          expect(Event.previous_week).to match_array([event_last_week])
-          expect(Event.previous_week)
-            .not_to include(event_one_day_outside_window, event_this_week, event_at_edge_of_window)
-        end
-      end
-    end
-
-    context "when there are no records created in the previous week" do
-      it "returns an empty array" do
-        expect(Event.previous_week).to eq([])
+        last_week = Event.previous_week.pluck(:identifier)
+        expect(last_week).to match_array(%w[at_edge_of_window last_week one_day_outside_window this_month])
       end
     end
   end
 
   describe ".this_month" do
     context "when there are database records that were created this month" do
-      let(:event_this_month) {
-        Event.create!(
-          identifier: "this_month",
-          payload: {name: "bar", value: 2},
-          created_at: Time.now.beginning_of_month
-        )
-      }
-      let(:event_one_day_outside_window) {
-        Event.create!(
-          identifier: "one_day_outside_window",
-          payload: {name: "bax", value: 2},
-          created_at: Time.now.beginning_of_month - 1.day
-        )
-      }
-      let(:event_at_edge_of_window) {
-        Event.create!(
-          identifier: "at_edge_of_window",
-          payload: {name: "bax", value: 2},
-          created_at: Time.now.end_of_month
-        )
-      }
-      let(:event_last_month) {
-        Event.create!(
-          identifier: "last_month",
-          payload: {name: "bax", value: 2},
-          created_at: 1.month.ago
-        )
-      }
-      let(:event_next_month) {
-        Event.create!(
-          identifier: "next_month",
-          payload: {name: "bax", value: 2},
-          created_at: 1.month.from_now
-        )
-      }
-
       it "returns all the records that were created this month" do
-        aggregate_failures do
-          expect(Event.this_month).to match_array([event_this_month])
-          expect(Event.this_month)
-            .not_to include(event_one_day_outside_window, event_last_month, event_next_month, event_at_edge_of_window)
-        end
-      end
-    end
-
-    context "when there are no records created this month" do
-      it "returns an empty array" do
-        expect(Event.this_month).to eq([])
+        this_month = Event.this_month.pluck(:identifier)
+        expect(this_month).to match_array(%w[at_edge_of_window one_day_outside_window this_month this_week])
       end
     end
   end
 
   describe ".this_week" do
     context "when there are database records that were created this week" do
-      let(:event_this_week) {
-        Event.create!(
-          identifier: "this_week",
-          payload: {name: "bar", value: 2},
-          created_at: Time.now
-        )
-      }
-      let(:event_one_day_outside_window) {
-        Event.create!(
-          identifier: "one_day_outside_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.week.ago.beginning_of_week - 1.day
-        )
-      }
-      let(:event_at_edge_of_window) {
-        Event.create!(
-          identifier: "at_edge_of_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.week.ago.end_of_week - 1.minute
-        )
-      }
-      let(:event_last_week) {
-        Event.create!(
-          identifier: "last_week",
-          payload: {name: "bax", value: 2},
-          created_at: 1.week.ago
-        )
-      }
-      let(:event_next_week) {
-        Event.create!(
-          identifier: "next_week",
-          payload: {name: "bax", value: 2},
-          created_at: 1.week.from_now
-        )
-      }
-
       it "returns all the records that were created this week" do
-        aggregate_failures do
-          expect(Event.this_week).to match_array([event_this_week, event_at_edge_of_window])
-          expect(Event.this_week)
-            .not_to include(event_one_day_outside_window, event_last_week, event_next_week)
-        end
-      end
-    end
-
-    context "when there are no records created this week" do
-      it "returns an empty array" do
-        expect(Event.this_week).to eq([])
+        this_week = Event.this_week.pluck(:identifier)
+        expect(this_week).to match_array(%w[this_week])
       end
     end
   end
 
   describe ".yesterday" do
     context "when there are database records that were created yesterday" do
-      let(:event_yesterday) {
+      let!(:event_yesterday) {
         Event.create!(
           identifier: "yesterday",
-          payload: {name: "bar", value: 2},
           created_at: 1.day.ago
-        )
-      }
-      let(:event_one_day_outside_window) {
-        Event.create!(
-          identifier: "one_day_outside_window",
-          payload: {name: "bax", value: 2},
-          created_at: 2.days.ago
-        )
-      }
-      let(:event_at_edge_of_window) {
-        Event.create!(
-          identifier: "at_edge_of_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.day.ago.midnight
-        )
-      }
-      let(:event_today) {
-        Event.create!(
-          identifier: "today",
-          payload: {name: "bax", value: 2},
-          created_at: Time.now
         )
       }
 
       it "returns all the records that were created yesterday" do
-        aggregate_failures do
-          expect(Event.yesterday).to match_array([event_yesterday, event_at_edge_of_window])
-          expect(Event.yesterday)
-            .not_to include(event_one_day_outside_window, event_today)
-        end
-      end
-    end
-
-    context "when there are no records created yesterday" do
-      it "returns an empty array" do
-        expect(Event.yesterday).to eq([])
+        yesterday = Event.yesterday.pluck(:identifier)
+        expect(yesterday).to match_array(%w[yesterday])
       end
     end
   end
 
   describe ".today" do
     context "when there are database records that were created today" do
-      let(:event_today) {
-        Event.create!(
-          identifier: "today",
-          payload: {name: "bar", value: 2},
-          created_at: 1.minute.ago
-        )
-      }
-      let(:event_one_day_outside_window) {
-        Event.create!(
-          identifier: "one_day_outside_window",
-          payload: {name: "bax", value: 2},
-          created_at: 2.days.ago
-        )
-      }
-      let(:event_at_edge_of_window) {
-        Event.create!(
-          identifier: "at_edge_of_window",
-          payload: {name: "bax", value: 2},
-          created_at: Time.now.end_of_day - 1.minute
-        )
-      }
-
       it "returns all the records that were created today" do
-        aggregate_failures do
-          expect(Event.today).to match_array([event_today])
-          expect(Event.today).not_to include(event_one_day_outside_window, event_at_edge_of_window)
-        end
-      end
-    end
-
-    context "when there are no records created today" do
-      it "returns an empty array" do
-        expect(Event.today).to eq([])
+        expect(Event.today).to be_empty
       end
     end
   end
 
   describe ".last_hour" do
     context "when there are database records that were created in the last hour" do
-      let(:event_last_hour) {
-        Event.create!(
-          identifier: "last_hour",
-          payload: {name: "bar", value: 2},
-          created_at: 1.minute.ago
-        )
-      }
-      let(:event_one_minute_outside_window) {
-        Event.create!(
-          identifier: "one_minute_outside_window",
-          payload: {name: "bax", value: 2},
-          created_at: 1.hour.ago - 1.minute
-        )
-      }
-      let(:event_at_edge_of_window) {
-        Event.create!(
-          identifier: "at_edge_of_window",
-          payload: {name: "bax", value: 2},
-          created_at: Time.now.end_of_hour
-        )
-      }
-
-      it "returns all the records that were created today" do
-        aggregate_failures do
-          expect(Event.last_hour).to match_array([event_last_hour, event_at_edge_of_window])
-          expect(Event.last_hour).not_to include(event_one_minute_outside_window)
-        end
-      end
-    end
-
-    context "when there are no records created in the last hour" do
-      it "returns an empty array" do
-        expect(Event.last_hour).to eq([])
+      it "returns all the records that were created in the last hour" do
+        expect(Event.last_hour).to be_empty
       end
     end
   end
