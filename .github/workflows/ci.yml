@@ -15,8 +15,8 @@ jobs:
         ruby: [ '3.1.2' ]
         database:
           - 'pg17-ts2.17-all'
-          - 'pg16.6-ts2.17-all'
-          - 'pg15-ts2.17'
+          - 'pg16-ts2.17-all'
+          - 'pg15-ts2.17-all'
 
     services:
       database:
