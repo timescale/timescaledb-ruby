@@ -5,14 +5,15 @@ require "timescaledb"
 require 'timescaledb/toolkit'
 require "dotenv"
 require "database_cleaner/active_record"
+require "active_support/testing/time_helpers"
 require_relative "support/active_record/models"
 require_relative "support/active_record/schema"
 
 Dotenv.load! if File.exist?(".env")
 
-# Establish a connection for testing
-ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.datetime_type = :timestamptz
-
+ActiveSupport.on_load(:active_record_postgresqladapter) do
+  self.datetime_type = :timestamptz
+end
 
 ActiveRecord::Base.establish_connection(ENV['PG_URI_TEST'])
 Timescaledb.establish_connection(ENV['PG_URI_TEST'])
@@ -32,6 +33,9 @@ RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
 
+  config.before(:suite) do
+    Time.zone = 'UTC'
+  end
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
@@ -44,4 +48,6 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  config.include ActiveSupport::Testing::TimeHelpers
 end
