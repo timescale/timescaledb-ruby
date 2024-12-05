@@ -9,20 +9,20 @@ module Timescaledb
 
       module ClassMethods
         def value_column
-          @value_column ||= time_vector_options[:value_column] || :val
+          @value_column ||= hypertable_options[:value_column] || :val
         end
 
         def time_column
-          respond_to?(:time_column) && super || time_vector_options[:time_column]
+          respond_to?(:time_column) && super || hypertable_options[:time_column]
         end
 
         def segment_by_column
-          time_vector_options[:segment_by]
+          hypertable_options[:segment_by] || hypertable_options[:compress_segment_by]
         end
 
         protected
 
-        def define_default_scopes
+        def define_default_vector_scopes
           scope :volatility, -> (segment_by: segment_by_column, value: value_column) do
             select([*segment_by,
                "timevector(#{time_column}, #{value}) -> sort() -> delta() -> abs() -> sum() as volatility"

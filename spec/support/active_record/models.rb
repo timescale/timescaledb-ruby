@@ -34,10 +34,8 @@ end
 class HypertableWithContinuousAggregates < ActiveRecord::Base
   extend Timescaledb::ActsAsHypertable
   include Timescaledb::ContinuousAggregatesHelper
-  extend Timescaledb::ActsAsTimeVector
 
-  acts_as_hypertable time_column: 'ts'
-  acts_as_time_vector segment_by: :identifier
+  acts_as_hypertable time_column: 'ts', segment_by: :identifier
 
   scope :total, -> { select("count(*) as total") }
   scope :by_identifier, -> { select("identifier, count(*) as total").group(:identifier) }
@@ -55,7 +53,7 @@ class HypertableWithContinuousAggregates < ActiveRecord::Base
     }
   )
   descendants.each do |cagg|
-    cagg.time_vector_options = time_vector_options.merge(value_column: :total)
+    cagg.hypertable_options = hypertable_options.merge(value_column: :total)
   end
 end
 
