@@ -205,7 +205,7 @@ SQL
       con.create_table :measurements, hypertable: hypertable_options, id: false do |t|
         t.integer :device_id
         t.decimal :val
-        t.timestamp :ts
+        t.datetime :ts
       end
     end
 
@@ -289,7 +289,7 @@ SQL
         t.text :symbol
         t.decimal :price
         t.decimal :volume
-        t.timestamp :time
+        t.datetime :time
       end
     end
 

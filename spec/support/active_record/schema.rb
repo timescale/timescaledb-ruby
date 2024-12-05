@@ -6,7 +6,7 @@ def setup_tables
     create_table(:events, id: false, hypertable: hypertable_options) do |t|
       t.string :identifier, null: false
       t.jsonb :payload
-      t.timestamptz :created_at
+      t.datetime :created_at
     end
 
     create_table(:hypertable_with_options, id: false, hypertable: {
@@ -19,7 +19,7 @@ def setup_tables
       if_not_exists: true
     }) do |t|
       t.serial :id, primary_key: false
-      t.timestamptz :ts
+      t.datetime :ts
       t.string :identifier
       t.index [:id, :ts], name: "index_hypertable_with_options_on_id_and_ts"
     end

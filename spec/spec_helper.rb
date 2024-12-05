@@ -11,6 +11,8 @@ require_relative "support/active_record/schema"
 Dotenv.load! if File.exist?(".env")
 
 # Establish a connection for testing
+ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.datetime_type = :timestamptz
+
 
 ActiveRecord::Base.establish_connection(ENV['PG_URI_TEST'])
 Timescaledb.establish_connection(ENV['PG_URI_TEST'])
