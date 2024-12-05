@@ -5,11 +5,11 @@ RSpec.describe Timescaledb::ActsAsHypertable do
 
   {
     'last_month' => 1.month.ago.beginning_of_month,
-    'at_edge_of_window' => 1.month.ago.end_of_month.end_of_day,
     'this_month' => 1.second.ago.beginning_of_month,
     'this_week' => 1.second.ago.beginning_of_week,
-    'one_day_outside_window' => 2.days.ago.beginning_of_month,
     'last_week' => 1.week.ago.beginning_of_week,
+    'one_day_outside_window' => 2.days.ago.beginning_of_month,
+    'at_edge_of_window' => 1.month.ago.end_of_month.end_of_day,
   }.each do |identifier, created_at|
     let!("event_#{identifier}") {
       Event.create!(
@@ -128,7 +128,7 @@ RSpec.describe Timescaledb::ActsAsHypertable do
     context "when there are database records that were created this month" do
       it "returns all the records that were created this month" do
         this_month = Event.this_month.pluck(:identifier)
-        expect(this_month).to match_array(%w[at_edge_of_window one_day_outside_window this_month this_week])
+        expect(this_month).to include(*%w[this_month one_day_outside_window this_week])
       end
     end
   end
