@@ -48,8 +48,9 @@ class Condition < ActiveRecord::Base
   extend Timescaledb::ActsAsHypertable
   extend Timescaledb::ActsAsTimeVector
 
-  acts_as_hypertable time_column: "time"
-  acts_as_time_vector value_column: "temperature", segment_by: "device_id"
+  acts_as_hypertable time_column: "time",
+    segment_by: "device_id",
+    value_column: "temperature"
 end
 
 # Setup Hypertable as in a migration

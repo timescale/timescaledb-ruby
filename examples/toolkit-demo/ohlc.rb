@@ -1,5 +1,5 @@
 # ruby ohlc.rb postgres://user:pass@host:port/db_name
-# @see https://jonatas.github.io/timescaledb/ohlc_tutorial
+# @see https://timescale.github.io/timescaledb-ruby/toolkit_ohlc/
 
 require 'bundler/inline' #require only what you need
 
@@ -12,8 +12,9 @@ ActiveRecord::Base.establish_connection ARGV.last
 
 # Compare ohlc processing in Ruby vs SQL.
 class Tick < ActiveRecord::Base
-  acts_as_hypertable time_column: "time"
-  acts_as_time_vector segment_by: "symbol", value_column: "price"
+  acts_as_hypertable time_column: "time",
+    segment_by: "symbol",
+    value_column: "price"
 end
 require "active_support/concern"
 

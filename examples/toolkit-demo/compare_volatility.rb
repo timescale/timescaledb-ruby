@@ -12,8 +12,9 @@ ActiveRecord::Base.establish_connection ARGV.last
 
 # Compare volatility processing in Ruby vs SQL.
 class Measurement < ActiveRecord::Base
-  acts_as_hypertable time_column: "ts"
-  acts_as_time_vector segment_by: "device_id", value_column: "val"
+  acts_as_hypertable time_column: "ts",
+    segment_by: "device_id",
+    value_column: "val"
 
   scope :volatility_sql, -> do
     select("device_id, timevector(#{time_column}, #{value_column}) -> sort() -> delta() -> abs() -> sum() as volatility")

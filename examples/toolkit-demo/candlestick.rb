@@ -22,11 +22,11 @@ end
 
 class Tick < ActiveRecord::Base
   extend Timescaledb::ActsAsHypertable
-  extend Timescaledb::ActsAsTimeVector
   include Timescaledb:: ContinuousAggregatesHelper
 
-  acts_as_hypertable time_column: "time"
-  acts_as_time_vector segment_by: "symbol", value_column: "price"
+  acts_as_hypertable time_column: "time",
+    segment_by: "symbol",
+    value_column: "price"
 
  
   scope :plotly_candlestick, -> (from: nil) do
@@ -43,7 +43,6 @@ class Tick < ActiveRecord::Base
       volume: data.map(&:volume)
     }
   end
-  
 
   continuous_aggregates(
     timeframes: [:minute, :hour, :day, :month],
