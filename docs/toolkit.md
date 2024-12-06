@@ -197,40 +197,29 @@ Measurement
 
 As you can see, it's much easier to read and digest the example. Now, let's take
 a look in how we can generate the queries using the scopes injected by the
-`acts_as_time_vector` macro.
+`acts_as_hypertable` macro.
 
 
-## Adding the `acts_as_time_vector` macro
+## Configuring the `segment_by` and `value_column`
 
-Let's start changing the model to add the `acts_as_time_vector` that is
-here to allow us to not repeat the parameters of the `timevector(ts, val)` call.
+Let's start changing the model to change the `acts_as_hypertable` to use the
+`segment_by` and `value_column` options.
 
 ```ruby
 class Measurement < ActiveRecord::Base
-  self.primary_key = nil
-
-  acts_as_hypertable time_column: "ts"
-
-  acts_as_time_vector segment_by: "device_id",
-    value_column: "val",
-    time_column: "ts"
-  end
+  acts_as_hypertable time_column: "ts",
+    segment_by: "device_id",
+    value_column: "val"
 end
 ```
-
-If you skip the `time_column` option in the `acts_as_time_vector` it will
-inherit the same value from the `acts_as_hypertable`. I'm making it explicit
-here for the sake of making the macros independent.
-
 
 Now, that we have it, let's create a scope for it:
 
 ```ruby
 class Measurement < ActiveRecord::Base
-  acts_as_hypertable time_column: "ts"
-  acts_as_time_vector segment_by: "device_id",
-    value_column: "val",
-    time_column: "ts"
+  acts_as_hypertable time_column: "ts",
+    segment_by: "device_id",
+    value_column: "val"
 
   scope :volatility, -> do
     select(<<-SQL).group("device_id")
@@ -248,16 +237,11 @@ end
 Now, we have created the volatility scope, grouping by device_id always.
 
 In the Toolkit helpers, we have a similar version which also contains a default
-segmentation based in the `segment_by` configuration done through the `acts_as_time_vector`
-macro. A method `segment_by_column` is added to access this configuration, so we
-can make a small change that makes you completely understand the volatility
-macro.
+segmentation based in the `segment_by` configuration done through the `acts_as_hypertable` macro. A method `segment_by_column` is added to access this configuration, so we can make a small change that makes you completely understand the volatility scope.
 
 ```ruby
 class Measurement < ActiveRecord::Base
-  # ... Skipping previous code to focus in the example
-
-  acts_as_time_vector segment_by: "device_id",
+  acts_as_hypertable segment_by: "device_id",
     value_column: "val",
     time_column: "ts"
 

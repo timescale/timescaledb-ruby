@@ -110,8 +110,9 @@ The `conditions` is the time-series data we'll refer to here.
 
 ```ruby
 class Condition < ActiveRecord::Base
-  acts_as_hypertable time_column: "time"
-  acts_as_time_vector value_column: "temperature", segment_by: "device_id"
+  acts_as_hypertable time_column: "time",
+    segment_by: "device_id",
+    value_column: "temperature"
   belongs_to :location, foreign_key: "device_id"
 end
 ```

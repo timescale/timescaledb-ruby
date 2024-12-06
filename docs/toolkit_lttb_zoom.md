@@ -148,8 +148,9 @@ The `conditions` is the time-series data we'll refer to here.
 
 ```ruby
 class Condition < ActiveRecord::Base
-  acts_as_hypertable time_column: "time"
-  acts_as_time_vector value_column: "temperature", segment_by: "device_id"
+  acts_as_hypertable time_column: "time",
+    segment_by: "device_id",
+    value_column: "temperature"
   belongs_to :location, foreign_key: "device_id"
 end
 ```
@@ -217,7 +218,7 @@ def downsampled
 end
 ```
 
-The `segment_by` keyword explicit `nil` because we have the `segment_by` explicit in the `acts_as_time_vector` macro in the model that is being inherited here. As the filter is specifying a `device_id`, we can skip this option to simplify the data coming from lttb.
+The `segment_by` keyword explicit `nil` because we have the `segment_by` explicit in the `acts_as_hypertable` macro in the model that is being inherited here. As the filter is specifying a `device_id`, we can skip this option to simplify the data coming from lttb.
 
 !!!info "The lttb scope"
     The `lttb` method call in reality is a ActiveRecord scope. It is encapsulating all the logic behind the library. The SQL code is not big, but there's some caveats involved here. So, behind the scenes the following SQL query is executed:
@@ -238,7 +239,7 @@ The `segment_by` keyword explicit `nil` because we have the `segment_by` explici
     ) AS ordered
     ```
 
-    The `acts_as_time_vector` macro makes the `lttb` scope available in the ActiveRecord scopes allowing to mix conditions in advance and nest the queries in the way that it can process the LTTB and unnest it properly.
+    The `acts_as_hypertable` macro makes the `lttb` scope available in the ActiveRecord scopes allowing to mix conditions in advance and nest the queries in the way that it can process the LTTB and unnest it properly.
 
     Also, note that it's using the `->` pipeline operator to unnest the timevector and transform the data in tupples again.
 

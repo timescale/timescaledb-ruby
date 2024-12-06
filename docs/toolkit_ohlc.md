@@ -41,15 +41,15 @@ As we don't need a primary key for the table, let's set it to nil. The
 `acts_as_hypertable` macro will give us several useful scopes that can be
 wrapping some of the TimescaleDB features.
 
-The `acts_as_time_vector` will allow us to set what are the default columns used
-to calculate the data.
+The `acts_as_hypertable` will allow us to set what are the default columns used to calculate the data.
 
 
 ```ruby
 class Tick < ActiveRecord::Base
   self.primary_key = nil
-  acts_as_hypertable time_column: :time
-  acts_as_time_vector value_column: price, segment_by: :symbol
+  acts_as_hypertable time_column: :time,
+    segment_by: :symbol,
+    value_column: :price
 end
 ```
 
@@ -59,12 +59,12 @@ If you need to generate some data for your table, please check [this post][2].
 
 ## The 'candlestick' scope
 
-When the `acts_as_time_vector` method is used in the model, it will inject
+When the `acts_as_hypertable` method is used in the model, it will inject
 several scopes from the toolkit to easily have access to functions like the
 candlestick.
 
 The `candlestick` scope is available with a few parameters that inherits the
-configuration from the `acts_as_time_vector` declared previously.
+configuration from the `acts_as_hypertable` declared previously.
 
 The simplest query is:
 

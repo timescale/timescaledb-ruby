@@ -63,8 +63,9 @@ The model is the best place to describe how you'll be using the timescaledb to k
 
 ```ruby
 class Tick < ActiveRecord::Base
-  acts_as_hypertable time_column: :time
-  acts_as_time_vector value_column: :price, segment_by: :symbol
+  acts_as_hypertable time_column: :time,
+    segment_by: :symbol,
+    value_column: :price
 
    scope :ohlcv, -> do
     select("symbol,
@@ -108,25 +109,15 @@ The `acts_as_hypertable` macro will assume the actual model corresponds to a hyp
 * `.hypertable` will give you access to the [hypertable][hypertable] domain, the `table_name` will be used to get all metadata from the `_timescaledb_catalog` and combine all the functions that receives a hypertable_name as a parameter.
 * The `time_column` keyword argument will be used to build scopes like `.yesterday`, `.previous_week`, `.last_hour`. And can be used for your own scopes using the `time_column` metadata.
 
-The `acts_as_time_vector` will be offering functions related to timescaledb toolkit.
-
 The `value_column:` will be combined with the `time_column` from the hypertable to use scopes like `candlestick`, `volatility`, `lttb` and just configure the missing information.
 
 The `segment_by:` will be widely used in the scopes to group by the data.
-
-When the keywords `time_column`, `value_column` and `segment_by` are used in the `acts_as_{hypertable,time_vector}` modules.
 
 By convention, all scopes reuse the metadata from the configuration. It can facilitate the process of building a lot of hypertable abstractions to facilitate the use combined scopes in the queries.
 
 ### The `acts_as_hypertable` macro
 
 The `acts_as_hypertable` will bring the `Model.hypertable` which will allow us to use a set of timeseries related set what are the default columns used to calculate the data.
-
-### The `acts_as_time_vector` macro
-
-The `acts_as_time_vector` will allow us to set what are the default columns used to calculate the data. It can be very handy to avoid repeating the same arguments in all the scopes.
-
-It will be very powerful to build your set of abstractions over it and simplify the maintenance of complex queries directly in the database.
 
 ### The `continuous_aggregates` macro
 
@@ -162,9 +153,9 @@ If you need to generate some data for your table, please check [this post][2].
 
 ## Query data
 
-When the `acts_as_time_vector` method is used in the model, it will inject several scopes from the toolkit to easily have access to functions like the `_candlestick`.
+When the `acts_as_hypertable` method is used in the model, it will inject several scopes from the toolkit to easily have access to functions like the `_candlestick`.
 
-The `candlestick` scope is available with a few parameters that inherits the configuration from the `acts_as_time_vector` declared previously.
+The `candlestick` scope is available with a few parameters that inherits the configuration from the `acts_as_hypertable` declared previously.
 
 The simplest query is:
 
