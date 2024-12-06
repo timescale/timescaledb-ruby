@@ -22,7 +22,8 @@ module Timescaledb
   #   for configuration options
   module ActsAsHypertable
     DEFAULT_OPTIONS = {
-      time_column: :created_at
+      time_column: :created_at,
+      # Add any default time vector options here if needed
     }.freeze
 
     def acts_as_hypertable?
@@ -45,10 +46,12 @@ module Timescaledb
     # @param [Hash] options The options to initialize your macro with.
     # @option options [Boolean] :skip_association_scopes to avoid `.hypertable`, `.chunks` and other scopes related to metadata.
     # @option options [Boolean] :skip_default_scopes to avoid the generation of default time related scopes like `last_hour`, `last_week`, `yesterday` and so on...
+    # @option options [Boolean] :skip_time_vector to avoid the generation of time vector related scopes
     def acts_as_hypertable(options = {})
       return if acts_as_hypertable?
 
       include Timescaledb::ActsAsHypertable::Core
+      include Timescaledb::Toolkit::TimeVector
 
       class_attribute :hypertable_options, instance_writer: false
 
@@ -58,6 +61,7 @@ module Timescaledb
 
       define_association_scopes unless options[:skip_association_scopes]
       define_default_scopes unless options[:skip_default_scopes]
+      define_default_vector_scopes unless options[:skip_time_vector]
     end
   end
 end

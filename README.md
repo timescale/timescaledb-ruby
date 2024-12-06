@@ -472,7 +472,7 @@ When you enable ActsAsTimeVector on your model, we include a couple default scop
 
 ```ruby
 class Condition < ActiveRecord::Base
-  acts_as_time_vector time_column: "time",
+  acts_as_hypertable time_column: "time",
     value_column: "temperature",
     segment_by: "device_id"
 end
@@ -487,6 +487,9 @@ class Condition < ActiveRecord::Base
   acts_as_hypertable time_column: "time", skip_default_scopes: true
 end
 ```
+
+You can also use `skip_time_vector` to skip the time vector related scopes.
+Or you can use `skip_association_scopes` to skip the association scopes.
 
 ## RSpec Hooks
 
