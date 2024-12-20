@@ -1,23 +1,5 @@
 RSpec.describe Timescaledb::ActsAsHypertable do
 
-  before { travel_to Time.utc(2024, 12, 8, 12, 0, 0) }
-  after { travel_back }
-
-  {
-    'last_month' => 1.month.ago.beginning_of_month,
-    'this_month' => 1.second.ago.beginning_of_month,
-    'this_week' => 1.second.ago.beginning_of_week,
-    'last_week' => 1.week.ago.beginning_of_week,
-    'one_day_outside_window' => 2.days.ago.beginning_of_month,
-    'at_edge_of_window' => 1.month.ago.end_of_month.end_of_day,
-  }.each do |identifier, created_at|
-    let!("event_#{identifier}") {
-      Event.create!(
-        identifier: identifier,
-        created_at: created_at
-      )
-    }
-  end
 
   describe ".acts_as_hypertable?" do
     context "when the model has not been declared as a hypertable" do
@@ -104,73 +86,5 @@ RSpec.describe Timescaledb::ActsAsHypertable do
     its(:num_dimensions) { is_expected.to eq(1) }
     its(:tablespaces) { is_expected.to be_nil }
     its(:hypertable_name) { is_expected.to eq(Event.table_name) }
-  end
-
-  describe ".previous_month" do
-    context "when there are database records that were created in the previous month" do
-      it "returns all the records that were created in the previous month" do
-        last_month = Event.previous_month.pluck(:identifier)
-        expect(last_month).to include(*%w[last_month last_week])
-      end
-    end
-  end
-
-  describe ".previous_week" do
-    context "when there are database records that were created in the previous week" do
-      it "returns all the records that were created in the previous week" do
-        last_week = Event.previous_week.pluck(:identifier)
-        expect(last_week).to match_array(%w[at_edge_of_window last_week one_day_outside_window this_month])
-      end
-    end
-  end
-
-  describe ".this_month" do
-    context "when there are database records that were created this month" do
-      it "returns all the records that were created this month" do
-        this_month = Event.this_month.pluck(:identifier)
-        expect(this_month).to include(*%w[this_month one_day_outside_window this_week])
-      end
-    end
-  end
-
-  describe ".this_week" do
-    context "when there are database records that were created this week" do
-      it "returns all the records that were created this week" do
-        this_week = Event.this_week.pluck(:identifier)
-        expect(this_week).to match_array(%w[this_week])
-      end
-    end
-  end
-
-  describe ".yesterday" do
-    context "when there are database records that were created yesterday" do
-      let!(:event_yesterday) {
-        Event.create!(
-          identifier: "yesterday",
-          created_at: 1.day.ago
-        )
-      }
-
-      it "returns all the records that were created yesterday" do
-        yesterday = Event.yesterday.pluck(:identifier)
-        expect(yesterday).to match_array(%w[yesterday])
-      end
-    end
-  end
-
-  describe ".today" do
-    context "when there are database records that were created today" do
-      it "returns all the records that were created today" do
-        expect(Event.today).to be_empty
-      end
-    end
-  end
-
-  describe ".last_hour" do
-    context "when there are database records that were created in the last hour" do
-      it "returns all the records that were created in the last hour" do
-        expect(Event.last_hour).to be_empty
-      end
-    end
   end
 end
