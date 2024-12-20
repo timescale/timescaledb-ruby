@@ -219,7 +219,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
         context "nulls last" do
           it "extracts compress_orderby correctly" do
-            options = { compress_segmentby: "identifier", compress_orderby: "created_at DESC NULLS LAST" }
+            options = { compress_segmentby: "identifier", compress_after: "1 month", compress_orderby: "created_at DESC NULLS LAST" }
             con.create_table :orderby_tests, hypertable: options, id: false do |t|
               t.string :identifier
               t.timestamps
@@ -227,7 +227,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
             dump = dump_output
 
-            expect(dump).to include 'create_hypertable "orderby_tests", time_column: "created_at", chunk_time_interval: "7 days", compress_segmentby: "identifier", compress_orderby: "created_at DESC NULLS LAST"'
+            expect(dump).to include 'create_hypertable "orderby_tests", time_column: "created_at", chunk_time_interval: "7 days", compress_segmentby: "identifier", compress_orderby: "created_at DESC NULLS LAST", compress_after: "P1M"'
           end
         end
       end

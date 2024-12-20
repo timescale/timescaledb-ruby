@@ -119,7 +119,7 @@ module Timescaledb
       end
 
       hypertable.jobs.compression.each do |job|
-        compression_settings[:compression_interval] = job.config["compress_after"]
+        compression_settings[:compress_after] = job.config["compress_after"]
       end
 
       # Pack the compression setting arrays into a comma-separated string instead.
