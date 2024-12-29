@@ -34,8 +34,8 @@ end
 ActiveRecord::Base.connection.instance_exec do
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-  drop_table(Event.table_name) if Event.table_exists?
-  drop_table(Event2.table_name) if Event2.table_exists?
+  drop_table(Event.table_name, if_exists: true)
+  drop_table(Event2.table_name, if_exists: true)
 
   hypertable_options = {
     time_column: 'created_at',

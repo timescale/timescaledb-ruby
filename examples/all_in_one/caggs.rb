@@ -29,7 +29,7 @@ class Tick < ActiveRecord::Base
 end
 
 ActiveRecord::Base.connection.instance_exec do
-  drop_table(:ticks, force: :cascade) if Tick.table_exists?
+  drop_table(:ticks, if_exists: true, force: :cascade)
 
   hypertable_options = {
     time_column: 'time',
