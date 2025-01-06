@@ -41,41 +41,41 @@ module Timescaledb
         end
 
         def define_default_scopes
+          scope :between, ->(start_time, end_time) do
+            where("#{time_column} BETWEEN ? AND ?", start_time, end_time)
+          end
+
           scope :previous_month, -> do
-            where(
-              "DATE(#{time_column}) >= :start_time AND DATE(#{time_column}) <= :end_time",
-              start_time: Date.today.last_month.in_time_zone.beginning_of_month.to_date,
-              end_time: Date.today.last_month.in_time_zone.end_of_month.to_date
-            )
+            ref = 1.month.ago.in_time_zone
+            between(ref.beginning_of_month, ref.end_of_month)
           end
 
           scope :previous_week, -> do
-            where(
-              "DATE(#{time_column}) >= :start_time AND DATE(#{time_column}) <= :end_time",
-              start_time: Date.today.last_week.in_time_zone.beginning_of_week.to_date,
-              end_time: Date.today.last_week.in_time_zone.end_of_week.to_date
-            )
+            ref = 1.week.ago.in_time_zone
+            between(ref.beginning_of_week, ref.end_of_week)
           end
 
           scope :this_month, -> do
-            where(
-              "DATE(#{time_column}) >= :start_time AND DATE(#{time_column}) <= :end_time",
-              start_time: Date.today.in_time_zone.beginning_of_month.to_date,
-              end_time: Date.today.in_time_zone.end_of_month.to_date
-            )
+            ref = Time.now.in_time_zone
+            between(ref.beginning_of_month, ref.end_of_month)
           end
 
           scope :this_week, -> do
-            where(
-              "DATE(#{time_column}) >= :start_time AND DATE(#{time_column}) <= :end_time",
-              start_time: Date.today.in_time_zone.beginning_of_week.to_date,
-              end_time: Date.today.in_time_zone.end_of_week.to_date
-            )
+            ref = Time.now.in_time_zone
+            between(ref.beginning_of_week, ref.end_of_week)
           end
 
-          scope :yesterday, -> { where("DATE(#{time_column}) = ?", Date.yesterday.in_time_zone.to_date) }
-          scope :today, -> { where("DATE(#{time_column}) = ?", Date.today.in_time_zone.to_date) }
-          scope :last_hour, -> { where("#{time_column} between ? and ?", 1.hour.ago.in_time_zone, Time.now.end_of_hour.in_time_zone) }
+          scope :yesterday, -> do
+            ref = 1.day.ago.in_time_zone
+            between(ref.yesterday, ref.yesterday)
+          end
+
+          scope :today, -> do
+            ref = Time.now.in_time_zone
+            between(ref.beginning_of_day, ref.end_of_day)
+          end
+
+          scope :last_hour, -> { where("#{time_column} > ?", 1.hour.ago.in_time_zone) }
         end
 
         def normalize_hypertable_options
