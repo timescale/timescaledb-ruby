@@ -28,7 +28,7 @@ RSpec.describe Timescaledb::Toolkit::Helpers, database_cleaner_strategy: :trunca
       if con.table_exists?(:measurements)
         # We need to truncate to avoid foreign key constraint errors + deadlocks
         con.execute("TRUNCATE measurements CASCADE")
-        con.execute("DROP TABLE IF EXISTS measurements CASCADE")
+        con.execute("DROP TABLE measurements CASCADE")
       end
       con.create_table :measurements, hypertable: hypertable_options, id: false do |t|
         t.integer :device_id
@@ -197,7 +197,7 @@ SQL
       con.add_toolkit_to_search_path!
       if con.table_exists?(:measurements)
         con.execute("TRUNCATE measurements CASCADE")
-        con.execute("DROP TABLE IF EXISTS measurements CASCADE")
+        con.execute("DROP TABLE measurements CASCADE")
       end
       con.create_table :measurements, hypertable: hypertable_options, id: false do |t|
         t.integer :device_id
@@ -277,7 +277,7 @@ SQL
       con.add_toolkit_to_search_path!
       if con.table_exists?(:ticks)
         con.execute("TRUNCATE ticks CASCADE")
-        con.execute("DROP TABLE IF EXISTS ticks CASCADE")
+        con.execute("DROP TABLE ticks CASCADE")
       end
       con.create_table :ticks, hypertable: hypertable_options, id: false do |t|
         t.text :symbol

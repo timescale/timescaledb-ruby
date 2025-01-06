@@ -3,9 +3,7 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
     let(:con) { ActiveRecord::Base.connection }
 
     before(:each) do
-      if con.table_exists?(:migration_tests)
-        con.drop_table :migration_tests, force: :cascade
-      end
+      con.drop_table :migration_tests, if_exists: true, force: :cascade
     end
 
     subject(:create_table) do
@@ -58,9 +56,7 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
     let(:con) { ActiveRecord::Base.connection }
 
     before(:each) do
-      if con.table_exists?(:ticks)
-        con.drop_table :ticks, force: :cascade
-      end
+      con.drop_table :ticks, if_exists: true, force: :cascade
       con.create_table :ticks, hypertable: hypertable_options, id: false do |t|
         t.string :symbol
         t.decimal :price

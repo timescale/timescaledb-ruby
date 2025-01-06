@@ -150,7 +150,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
     context "compress_segmentby" do
       before(:each) do
-        con.drop_table :segmentby_tests, force: :cascade if con.table_exists?(:segmentby_tests)
+        con.drop_table :segmentby_tests, if_exists: true, force: :cascade
       end
 
       it "handles multiple compress_segmentby" do
@@ -169,7 +169,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
     context "compress_orderby" do
       before(:each) do
-        con.drop_table :orderby_tests, force: :cascade if con.table_exists?(:orderby_tests)
+        con.drop_table :orderby_tests, if_exists: true, force: :cascade
       end
 
       context "ascending order" do

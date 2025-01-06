@@ -22,7 +22,7 @@ end
 ActiveRecord::Base.connection.instance_exec do
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-  drop_table(:events, cascade: true) if Event.table_exists?
+  drop_table(:events, if_exists: true, cascade: true)
 
   hypertable_options = {
     time_column: 'created_at',
