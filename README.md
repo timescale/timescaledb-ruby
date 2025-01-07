@@ -29,7 +29,41 @@ gem install timescaledb
 
 ## Quick Start
 
-### 1. Enable TimescaleDB in Your Models
+The timescaledb gem provides helpers for creating hypertables, configuring compression, retention policies, and more.
+After adding the gem to your Gemfile, you can create hypertables in your migrations.
+
+### 1. Create Hypertables in the Active Record Migrations
+
+```ruby
+class CreateEvents < ActiveRecord::Migration[7.0]
+  def up
+    hypertable_options = {
+      time_column: 'created_at',
+      chunk_time_interval: '1 day',
+      compress_segmentby: 'identifier',
+      compress_after: '7 days',
+      compress_orderby: 'created_at DESC NULLS LAST',
+      drop_after: '3 months'
+    }
+
+    create_table(:events, id: false, hypertable: hypertable_options) do |t|
+      t.timestamptz :created_at
+      t.string :identifier, null: false
+      t.jsonb :payload
+    end
+  end
+
+  def down
+    drop_table :events
+  end
+end
+```
+
+### 2. Enable TimescaleDB in Your Models
+
+You can enable TimescaleDB in your models by adding the `acts_as_hypertable` macro to your model. This macro extends your existing model with timescaledb-related functionality.
+
+If you are using Rails, you can setup your app to use the gem by creating a `config/initializers/timescaledb.rb` file and adding the following line:
 
 ```ruby
 # config/initializers/timescaledb.rb
@@ -37,30 +71,21 @@ ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
 
 # app/models/event.rb
 class Event < ActiveRecord::Base
-  acts_as_hypertable
+  acts_as_hypertable time_column: "time", segment_by: "identifier"
 end
 ```
 
-### 2. Create Hypertables in Migrations
+In case you don't want to add it to all your models, you can include it in the model you need:
 
 ```ruby
-hypertable_options = {
-  time_column: 'created_at',
-  chunk_time_interval: '1 min',
-  compress_segmentby: 'identifier',
-  compress_after: '7 days',
-  compress_orderby: 'created_at DESC NULLS LAST',
-  drop_after: '6 months'
-}
+class Event < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
 
-create_table(:events, id: false, hypertable: hypertable_options) do |t|
-  t.string :identifier, null: false
-  t.jsonb :payload
-  t.timestamps
+  acts_as_hypertable time_column: "time", segment_by: "identifier"
 end
 ```
 
-## Usage
+## Examples
 
 Check the [examples/ranking](examples/ranking) to get a Rails complete example.
 
@@ -112,9 +137,9 @@ hypertable_options = {
 }
 
 create_table(:events, id: false, hypertable: hypertable_options) do |t|
+  t.timestamptz :created_at
   t.string :identifier, null: false
   t.jsonb :payload
-  t.timestamps
 end
 ```
 
@@ -122,10 +147,9 @@ And the code above will create a hypertable with the following options:
 
 ```sql
 CREATE TABLE events (
-  identifier text NOT NULL,
-  payload jsonb,
   created_at timestamp with time zone NOT NULL,
-  updated_at timestamp with time zone NOT NULL
+  identifier text NOT NULL,
+  payload jsonb
 )
 SELECT create_hypertable('events', by_range('created_at', INTERVAL '1 day'));
 ALTER TABLE events SET (
@@ -146,17 +170,18 @@ minute.
 class CreateTicks < ActiveRecord::Migration[7.0]
   def up
     hypertable_options = {
-      time_column: 'created_at',
+      time_column: 'time',
       chunk_time_interval: '1 day',
       compress_segmentby: 'symbol',
       compress_orderby: 'created_at',
-      compress_after: '30 days'
+      compress_after: '7 days',
+      drop_after: '30 days'
     }
     create_table :ticks, hypertable: hypertable_options, id: false do |t|
+      t.timestamptz :time
       t.string :symbol
       t.decimal :price
       t.integer :volume
-      t.timestamps
     end
     create_continuous_aggregate_ohlc_1m
   end
@@ -245,9 +270,9 @@ the schema dumper included with Scenic can't dump a complete definition.
 This gem automatically configures Scenic to use a `Timescaledb::Scenic::Adapter`
 which will correctly handle schema dumping.
 
-### Enable ActsAsHypertable
+### Setup your Rails app
 
-Create your `config/initializers/timescaledb.rb` file and add the following line:
+If you are using Rails, you can setup your app to use the gem by creating a `config/initializers/timescaledb.rb` file and adding the following line:
 
 ```ruby
 ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
@@ -258,7 +283,7 @@ model:
 
 ```ruby
 class Event < ActiveRecord::Base
-  acts_as_hypertable
+  acts_as_hypertable time_column: "time", segment_by: "identifier"
 end
 ```
 
