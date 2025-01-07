@@ -23,7 +23,6 @@ module Timescaledb
   module ActsAsHypertable
     DEFAULT_OPTIONS = {
       time_column: :created_at,
-      # Add any default time vector options here if needed
     }.freeze
 
     def acts_as_hypertable?
