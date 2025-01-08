@@ -75,7 +75,8 @@ class Event < ActiveRecord::Base
 end
 ```
 
-In case you don't want to add it to all your models, you can include it in the model you need:
+**OR** In case you don't want to add it to all your models, you can include it in the model you need:
+
 
 ```ruby
 class Event < ActiveRecord::Base
@@ -85,42 +86,25 @@ class Event < ActiveRecord::Base
 end
 ```
 
-## Examples
+**OR** create a Hypertable abstract model and inherit from it:
 
-Check the [examples/ranking](examples/ranking) to get a Rails complete example.
+```ruby
+class Hypertable < ActiveRecord::Base
+  self.abstract_class = true
 
-You can check the [all_in_one.rb](examples/all_in_one/all_in_one.rb) example that will:
+  extend Timescaledb::ActsAsHypertable
+end
 
-1. Create hypertable with compression settings
-2. Insert data
-3. Run some queries
-4. Check chunk size per model
-5. Compress a chunk
-6. Check chunk status
-7. Decompress a chunk
+# And then, you can inherit from this model:
 
-### The Timescaledb Toolkit
-
-The Timescaledb Toolkit is an extension that contains a lot of extra features to analyse data more deeply directly in
-the SQL. There are a few examples in the [examples/toolkit-demo](examples/toolkit-demo) folder that can let you benchmark and see the differences between implementing the algorithm directly in Ruby or directly in SQL using the [Timescaledb Toolkit](https://github.com/timescale/timescaledb-toolkit) extension.
-
-For now you can benchmark and compare:
-
-1. [volatility](examples/toolkit-demo/compare_volatility.rb) algorithm.
-2. [lttb](examples/toolkit-demo/lttb/lttb_sinatra.rb) algorithm.
-
-You can also watch this talk from RubyConf Thailand which covers the toolkit: [Ruby or SQL? where to process your data](https://www.youtube.com/watch?v=MXAtSZ5Szgk).
-
-
-### Testing
-
-If you need some inspiration for how are you going to test your hypertables,
-please check the [spec/spec_helper.rb](spec/spec_helper.rb) for inspiration.
+class Event < Hypertable
+  acts_as_hypertable time_column: "time", segment_by: "identifier"
+end
+```
 
 ### Migrations
 
-Create table is now with the `hypertable` keyword allowing to pass a few options
-to the function call while also using `create_table` method:
+Create table is the `hypertable` keyword will automatically partition the table through the `create_hypertable` function call while also using `create_table` method:
 
 #### create_table with `:hypertable`
 
@@ -142,7 +126,6 @@ create_table(:events, id: false, hypertable: hypertable_options) do |t|
   t.jsonb :payload
 end
 ```
-
 And the code above will create a hypertable with the following options:
 
 ```sql
@@ -161,104 +144,103 @@ SELECT add_compression_policy('events', INTERVAL '7 days');
 SELECT add_retention_policy('events', INTERVAL '6 months');
 ```
 
-#### create_continuous_aggregate
+In this case, the hypertable will be created with the following options:
 
-This example shows a ticks table grouping ticks as OHLCV histograms for every
-minute.
+* automatically partition - 1 table per day
+* compression enabled - 7 days after the first data
+* compression order - created_at DESC NULLS LAST
+* compression segmentby - identifier (this is the column that will be used to compress the data and also work as a hash key)
+* drop after - 6 months - This is a retention policy that will delete the data after 6 months.
+
+If you use keyword `compress_after` it will enable hypercore compression. Which can be used to set when the compression should start.
+
+
+#### Continuous Aggregates
+
+The continuous aggregates is a core feature of TimescaleDB. It allows you to create materialized views that are automatically updated (in background) with the data from the hypertable. You can also set them hierarchically to rollup several timeframes.
+
+This example shows migration to create a continuous aggregate for events per minute:
 
 ```ruby
-class CreateTicks < ActiveRecord::Migration[7.0]
+class CreateContinuousAggregates < ActiveRecord::Migration[7.0]
   def up
-    hypertable_options = {
-      time_column: 'time',
-      chunk_time_interval: '1 day',
-      compress_segmentby: 'symbol',
-      compress_orderby: 'created_at',
-      compress_after: '7 days',
-      drop_after: '30 days'
-    }
-    create_table :ticks, hypertable: hypertable_options, id: false do |t|
-      t.timestamptz :time
-      t.string :symbol
-      t.decimal :price
-      t.integer :volume
-    end
-    create_continuous_aggregate_ohlc_1m
+    query = Event
+      .select("time_bucket('1 minute', created_at) as time, identifier, COUNT(*) as count")
+      .group("identifier, time")
+
+    create_continuous_aggregate('events_per_minute', query)
+
+    add_continuous_aggregate_policy('events_per_minute',
+      start_offset: '3 minute',
+      end_offset: '1 minute',
+      schedule_interval: '1 minute') 
   end
 
   def down
-    drop_table :ticks
-    drop_continuous_aggregate :ohlc_1m
-  end
-
-  private
-
-  def create_continuous_aggregate_ohlc_1m
-    query = Tick.select(<<~QUERY)
-      time_bucket('1 day', created_at) as time,
-      symbol,
-      FIRST(price, created_at) as open,
-      MAX(price) as high,
-      MIN(price) as low,
-        LAST(price, created_at) as close,
-        SUM(volume) as volume").group("1,2")
-      QUERY
-
-      options = {
-        with_data: false,
-        refresh_policies: {
-          start_offset: "INTERVAL '1 month'",
-          end_offset: "INTERVAL '1 minute'",
-          schedule_interval: "INTERVAL '1 minute'"
-        }
-      }
-
-    create_continuous_aggregate('ohlc_1m', query, **options)
+    drop_continuous_aggregate :events_per_minute
   end
 end
 ```
+Note that you need to establish a policy to refresh the continuous aggregate or refresh it manually.
 
-Alternatively, you can use the `continuous_aggregate` macro in the model to rollup hierarchically several timeframes:
+Alternatively, you can use the `continuous_aggregate` macro in the model to rollup [hierarchically](https://docs.timescale.com/use-timescale/latest/continuous-aggregates/hierarchical-continuous-aggregates/) several timeframes:
 
 ```ruby
-class Tick < ActiveRecord::Base
+class Event < ActiveRecord::Base
   extend Timescaledb::ActsAsHypertable
   include Timescaledb::ContinuousAggregatesHelper
 
-  self.table_name = 'crypto_ticks'
+  acts_as_hypertable time_column: "time",
+    segment_by: "identifier"
 
-  acts_as_hypertable time_column: 'time',
-    segment_by: 'symbol',
-    value_column: 'price'
+  scope :count_clicks, -> { select("count(*)").where(identifier: "click") }
+  scope :count_views, -> { select("count(*)").where(identifier: "views") }
 
-  scope :btc, -> { where(symbol: 'BTC/USD') }
-  scope :ohlc, lambda {
-    _candlestick(volume: :day_volume)
-  }
-
-  continuous_aggregates(
-    timeframes: %i[minute hour day month],
-    scopes: [:ohlc]
-  )
+  continuous_aggregates scopes: [:count_clicks, :count_views],
+    timeframes: [:minute, :hour, :day],
+    refresh_policy: {
+      minute: {
+        start_offset: '3 minute',
+        end_offset: '1 minute',
+        schedule_interval: '1 minute'
+      },
+      hour: {
+        start_offset: '3 hours',
+        end_offset: '1 hour',
+        schedule_interval: '1 minute'
+      },
+      day: {
+        start_offset: '3 day',
+        end_offset: '1 day',
+        schedule_interval: '1 minute'
+      }
+    }
 end
 ```
+
 And then in the migration you can create the continuous aggregates:
 
 ```ruby
 class CreateContinuousAggregates < ActiveRecord::Migration[7.0]
   def up
-    Tick.create_continuous_aggregates
+    Event.create_continuous_aggregates
   end
 
   def down
-    Tick.drop_continuous_aggregates
+    Event.drop_continuous_aggregates
   end
 end
 ```
 
 It will create the continuous aggregates for the given timeframes and scopes and create nested classes for each timeframe.
 
-Check the [blog post](https://www.timescale.com/blog/building-a-better-ruby-orm-for-time-series-and-analytics) for more details.
+```ruby
+Event.clicks_per_minute # get data from the hypertable
+Event::ClicksPerMinute.last_week.all # get data from the continuous aggregate filtered by last week
+```
+
+Check the [How to build a better Ruby ORM for time-series and analytics](https://www.timescale.com/blog/building-a-better-ruby-orm-for-time-series-and-analytics) for more details.
+
 
 #### Scenic integration
 
@@ -269,68 +251,6 @@ the schema dumper included with Scenic can't dump a complete definition.
 
 This gem automatically configures Scenic to use a `Timescaledb::Scenic::Adapter`
 which will correctly handle schema dumping.
-
-### Setup your Rails app
-
-If you are using Rails, you can setup your app to use the gem by creating a `config/initializers/timescaledb.rb` file and adding the following line:
-
-```ruby
-ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
-```
-
-You can declare a Rails model as a Hypertable by invoking the `acts_as_hypertable` macro. This macro extends your existing model with timescaledb-related functionality.
-model:
-
-```ruby
-class Event < ActiveRecord::Base
-  acts_as_hypertable time_column: "time", segment_by: "identifier"
-end
-```
-
-By default, ActsAsHypertable assumes a record's _time_column_ is called `created_at`.
-
-You may isolate your hypertables in another database, so, creating an abstract
-layer for your hypertables is a good idea:
-
-```ruby
-class Hypertable < ActiveRecord::Base
-  self.abstract_class = true
-
-  extend Timescaledb::ActsAsHypertable
-
-  establish_connection :timescaledb
-end
-```
-
-And then, you can inherit from this model:
-
-```ruby
-class Event < Hypertable
-  acts_as_hypertable time_column: "time"
-end
-```
-
-Or you can include only when you're going to use them:
-
-```ruby
-class Event < ActiveRecord::Base
-  extend Timescaledb::ActsAsHypertable
-
-  establish_connection :timescaledb
-
-  acts_as_hypertable time_column: "time"
-end
-```
-
-### Options
-
-If you are using a different time_column name, you can specify it as follows when invoking the `acts_as_hypertable` macro:
-
-```ruby
-class Event < ActiveRecord::Base
-  acts_as_hypertable time_column: :timestamp
-end
-```
 
 ### Chunks
 
@@ -360,29 +280,10 @@ Event.hypertable.compression_settings # => [#<Timescaledb::CompressionSettings>,
 
 To get compression settings for all hypertables: `Timescaledb.compression_settings`.
 
-### Skip association scopes
-
-If you don't want to overload your model, you can skip the `.hypertable` and other association scopes by passing `skip_association_scopes: true` to the `acts_as_hypertable` macro.
-
-```ruby
-class Event < ActiveRecord::Base
-  acts_as_hypertable time_column: "time", skip_association_scopes: true
-end
-```
 
 ### Scopes
 
-The `acts_as_hypertable` macro can be very useful to generate some extra scopes
-for you. Example of a weather condition:
-
-```ruby
-class Condition < ActiveRecord::Base
-  acts_as_hypertable time_column: "time"
-end
-```
-
-Through the [ActsAsHypertable](./lib/timescaledb/acts_as_hypertable) on the model,
-a few scopes are created based on the `time_column` argument:
+The `acts_as_hypertable` macro will be used to generate some extra scopes using the `time_column` argument:
 
 | Scope name             | What they return                      |
 |------------------------|---------------------------------------|
@@ -396,14 +297,17 @@ a few scopes are created based on the `time_column` argument:
 
 All time-related scopes respect your application's timezone.
 
-When you enable ActsAsTimeVector on your model, we include a couple default scopes. They are:
+When you define the `value_column` on your model, it can also be used by the analytical functions in the scopes.
 
 ```ruby
-class Condition < ActiveRecord::Base
+class Event < ActiveRecord::Base
   acts_as_hypertable time_column: "time",
-    value_column: "temperature",
-    segment_by: "device_id"
+    value_column: "response_time",
+    segment_by: "identifier"
 end
+
+Event.candlestick(1.day)
+Event.clicks.last_week.candlestick(1.day)
 ```
 
 ### Skip default scopes
@@ -466,220 +370,29 @@ config.before(:suite) do
     end
 
     ApplicationRecord.connection.instance_exec(table_name, time_column) do |table_name, time_column|
-      create_hypertable(table_name, by_range(time_column.to_s, INTERVAL '1 day'))
+      create_hypertable(table_name, time_column: time_column, chunk_time_interval: '1 day')
     end
   end
 end
 ```
 
-## The `tsdb` CLI
-
-When you install the gem locally, a new command line application named `tsdb`
-will be linked in your command line.
-
-It accepts a Postgresql URI and some extra flags that can help you to get more
-info from your TimescaleDB server:
-
-```bash
-tsdb <uri> --stats
-```
-
-Where the `<uri>` is replaced with params from your connection like:
-
-```bash
-tsdb postgres://<user>@localhost:5432/<dbname> --stats
-```
-
-Or just check the stats:
-
-```bash
-tsdb "postgres://<user>@localhost:5432/timescaledb_test" --stats
-```
-
-These is a sample output from database example with almost no data:
-
-```ruby
-{:hypertables=>
-  {:count=>3,
-   :uncompressed=>2,
-   :chunks=>{:total=>1, :compressed=>0, :uncompressed=>1},
-   :size=>{:before_compressing=>"80 KB", :after_compressing=>"0 Bytes"}},
- :continuous_aggregates=>{:count=>1},
- :jobs_stats=>[{:success=>nil, :runs=>nil, :failures=>nil}]}
-```
-
-To start a interactive ruby/[pry](https://github.com/pry/pry) console use `--console`:
-The console will dynamically create models for all hypertables that it finds
-in the database.
-
-Let's consider the [caggs.sql](https://gist.github.com/jonatas/95573ad8744994094ec9f284150004f9#file-caggs-sql)
-as the example of database.
-
-
-```bash
-psql postgres://<user>@localhost:5432/playground -f caggs.sql
-```
-
-Then use `tsdb` in the command line with the same URI and `--stats`:
-
-```bash
-tsdb postgres://<user>@localhost:5432/playground --stats
-{:hypertables=>
-  {:count=>1,
-   :uncompressed=>1,
-   :approximate_row_count=>{"ticks"=>352},
-   :chunks=>{:total=>1, :compressed=>0, :uncompressed=>1},
-   :size=>{:uncompressed=>"88 KB", :compressed=>"0 Bytes"}},
- :continuous_aggregates=>{:total=>1},
- :jobs_stats=>[{:success=>nil, :runs=>nil, :failures=>nil}]}
-```
-
-To have some interactive playground with the actual database using ruby, just
-try the same command before changing from `--stats` to `--console`:
-
-### tsdb --console
-
-The same database from previous example, is used so
-the context has a hypertable named `ticks` and a view named `ohlc_1m`.
-
-
-```ruby
-tsdb postgres://<user>@localhost:5432/playground --console
-pry(Timescale)>
-```
-
-The `tsdb` CLI will automatically create ActiveRecord models for hypertables and
-continuous aggregates views.
-
-```ruby
-Tick
-=> Timescaledb::Tick(time: datetime, symbol: string, price: decimal, volume: integer)
-```
-
-Note that it's only created for this session and will never be cached in the
-library or any other place.
-
-In this case, `Tick` model comes from `ticks` hypertable that was found in the database.
-It contains several extra methods inherited from `acts_as_hypertable` macro.
-
-Let's start with the `.hypertable` method.
-
-```ruby
-Tick.hypertable
-=> #<Timescaledb::Hypertable:0x00007fe99c258900
- hypertable_schema: "public",
- hypertable_name: "ticks",
- owner: "jonatasdp",
- num_dimensions: 1,
- num_chunks: 1,
- compression_enabled: false,
- tablespaces: nil>
-```
-
-The core of the hypertables are the fragmentation of the data into chunks that
-are the child tables that distribute the data. You can check all chunks directly
-from the hypertable relation.
-
-```ruby
-Tick.hypertable.chunks
-unknown OID 2206: failed to recognize type of 'primary_dimension_type'. It will be treated as String.
-=> [#<Timescaledb::Chunk:0x00007fe99c31b068
-  hypertable_schema: "public",
-  hypertable_name: "ticks",
-  chunk_schema: "_timescaledb_internal",
-  chunk_name: "_hyper_33_17_chunk",
-  primary_dimension: "time",
-  primary_dimension_type: "timestamp without time zone",
-  range_start: 1999-12-30 00:00:00 +0000,
-  range_end: 2000-01-06 00:00:00 +0000,
-  range_start_integer: nil,
-  range_end_integer: nil,
-  is_compressed: false,
-  chunk_tablespace: nil,
-  data_nodes: nil>]
-```
-
-> Chunks are created by partitioning a hypertable's data into one
-> (or potentially multiple) dimensions. All hypertables are partitioned by the
-> values belonging to a time column, which may be in timestamp, date, or
-> various integer forms. If the time partitioning interval is one day,
-> for example, then rows with timestamps that belong to the same day are co-located
-> within the same chunk, while rows belonging to different days belong to different chunks.
-> Learn more [here](https://docs.timescale.com/timescaledb/latest/overview/core-concepts/hypertables-and-chunks/).
-
-Another core concept of TimescaleDB is compression. With data partitioned, it
-becomes very convenient to compress and decompress chunks independently.
-
-```ruby
-Tick.hypertable.chunks.first.compress!
-ActiveRecord::StatementInvalid: PG::FeatureNotSupported: ERROR:  compression not enabled on "ticks"
-DETAIL:  It is not possible to compress chunks on a hypertable that does not have compression enabled.
-HINT:  Enable compression using ALTER TABLE with the timescaledb.compress option.
-```
-
-As compression is not enabled, let's do it executing a plain SQL directly from
-the actual context. To borrow a connection, let's use the Tick object.
-
-```ruby
-Tick.connection.execute("ALTER TABLE ticks SET (timescaledb.compress)") # => PG_OK
-```
-
-And now, it's possible to compress and decompress:
-
-```ruby
-Tick.hypertable.chunks.first.compress!
-Tick.hypertable.chunks.first.decompress!
-```
-Learn more about TimescaleDB compression [here](https://docs.timescale.com/timescaledb/latest/overview/core-concepts/compression/).
-
-The `ohlc_1m` view is also available as an ActiveRecord:
-
-```ruby
-Ohlc1m
-=> Timescaledb::Ohlc1m(bucket: datetime, symbol: string, open: decimal, high: decimal, low: decimal, close: decimal, volume: integer)
-```
-
-And you can run any query as you do with regular active record queries.
-
-```ruby
-Ohlc1m.order(bucket: :desc).last
-=> #<Timescaledb::Ohlc1m:0x00007fe99c2c38e0
- bucket: 2000-01-01 00:00:00 UTC,
- symbol: "SYMBOL",
- open: 0.13e2,
- high: 0.3e2,
- low: 0.1e1,
- close: 0.1e2,
- volume: 27600>
-```
-
-
-## Development
-
-After checking out the repo, run `bin/setup` to install the development dependencies. Then, `bundle exec rake test:setup` to setup the test database and tables. Finally, run `bundle exec rake` to run the tests.
-
-You can also run `tsdb` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-You can create a `.env` file locally to run tests locally. Make sure to put your
-own credentials there!
-
-```bash
-PG_URI_TEST="postgres://<user>@localhost:5432/<dbname>"
-```
-
-You can put some postgres URI directly as a parameter of
-`tsdb`. Here is an example from the console:
-
-```bash
-tsdb "postgres://<user>@localhost:5432/timescaledb_test"
-```
-
 ## More resources
 
-This library was started on [twitch.tv/timescaledb](https://twitch.tv/timescaledb).
-You can watch all episodes here:
+If you want to learn more about TimescaleDB with Ruby code, you can check the [examples](examples) folder and videos below:
+
+### Toolkit examples
+
+Check the [examples/toolkit-demo](examples/toolkit-demo) folder for more examples.
+
+1. [volatility](examples/toolkit-demo/compare_volatility.rb) algorithm.
+2. [lttb](examples/toolkit-demo/lttb/lttb_sinatra.rb) algorithm.
+
+You can also watch this talk from RubyConf Thailand which covers the toolkit: [Ruby or SQL? where to process your data](https://www.youtube.com/watch?v=MXAtSZ5Szgk).
+
+
+### Videos
+
+This library was built during live coding sessions. You can also watch all episodes of the kickoff of this gem here:
 
 1. [Wrapping Functions to Ruby Helpers](https://www.youtube.com/watch?v=hGPsUxLFAYk).
 2. [Extending ActiveRecord with Timescale Helpers](https://www.youtube.com/watch?v=IEyJIHk1Clk).
@@ -688,6 +401,10 @@ You can watch all episodes here:
 4. [the code to this repository](https://www.youtube.com/watch?v=CMdGAl_XlL4).
 5. [Working with Timescale continuous aggregates](https://youtu.be/co4HnBkHzVw).
 6. [Creating the command-line application in Ruby to explore the Timescale API](https://www.youtube.com/watch?v=I3vM_q2m7T0).
+
+Note that the gem also includes a command line application named `tsdb` built in the last episode.
+
+Check the [command line](https://timescale.github.io/timescaledb-ruby/command_line/) options.
 
 ## Contributing
 

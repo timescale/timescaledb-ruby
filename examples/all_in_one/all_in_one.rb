@@ -14,28 +14,57 @@ ActiveRecord::Base.establish_connection( ARGV.last)
 
 # Simple example
 class Event < ActiveRecord::Base
-  self.primary_key = nil
-  acts_as_hypertable
+  extend Timescaledb::ActsAsHypertable
+  include Timescaledb::ContinuousAggregatesHelper
+
+  acts_as_hypertable time_column: "time",
+    segment_by: "identifier"
+
+  scope :count_clicks, -> { select("count(*)").where(identifier: "click") }
+  scope :count_views, -> { select("count(*)").where(identifier: "views") }
+
+  continuous_aggregates scopes: [:count_clicks, :count_views],
+    timeframes: [:minute, :hour, :day],
+    refresh_policy: {
+      minute: {
+        start_offset: '3 minute',
+        end_offset: '1 minute',
+        schedule_interval: '1 minute'
+      },
+      hour: {
+        start_offset: '3 hours',
+        end_offset: '1 hour',
+        schedule_interval: '1 minute'
+      },
+      day: {
+        start_offset: '3 day',
+        end_offset: '1 day',
+        schedule_interval: '1 minute'
+      }
+    }
 end
 
 # Setup Hypertable as in a migration
 ActiveRecord::Base.connection.instance_exec do
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 
+  Event.drop_continuous_aggregates
   drop_table(:events, if_exists: true, cascade: true)
 
   hypertable_options = {
-    time_column: 'created_at',
+    time_column: 'time',
     chunk_time_interval: '1 day',
     compress_segmentby: 'identifier',
+    compress_orderby: 'time',
     compress_after: '7 days'
   }
 
   create_table(:events, id: false, hypertable: hypertable_options) do |t|
+    t.timestamptz :time, null: false, default: -> { 'now()' }
     t.string :identifier, null: false
     t.jsonb :payload
-    t.timestamps
   end
+  Event.create_continuous_aggregates
 end
 
 # Create some data just to see how it works
@@ -56,8 +85,7 @@ def generate_fake_data(total: 100_000)
     identifier = %w[sign_up login click scroll logout view]
     time = time + rand(60).seconds
     {
-      created_at: time,
-      updated_at: time,
+      time: time,
       identifier: identifier.sample,
       payload: {
         "name" => Faker::Name.name,
@@ -79,8 +107,11 @@ supress_logs do
 end
 # Now let's see what we have in the scopes
 Event.last_hour.group(:identifier).count # => {"login"=>2, "click"=>1, "logout"=>1, "sign_up"=>1, "scroll"=>1}
+Event.refresh_aggregates
+pp Event::CountClicksPerMinute.last_hour.map(&:attributes)
+pp Event::CountViewsPerMinute.last_hour.map(&:attributes)
 
-puts "compressing #{ Event.chunks.count }"
+puts "compressing 1 chunk of #{ Event.chunks.count } chunks"
 Event.chunks.first.compress!
 
 puts "detailed size"
