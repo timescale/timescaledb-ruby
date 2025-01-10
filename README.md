@@ -299,23 +299,61 @@ All time-related scopes respect your application's timezone.
 
 When you define the `value_column` on your model, it can also be used by the analytical functions in the scopes.
 
+In this example, we are using the [stats_agg](https://docs.timescale.com/api/latest/hyperfunctions/statistical-and-regression-analysis/stats_agg-one-variable/) function to calculate the average and standard deviation of the purchase price.
+
 ```ruby
 class Event < ActiveRecord::Base
   acts_as_hypertable time_column: "time",
-    value_column: "response_time",
+    value_column: "cast(payload->>'price' as float)",
     segment_by: "identifier"
+
+  scope :purchase, -> { where(identifier: "purchase") }
+
+  scope :purchase_stats, -> { purchase.select("stats_agg(#{value_column}) as stats_agg") }
+  scope :stats, -> { select("average(stats_agg), stddev(stats_agg)") } # just for descendants aggregated classes
 end
 
-Event.candlestick(1.day)
-Event.clicks.last_week.candlestick(1.day)
+Event::PurchaseStatsPerMinute.stats
+Event::PurchaseStatsPerHour.stats => [#<Event::PurchaseStatsPerHour:0x00000001204de268 average: 519.8333333333334, stddev: 255.8775557359648>,
 ```
+
+Load the [all_in_one](examples/all_in_one) example to see more details.
+
+### Insert data
+
+The `insert_all` method seems the most effective way to insert data into the hypertable.
+
+```ruby
+def generate_fake_data(total: 100_000, start_time: 1.month.ago)
+  total.times.flat_map do
+    identifier = %w[sign_up login click scroll logout view purchase]
+    start_time = start_time + rand(10).seconds
+    id = identifier.sample
+
+    payload =  id == "purchase" ? {
+      "price" => rand(100..1000)
+    } : {
+      "name" => Faker::Name.name,
+      "email" => Faker::Internet.email,
+    }
+    {
+      time: start_time,
+      identifier: id,
+      payload: payload
+    }
+  end
+end
+Event.insert_all(generate_fake_data, returning: false)
+```
+
+Note that `returning: false` is used to avoid the `returning` option to be used.
 
 ### Skip default scopes
 
 You can skip the default scopes by passing `skip_default_scopes: true` to the `acts_as_hypertable` macro.
 
 ```ruby
-class Condition < ActiveRecord::Base
+class Event < ActiveRecord::Base
   acts_as_hypertable time_column: "time", skip_default_scopes: true
 end
 ```
@@ -326,7 +364,7 @@ Or you can use `skip_association_scopes` to skip the association scopes.
 ## Schema Dumper
 
 If you're using the gem with Rails and you want to dump the schema to a file,
-The schema dumper will include:
+the schema dumper will include:
 
 * hypertables configuration
 * compression settings

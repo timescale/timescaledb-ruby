@@ -18,12 +18,18 @@ class Event < ActiveRecord::Base
   include Timescaledb::ContinuousAggregatesHelper
 
   acts_as_hypertable time_column: "time",
-    segment_by: "identifier"
+    segment_by: "identifier",
+    value_column: "cast(payload->>'price' as float)"
 
   scope :count_clicks, -> { select("count(*)").where(identifier: "click") }
   scope :count_views, -> { select("count(*)").where(identifier: "views") }
+  scope :purchase, -> { where(identifier: "purchase") }
 
-  continuous_aggregates scopes: [:count_clicks, :count_views],
+  scope :purchase_stats, -> { purchase.select("stats_agg(#{value_column}) as stats_agg") }
+
+  scope :stats, -> { select("average(stats_agg), stddev(stats_agg)") } # just for descendants aggregated classes
+
+  continuous_aggregates scopes: [:count_clicks, :count_views, :purchase_stats],
     timeframes: [:minute, :hour, :day],
     refresh_policy: {
       minute: {
@@ -75,6 +81,9 @@ end
     Event.create identifier: "click", payload: {"user" => "eon", "path" => "/install/timescaledb"}
     Event.create identifier: "scroll", payload: {"user" => "eon", "path" => "/install/timescaledb"}
     Event.create identifier: "logout", payload: {"email" => "eon@timescale.com"}
+    Event.create identifier: "purchase", payload: { price: 100.0}
+    Event.create identifier: "purchase", payload: { price: 120.0}
+    Event.create identifier: "purchase", payload: { price: 140.0}
   end
 end
 
@@ -82,15 +91,20 @@ end
 def generate_fake_data(total: 100_000)
   time = 1.month.ago
   total.times.flat_map do
-    identifier = %w[sign_up login click scroll logout view]
+    identifier = %w[sign_up login click scroll logout view purchase]
     time = time + rand(60).seconds
+    id = identifier.sample
+
+    payload =  id == "purchase" ? {
+      "price" => rand(100..1000)
+    } : {
+      "name" => Faker::Name.name,
+      "email" => Faker::Internet.email,
+    }
     {
       time: time,
-      identifier: identifier.sample,
-      payload: {
-        "name" => Faker::Name.name,
-        "email" => Faker::Internet.email
-      }
+      identifier: id,
+      payload: payload
     }
   end
 end
