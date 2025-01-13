@@ -18,6 +18,8 @@ module Timescaledb
         /state_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
         /percentile_agg\((\w+),\s*(\w+)\)\s+as\s+(\w+)/ => 'rollup(\3) as \3',
         /heartbeat_agg\((\w+)\)\s+as\s+(\w+)/ => 'rollup(\2) as \2',
+        /stats_agg\(([^)]+)\)\s+(as\s+(\w+))/ => 'rollup(\3) \2',
+        /stats_agg\((.*)\)\s+(as\s+(\w+))/ => 'rollup(\3) \2'
       }
 
       scope :rollup, ->(interval) do
@@ -147,12 +149,21 @@ module Timescaledb
               if previous_timeframe
                 prev_klass = base_model.const_get("#{aggregate_name}_per_#{previous_timeframe}".classify)
                 select_clause = base_model.apply_rollup_rules("#{config[:select]}")
+                # Note there's no where clause here, because we're using the previous timeframe's data
                 self.base_query = "SELECT #{tb} as #{time_column}, #{select_clause} FROM \"#{prev_klass.table_name}\" GROUP BY #{[tb, *config[:group_by]].join(', ')}"
               else
                 scope = base_model.public_send(config[:scope_name])
                 config[:select] = scope.select_values.select{|e|!e.downcase.start_with?("time_bucket")}.join(', ')
                 config[:group_by] = scope.group_values
-                self.base_query = "SELECT #{tb} as #{time_column}, #{config[:select]} FROM \"#{scope.table_name}\" GROUP BY #{[tb, *config[:group_by]].join(', ')}"
+                config[:where] = if scope.where_values_hash.present?
+                  scope.where_values_hash.to_sql
+                  elsif scope.where_clause.ast.present? && scope.where_clause.ast.to_sql.present?
+                  scope.where_clause.ast.to_sql
+                end
+                self.base_query = "SELECT #{tb} as #{time_column}, #{config[:select]}"
+                self.base_query += " FROM \"#{base_model.table_name}\""
+                self.base_query += " WHERE #{config[:where]}" if config[:where]
+                self.base_query += " GROUP BY #{[tb, *config[:group_by]].join(', ')}"
               end
 
               def self.refresh!(start_time = nil, end_time = nil)
