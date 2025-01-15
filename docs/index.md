@@ -1,72 +1,263 @@
-# The TimescaleDB Ruby Gem
+# TimescaleDB Ruby Gem
 
-Welcome to the TimescaleDB gem! To experiment with the code, start installing the
-gem:
+> The Timescale SDK for Ruby
 
-## Installing
+A Ruby [gem](https://rubygems.org/gems/timescaledb) for working with TimescaleDB - an open-source time-series database built on PostgreSQL. This gem provides ActiveRecord integration and helpful tools for managing time-series data.
 
-You can install the gem locally:
+## What is TimescaleDB?
+
+TimescaleDB extends PostgreSQL with specialized features for time-series data:
+
+- **Hypertables**: Automatically partitioned tables optimized for time-series data
+- **Hypercores**: Hypercore is a dynamic storage engine that allows you to store data in a way that is optimized for time-series data
+- **Chunks**: Transparent table partitions that improve query performance
+- **Continuous Aggregates**: Materialized views that automatically update
+- **Data Compression**: Automatic compression of older data
+- **Data Retention**: Policies for managing data lifecycle
+
+## Installation
+
+Add to your Gemfile:
+
+```ruby
+gem 'timescaledb'
+```
+
+Or install directly:
 
 ```bash
 gem install timescaledb
 ```
 
-Or require it directly in the Gemfile of your project:
+## Quick Start
+
+### 1. Create Hypertables in Migrations
 
 ```ruby
-gem "timescaledb"
+class CreateEvents < ActiveRecord::Migration[7.0]
+  def up
+    hypertable_options = {
+      time_column: 'created_at',
+      chunk_time_interval: '1 day',
+      compress_segmentby: 'identifier',
+      compress_orderby: 'created_at DESC',
+      compress_after: '7 days',
+      drop_after: '3 months',
+      partition_column: 'user_id',        # Optional: Add space partitioning
+      number_partitions: 4                # Required when using partition_column 
+    }
+
+    create_table(:events, id: false, hypertable: hypertable_options) do |t|
+      t.timestamptz :created_at
+      t.string :identifier, null: false
+      t.jsonb :payload
+      t.integer :user_id
+    end
+  end
+end
 ```
 
-## Features
+### 2. Enable TimescaleDB in Your Models
 
-* The model can use the [acts_as_hypertable](https://github.com/timescale/timescaledb-ruby/tree/master/lib/timescaledb/acts_as_hypertable.rb) macro. Check more on [models](models) documentation.
-* The ActiveRecord [migrations](migrations) can use the [create_table](https://github.com/timescale/timescaledb-ruby/tree/master/lib/timescaledb/migration_helpers.rb) supporting the `hypertable` keyword. It's also enabling you to add retention and continuous aggregates policies
-* A standalone `create_hypertable` macro is also allowed in the migrations.
-* Testing also becomes easier as the [schema dumper](https://github.com/timescale/timescaledb-ruby/tree/master/lib/timescaledb/schema_dumper.rb) will automatically introduce the hypertables to all environments.
-* It also contains a [scenic extension](https://github.com/timescale/timescaledb-ruby/tree/master/lib/timescaledb/scenic/extension.rb) to work with [scenic views](https://github.com/scenic-views/scenic) as it's a wide adoption in the community.
-* The gem is also packed with a [command line utility](command_line) that makes it easier to navigate in your database with Pry and all your hypertables available in a Ruby style.
+#### Global Configuration
 
-## Examples
+```ruby
+# config/initializers/timescaledb.rb
+ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
 
-The [all_in_one](https://github.com/timescale/timescaledb-ruby/tree/master/examples/all_in_one/all_in_one.rb) example shows:
+# app/models/event.rb
+class Event < ActiveRecord::Base
+  acts_as_hypertable time_column: "time",
+    segment_by: "identifier",
+    value_column: "cast(payload->>'value' as float)"
+end
+```
 
-1. Create a hypertable with compression settings
-2. Insert data
-3. Run some queries
-4. Check chunk size per model
-5. Compress a chunk
-6. Check chunk status
-7. Decompress a chunk
+#### Per-Model Configuration
 
-The [ranking](https://github.com/timescale/timescaledb-ruby/tree/master/examples/ranking) example shows how to configure a Rails app and navigate all the features available.
+```ruby
+class Event < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
+  acts_as_hypertable time_column: "time"
+end
+```
 
+#### Abstract Model Configuration
 
-## Toolkit  examples
+```ruby
+class Hypertable < ActiveRecord::Base
+  self.abstract_class = true
+  extend Timescaledb::ActsAsHypertable
+end
 
-There are also examples in the [toolkit-demo](https://github.com/timescale/timescaledb-ruby/tree/master/examples/toolkit-demo) folder that can help you to
-understand how to properly use the toolkit functions.
+class Event < Hypertable
+  acts_as_hypertable time_column: "time"
+end
+```
 
-* [ohlc](https://github.com/timescale/timescaledb-ruby/tree/master/examples/toolkit-demo/ohlc.rb) is a funtion that groups data by Open, High, Low, Close and make histogram availables to group the data, very useful for financial analysis.
-* While building the [LTTB tutorial]( https://jonatas.github.io/timescaledb/toolkit_lttb_tutorial/) I created the [lttb](https://github.com/timescale/timescaledb-ruby/tree/master/examples/toolkit-demo/lttb) is a simple charting using the Largest Triangle Three Buckets and there. A [zoomable](https://github.com/timescale/timescaledb-ruby/tree/master/examples/toolkit-demo/lttb-zoom) version which allows to navigate in the data and zoom it keeping the same data resolution is also available.
-* A small example showing how to process [volatility](https://github.com/timescale/timescaledb-ruby/blob/master/examples/toolkit-demo/compare_volatility.rb) is also good to get familiar with the pipeline functions. A benchmark implementing the same in Ruby is also available to check how it compares to the SQL implementation.
+## Advanced Features
 
+We're always looking for ways to improve the gem and make it easier to use. Feel free to open an issue or a PR if you have any ideas or suggestions.
 
-## Extra resources
+### Scenic Integration
 
-If you need extra help, please join the fantastic [timescale community](https://www.timescale.com/community)
-or ask your question on [StackOverflow](https://stackoverflow.com/questions/tagged/timescaledb) using the `#timescaledb` tag.
+The gem integrates with the Scenic gem for managing database views:
 
-If you want to go deeper in the library, the [videos](videos) links to all
-live-coding sessions showed how [@jonatasdp](https://twitter.com/jonatasdp) built the gem.
+```ruby
+class CreateAnalyticsView < ActiveRecord::Migration[7.0]
+  def change
+    create_view :daily_analytics, 
+      materialized: true, 
+      version: 1,
+      with: "timescaledb.continuous"
+  end
+end
+```
+
+### Compression Settings
+
+Access and configure compression settings:
+
+```ruby
+# Check compression settings
+Event.hypertable.compression_settings
+
+# Get compression stats
+Event.hypertable.compression_stats
+
+# Compress specific chunks
+Event.chunks.uncompressed.where("end_time < ?", 1.week.ago).each(&:compress!)
+```
+
+### Job Management
+
+Monitor and manage background jobs:
+
+```ruby
+# List all jobs
+Timescaledb::Job.all
+
+# Check compression jobs
+Timescaledb::Job.compression.scheduled
+
+# View job statistics
+Timescaledb::JobStats.success.resume
+```
+
+### Dimensions and Partitioning
+
+Access information about table dimensions:
+
+```ruby
+# Get main time dimension
+Event.hypertable.main_dimension
+
+# Check all dimensions
+Event.hypertable.dimensions
+```
+
+### Extension Management
+
+Manage the TimescaleDB extension:
+
+```ruby
+# Check version
+Timescaledb::Extension.version
+
+# Check if installed
+Timescaledb::Extension.installed?
+
+# Update extension
+Timescaledb::Extension.update!
+```
+
+## Schema Dumper
+
+The gem enhances Rails' schema dumper to handle TimescaleDB-specific features:
+
+- Hypertable configurations
+- Compression settings
+- Continuous aggregates
+- Retention policies
+- Space partitioning
+
+## Continuous Aggregates Macro
+
+The gem provides a macro for creating continuous aggregates:
+
+```ruby
+class Achievement < ActiveRecord::Base
+  extend Timescaledb::ActsAsHypertable
+  acts_as_hypertable time_column: "time", segment_by: "user_id", value_column: "points"
+
+  scope :count_by_user, -> { group(:user_id).count }
+  scope :points_by_user, -> { group(:user_id).sum(:points) }
+
+  continuous_aggregate scopes: [:count_by_user, :points_by_user],
+    timeframes: [:hour, :day, :month]
+end
+```
+Then in your migrations:
+
+```ruby
+class CreateAchievements < ActiveRecord::Migration[7.0]
+  def up
+    hypertable = {
+      time_column: "created_at",
+      segment_by: "user_id",
+      value_column: "points"
+    }
+
+    create_table :achievements, id: false, hypertable: hypertable do |t|
+      t.timestamptz :created_at, default: -> { "now()" }
+      t.integer :user_id, null: false
+      t.integer :points, null: false, default: 1
+    end
+    Achievement.create_continuous_aggregate
+  end
+
+  def down
+    Achievement.drop_continuous_aggregate
+    drop_table :achievements
+  end
+end
+```
+
+Check the blog post for more details: [building a better Ruby ORM for time series data](https://www.timescale.com/blog/building-a-better-ruby-orm-for-time-series-and-analytics).
+
+## Testing Support
+
+For testing environments, you can use this RSpec configuration:
+
+```ruby
+# spec/spec_helper.rb
+RSpec.configure do |config|
+  config.before(:suite) do
+    hypertable_models = ActiveRecord::Base.descendants.select(&:acts_as_hypertable?)
+    
+    hypertable_models.each do |klass|
+      next if klass.try(:hypertable).present?
+      
+      ApplicationRecord.connection.create_hypertable(
+        klass.table_name,
+        time_column: klass.hypertable_options[:time_column],
+        chunk_time_interval: '1 day'
+      )
+    end
+  end
+end
+```
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/timescale/timescaledb-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/timescale/timescaledb-ruby/blob/master/CODE_OF_CONDUCT.md).
 
+You can also connect to the #ruby channel on the [TimescaleDB Community Slack](https://slack.timescale.com).
+
 ## License
 
-The gem is available as open source under the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Code of Conduct
 
-Everyone interacting in the Timescale project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the [code of conduct](https://github.com/timescale/timescaledb-ruby/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Timescale project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/timescale/timescaledb-ruby/blob/master/CODE_OF_CONDUCT.md).
