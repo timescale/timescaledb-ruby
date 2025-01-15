@@ -66,6 +66,7 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
         scope_name: :total,
         select: "count(*) as total",
         group_by: [],
+        where: nil,
         refresh_policy: {
           minute: { start_offset: "10 minutes", end_offset: "1 minute", schedule_interval: "1 minute" },
           hour:   { start_offset: "4 hour",     end_offset: "1 hour",   schedule_interval: "1 hour" },
@@ -75,6 +76,11 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       }
       expect(test_class::TotalPerMinute.config).to eq(expected_config)
     end
+
+    it "sets the where clause for each aggregate" do
+      expect(test_class::PurchaseStatsPerMinute.config[:where]).to eq("(identifier = 'purchase')")
+    end
+
 
     it 'defines rollup scope for aggregates' do
       test_class.create_continuous_aggregates
@@ -94,6 +100,11 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       expect(test_class::ByIdentifierPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_day\" GROUP BY time_bucket('1 month', ts), identifier")
       expect(test_class::ByIdentifierPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_hour\" GROUP BY time_bucket('1 day', ts), identifier")
       expect(test_class::ByIdentifierPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, identifier, sum(total) as total FROM \"by_identifier_per_minute\" GROUP BY time_bucket('1 hour', ts), identifier") 
+
+      expect(test_class::PurchaseStatsPerMinute.base_query).to eq("SELECT time_bucket('1 minute', ts) as ts, stats_agg(cast(payload->>'price' as float)) as stats_agg FROM \"hypertable_with_continuous_aggregates\" WHERE (identifier = 'purchase') GROUP BY time_bucket('1 minute', ts)")
+      expect(test_class::PurchaseStatsPerHour.base_query).to eq("SELECT time_bucket('1 hour', ts) as ts, rollup(stats_agg) as stats_agg FROM \"purchase_stats_per_minute\" GROUP BY time_bucket('1 hour', ts)")
+      expect(test_class::PurchaseStatsPerDay.base_query).to eq("SELECT time_bucket('1 day', ts) as ts, rollup(stats_agg) as stats_agg FROM \"purchase_stats_per_hour\" GROUP BY time_bucket('1 day', ts)")
+      expect(test_class::PurchaseStatsPerMonth.base_query).to eq("SELECT time_bucket('1 month', ts) as ts, rollup(stats_agg) as stats_agg FROM \"purchase_stats_per_day\" GROUP BY time_bucket('1 month', ts)")
     end
   end
 
@@ -113,8 +124,10 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS by_version_per_hour/i)
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS by_version_per_minute/i)
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS by_identifier_per_month/i)
-
-      expect(test_class::TotalPerMinute.select("sum(total) as total").rollup("'1 hour'").to_sql).to eq("SELECT time_bucket('1 hour', ts) as ts, identifier, sum(total) as total FROM \"total_per_minute\" GROUP BY time_bucket('1 hour', ts), \"identifier\"")
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS purchase_stats_per_minute/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS purchase_stats_per_hour/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS purchase_stats_per_day/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/CREATE MATERIALIZED VIEW IF NOT EXISTS purchase_stats_per_month/i)
     end
 
     it 'sets up refresh policies for each aggregate' do
@@ -128,6 +141,10 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/add_continuous_aggregate_policy.*by_identifier_per_month/i)
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/add_continuous_aggregate_policy.*by_version_per_day/i)
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/add_continuous_aggregate_policy.*by_version_per_month/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/add_continuous_aggregate_policy.*purchase_stats_per_minute/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/add_continuous_aggregate_policy.*purchase_stats_per_hour/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/add_continuous_aggregate_policy.*purchase_stats_per_day/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/add_continuous_aggregate_policy.*purchase_stats_per_month/i)
     end
   end
 
@@ -141,7 +158,7 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       }
 
       policies.each do |timeframe, expected_policy|
-        %w[Total ByVersion ByIdentifier].each do |klass|
+        %w[Total ByVersion ByIdentifier PurchaseStats].each do |klass|
           actual_policy = test_class.const_get("#{klass}Per#{timeframe.to_s.capitalize}").refresh_policy
           expect(actual_policy).to eq(expected_policy)
         end
@@ -169,6 +186,11 @@ RSpec.describe Timescaledb::ContinuousAggregatesHelper do
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS by_identifier_per_day CASCADE/i)
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS by_identifier_per_hour CASCADE/i)
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS by_identifier_per_minute CASCADE/i)
+
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS purchase_stats_per_month CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS purchase_stats_per_day CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS purchase_stats_per_hour CASCADE/i)
+      expect(ActiveRecord::Base.connection).to have_received(:execute).with(/DROP MATERIALIZED VIEW IF EXISTS purchase_stats_per_minute CASCADE/i)
     end
   end
 end
