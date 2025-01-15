@@ -106,7 +106,7 @@ end
 
 ### Migrations
 
-Create table is the `hypertable` keyword will automatically partition the table through the `create_hypertable` function call while also using `create_table` method:
+Create table with the `hypertable` keyword will fully configure the hypertable through the `create_hypertable` function and also fully configure the data lifecycle policies.
 
 #### create_table with `:hypertable`
 
@@ -114,22 +114,22 @@ You can just pass the options to the `hypertable` keyword:
 
 ```ruby
 hypertable_options = {
-  time_column: 'created_at',
-  chunk_time_interval: '1 day',
-  compress_segmentby: 'identifier',
-  compress_after: '7 days',
-  compress_orderby: 'created_at DESC NULLS LAST',
-  drop_after: '6 months'
+  time_column: 'created_at',        # partition data by this column
+  chunk_time_interval: '1 day',     # create a new table for each day
+  compress_segmentby: 'identifier', # columnar compression key
+  compress_after: '7 days',         # start compression after 7 days
+  compress_orderby: 'created_at DESC', # compression order
+  drop_after: '6 months'            # delete data after 6 months
 }
 
 create_table(:events, id: false, hypertable: hypertable_options) do |t|
-  t.timestamptz :created_at
+  t.timestamptz :created_at, null: false
   t.string :identifier, null: false
   t.jsonb :payload
 end
 ```
 
-And the code above will create a hypertable with the following options:
+And the SQL output will be:
 
 ```sql
 CREATE TABLE events (
@@ -141,7 +141,7 @@ SELECT create_hypertable('events', by_range('created_at', INTERVAL '1 day'));
 ALTER TABLE events SET (
   timescaledb.compress,
   timescaledb.compress_segmentby = 'identifier',
-  timescaledb.compress_orderby = 'created_at DESC NULLS LAST'
+  timescaledb.compress_orderby = 'created_at DESC'
 );
 SELECT add_compression_policy('events', INTERVAL '7 days');
 SELECT add_retention_policy('events', INTERVAL '6 months');
@@ -149,17 +149,17 @@ SELECT add_retention_policy('events', INTERVAL '6 months');
 
 In this case, the hypertable will be created with the following options:
 
-* [create hypertable](https://docs.timescale.com/api/latest/hypertable/create_hypertable/) for automatic partitioning - 1 table per day
-* [compression](https://docs.timescale.com/api/latest/compression/alter_table_compression/) enabled - partitions with data older than 7 days are compressed
-* [compression segmentby](https://docs.timescale.com/api/latest/compression/alter_table_compression/) configured - identifier (this is the column that will be used as a columnar storage key)
-* [drop after](https://docs.timescale.com/use-timescale/latest/data-retention/create-a-retention-policy/) configured - 6 months - This is a retention policy that will delete the old data after 6 months. Note this deletion is very efficient as it drops the entire partition.
+* [create hypertable](https://docs.timescale.com/api/latest/hypertable/create_hypertable/) for automatic partitioning - 1 table per day.
+* [compression](https://docs.timescale.com/api/latest/compression/alter_table_compression/) configured - segment by identifier, this is the column that will be used as a columnar storage key.
+* [compression policy](https://docs.timescale.com/api/latest/compression/alter_table_compression/) enabled - partitions with data older than 7 days are compressed.
+* [retention policy](https://docs.timescale.com/use-timescale/latest/data-retention/create-a-retention-policy/) configured - 6 months - This is a retention policy that will delete the old data after 6 months. Note this deletion is very efficient as it drops the entire partition.
 
-If you use keyword `compress_after` it will enable hypercore compression. Which can be used to set when the compression should start.
+To understand more about the compression and retention policies, check out the [hypercore article](https://www.timescale.com/blog/hypercore-a-hybrid-row-storage-engine-for-real-time-analytics).
 
 
 #### Continuous Aggregates
 
-The continuous aggregates is a core feature of TimescaleDB. It allows you to create materialized views that are automatically updated (in background) with the data from the hypertable. You can also set them hierarchically to rollup several timeframes.
+The continuous aggregates allows you to create materialized views that are automatically updated (in background) with the data from the hypertable. You can also set them hierarchically to rollup several timeframes.
 
 This example shows migration to create a continuous aggregate for events per minute:
 
