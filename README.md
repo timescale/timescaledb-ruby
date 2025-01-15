@@ -1,6 +1,8 @@
 # TimescaleDB
 
-A Ruby gem for working with TimescaleDB - an open-source time-series database built on PostgreSQL. This gem provides ActiveRecord integration and helpful tools for managing time-series data.
+> The Timescale SDK for Ruby
+
+A Ruby [gem](https://rubygems.org/gems/timescaledb) for working with TimescaleDB - an open-source time-series database built on PostgreSQL. This gem provides ActiveRecord integration and helpful tools for managing time-series data.
 
 ## What is TimescaleDB?
 
@@ -42,7 +44,7 @@ class CreateEvents < ActiveRecord::Migration[7.0]
       chunk_time_interval: '1 day',
       compress_segmentby: 'identifier',
       compress_after: '7 days',
-      compress_orderby: 'created_at DESC NULLS LAST',
+      compress_orderby: 'created_at DESC',
       drop_after: '3 months'
     }
 
@@ -126,6 +128,7 @@ create_table(:events, id: false, hypertable: hypertable_options) do |t|
   t.jsonb :payload
 end
 ```
+
 And the code above will create a hypertable with the following options:
 
 ```sql
@@ -146,11 +149,10 @@ SELECT add_retention_policy('events', INTERVAL '6 months');
 
 In this case, the hypertable will be created with the following options:
 
-* automatically partition - 1 table per day
-* compression enabled - 7 days after the first data
-* compression order - created_at DESC NULLS LAST
-* compression segmentby - identifier (this is the column that will be used to compress the data and also work as a hash key)
-* drop after - 6 months - This is a retention policy that will delete the data after 6 months.
+* [create hypertable](https://docs.timescale.com/api/latest/hypertable/create_hypertable/) for automatic partitioning - 1 table per day
+* [compression](https://docs.timescale.com/api/latest/compression/alter_table_compression/) enabled - partitions with data older than 7 days are compressed
+* [compression segmentby](https://docs.timescale.com/api/latest/compression/alter_table_compression/) configured - identifier (this is the column that will be used as a columnar storage key)
+* [drop after](https://docs.timescale.com/use-timescale/latest/data-retention/create-a-retention-policy/) configured - 6 months - This is a retention policy that will delete the old data after 6 months. Note this deletion is very efficient as it drops the entire partition.
 
 If you use keyword `compress_after` it will enable hypercore compression. Which can be used to set when the compression should start.
 
