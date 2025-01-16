@@ -1,9 +1,0 @@
----
-language: ruby
-cache: bundler
-rvm:
-  - 3.1.2
-before_install: gem install bundler
-gemfile:
-  - Gemfile
-  - Gemfile.scenic
