@@ -35,7 +35,7 @@ jobs:
 
 
     runs-on: ubuntu-latest
-    name: OS Ruby ${{matrix.ruby}} database ${{matrix.database}}
+    name: OS Ruby ${{matrix.ruby}} (${{matrix.gemfile}}) database ${{matrix.database}}
     container: ruby:${{matrix.ruby}}
 
     steps:
