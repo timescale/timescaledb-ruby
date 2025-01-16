@@ -57,9 +57,7 @@ jobs:
         echo "SELECT version()" | psql -h database -U username testdb
         echo "SELECT CURRENT_TIME" | psql -h database -U username testdb
 
-    - name: Setup
-      run: |
-        ./bin/setup
+    - run: bundle install
 
     - name: run tsdb
       run: ./bin/tsdb postgres://username:secret@database:5432/testdb --stats
