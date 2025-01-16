@@ -10,6 +10,6 @@ The [./lttb_sinatra.rb](./lttb_sinatra.rb) is a small webserver that compares
 the SQL vs Ruby implementation. It also uses the [./views](./views) folder which
 contains the view rendering part.
 
-You can learn more by reading the [LTTB tutorial](https://jonatas.github.io/timescaledb/toolkit_lttb_tutorial/).
+You can learn more by reading the [LTTB tutorial](https://timescale.github.io/timescaledb-ruby/toolkit_lttb_tutorial/).
 
 

@@ -1,5 +1,5 @@
 # ruby candlestick.rb postgres://user:pass@host:port/db_name
-# @see https://jonatas.github.io/timescaledb/candlestick_tutorial
+# @see https://timescale.github.io/timescaledb-ruby/toolkit_candlestick/
 
 require 'bundler/inline' #require only what you need
 
