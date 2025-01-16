@@ -164,7 +164,7 @@ If you want to understand the algorithm behind the scenes, this step will make i
 
     The obvious answer is to use a brute-force approach and simply try out all the possibilities. That is, for each point in the current bucket, form a triangle with all the points in the next bucket. It turns out that this gives a fairly good visual result, but as with many brute-force approaches it is inefficient. For example, if there were 100 points per bucket, the algorithm would need to calculate the area of 10,000 triangles for every bucket. Another and more clever solution is to add a temporary point to the last bucket and keep it fixed. That way the algorithm has two fixed points; and one only needs to calculate the number of triangles equal to the number of points in the current bucket. The point in the current bucket which forms the largest triangle with this two fixed point in the adjacent buckets is then selected. In figure 4.4 it is shown how point B forms the largest triangle across the buckets with fixed point A (previously selected) and the temporary point C.
 
-    ![LTTB Triangle Bucketing Example](https://jonatas.github.io/timescaledb/img/lttb_example.png)
+    ![LTTB Triangle Bucketing Example](img/lttb_example.png)
 
 ### Calculate the area of a Triangle
 
@@ -485,7 +485,7 @@ end
 Now that both endpoints are ready, it's easy to check the results and
 understand how fast Ruby can execute each solution.
 
-![LTTB in action](https://jonatas.github.io/timescaledb/img/lttb_sql_vs_ruby.gif)
+![LTTB in action](img/lttb_sql_vs_ruby.gif)
 
 In the logs, we can see the time difference between every result:
 

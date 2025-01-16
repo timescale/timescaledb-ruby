@@ -8,6 +8,6 @@ There is a [./lttb_zoomable.rb](./lttb_zoomable.rb) file is a small webserver th
 the SQL vs Ruby implementation. It also uses the [./views](./views) folder which
 contains the view with the rendering and javascript part.
 
-You can learn more by reading the [LTTB Zoom tutorial](https://jonatas.github.io/timescaledb/toolkit_lttb_zoom/).
+You can learn more by reading the [LTTB Zoom tutorial](https://timescale.github.io/timescaledb-ruby/toolkit_lttb_zoom/).
 
 

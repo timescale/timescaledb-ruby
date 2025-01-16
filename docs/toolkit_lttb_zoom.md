@@ -23,7 +23,7 @@ In this example, we're going to use the [lttb][3] function, that is  part of the
  The image bellow corresponds to the step by step guide provided here.
 
 
-![LTTB Zoomable Example](https://jonatas.github.io/timescaledb/img/lttb_zoom.gif)
+![LTTB Zoomable Example](img/lttb_zoom.gif)
 
 
 If you want to just go and run it directly, you can fetch the complete example [here][2].
