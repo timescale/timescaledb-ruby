@@ -6,6 +6,7 @@ Here you can find the changes to the project that may be relevant to you.
 
 * For the `create_hypertable` method, the param `compression_interval` is now renamed to `compress_after` just to make it more consistent with the other parameters.
 * Change examples to use `drop_table t, if_exists: true` (#85) - Thanks @intermittentnrg
+* For the `create_retention_policy` method, the param `interval` is now renamed to `drop_after`
 
 # 2024-12-21
 
