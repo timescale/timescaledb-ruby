@@ -13,6 +13,9 @@ uri = ARGV[0] || uri_from_test
 ActiveRecord::Base.establish_connection(uri)
 Timescaledb.establish_connection(uri)
 
+ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
+
+
 Timescaledb::Hypertable.find_each do |hypertable|
   class_name = hypertable.hypertable_name.singularize.camelize
 
