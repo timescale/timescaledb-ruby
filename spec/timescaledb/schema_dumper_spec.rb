@@ -63,7 +63,7 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
       it "add retention policies after hypertables" do
         dump = dump_output
         last_hypertable = dump.index(%|create_hypertable "#{sorted_hypertables.last}"|)
-        index = dump.index(%|create_retention_policy "events", interval: "P7D"|)
+        index = dump.index(%|create_retention_policy "events", drop_after: "P7D"|)
         expect(index).to be > last_hypertable
       end
     end

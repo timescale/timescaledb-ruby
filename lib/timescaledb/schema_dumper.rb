@@ -90,7 +90,7 @@ module Timescaledb
 
     def timescale_retention_policy(hypertable, stream)
       hypertable.jobs.where(proc_name: "policy_retention").each do |job|
-        stream.puts %Q[  create_retention_policy "#{job.hypertable_name}", interval: "#{job.config["drop_after"]}"]
+        stream.puts %Q[  create_retention_policy "#{job.hypertable_name}", drop_after: "#{job.config["drop_after"]}"]
       end
     end
 
