@@ -12,6 +12,24 @@ require 'pry'
 # ruby all_in_one.rb postgres://user:pass@host:port/db_name
 ActiveRecord::Base.establish_connection( ARGV.last)
 
+# Setup Hypertable as in a migration
+ActiveRecord::Base.connection.instance_exec do
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+  drop_table(:events, if_exists: true, cascade: true)
+
+  hypertable_options = {
+    time_column: 'time',
+    chunk_time_interval: '1 day',
+  }
+
+  create_table(:events, id: false, hypertable: hypertable_options) do |t|
+    t.timestamptz :time, null: false, default: -> { 'now()' }
+    t.string :identifier, null: false
+    t.jsonb :payload
+  end
+end
+
 # Simple example
 class Event < ActiveRecord::Base
   extend Timescaledb::ActsAsHypertable
@@ -50,26 +68,7 @@ class Event < ActiveRecord::Base
     }
 end
 
-# Setup Hypertable as in a migration
 ActiveRecord::Base.connection.instance_exec do
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
-
-  Event.drop_continuous_aggregates
-  drop_table(:events, if_exists: true, cascade: true)
-
-  hypertable_options = {
-    time_column: 'time',
-    chunk_time_interval: '1 day',
-    compress_segmentby: 'identifier',
-    compress_orderby: 'time',
-    compress_after: '7 days'
-  }
-
-  create_table(:events, id: false, hypertable: hypertable_options) do |t|
-    t.timestamptz :time, null: false, default: -> { 'now()' }
-    t.string :identifier, null: false
-    t.jsonb :payload
-  end
   Event.create_continuous_aggregates
 end
 
