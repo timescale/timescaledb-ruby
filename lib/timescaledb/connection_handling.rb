@@ -20,9 +20,13 @@ module Timescaledb
     
     # Also set ActiveRecord connection if it's defined
     if defined?(ActiveRecord::Base) && ActiveRecord::Base.connected?
-      # Get the existing connection handler and update it
       ar_conn = ActiveRecord::Base.connection
-      ar_conn.instance_variable_set(:@raw_connection, conn)
+      current_conn = ar_conn.raw_connection
+      
+      # Only set if it's different to avoid redundant assignment
+      if current_conn != conn
+        ar_conn.instance_variable_set(:@raw_connection, conn)
+      end
     end
   end
 
