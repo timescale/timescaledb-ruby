@@ -15,12 +15,14 @@ module Timescaledb
   end
 
   # @param [PG::Connection] to use it directly from a raw connection
-  def use_connection conn
-    Connection.instance.use_connection conn
+  def use_connection(conn)
+    Connection.instance.use_connection(conn)
     
     # Also set ActiveRecord connection if it's defined
-    if defined?(ActiveRecord::Base)
-      ActiveRecord::Base.connection.raw_connection = conn
+    if defined?(ActiveRecord::Base) && ActiveRecord::Base.connected?
+      # Get the existing connection handler and update it
+      ar_conn = ActiveRecord::Base.connection
+      ar_conn.instance_variable_set(:@raw_connection, conn)
     end
   end
 
