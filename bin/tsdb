@@ -27,8 +27,6 @@ if ARGV.index("--stats")
 end
 
 if ARGV.index("--console")
-  ActiveRecord::Base.establish_connection(ARGV[0])
-
   Timescaledb::Hypertable.find_each do |hypertable|
     class_name = hypertable.hypertable_name.singularize.camelize
     model = Class.new(ActiveRecord::Base) do
