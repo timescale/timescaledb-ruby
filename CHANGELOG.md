@@ -2,6 +2,10 @@
 
 Here you can find the changes to the project that may be relevant to you.
 
+# 2025-02-18
+
+* Fixed the `create_retention_policy` call in the SchemaDumper, the param `interval` is now called `drop_after`. (#105) Thanks @steveshogun.
+
 # 2025-01-06
 
 * For the `create_hypertable` method, the param `compression_interval` is now renamed to `compress_after` just to make it more consistent with the other parameters.
