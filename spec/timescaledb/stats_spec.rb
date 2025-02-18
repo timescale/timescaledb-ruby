@@ -1,5 +1,5 @@
 RSpec.describe Timescaledb::Stats do
-  let(:hypertables) { Timescaledb.connection.query('SELECT * FROM timescaledb_information.hypertables') }
+  let(:hypertables) { Timescaledb::Hypertable.all }
 
   subject(:stats) { described_class.new(hypertables) }
 

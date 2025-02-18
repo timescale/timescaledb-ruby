@@ -3,18 +3,15 @@
 require "bundler/setup"
 require "timescaledb"
 
-def uri_from_test
-  require 'dotenv'
-  Dotenv.load!
-  ENV['PG_URI_TEST']
-end
-
-uri = ARGV[0] || uri_from_test
+uri = ARGV[0] || raise("Database URI is required. Run `bin/console <uri>`")
 ActiveRecord::Base.establish_connection(uri)
 Timescaledb.establish_connection(uri)
 
+ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
+
 Timescaledb::Hypertable.find_each do |hypertable|
   class_name = hypertable.hypertable_name.singularize.camelize
+  next if Timescaledb.constants.include?(class_name)
 
   model = Class.new(ActiveRecord::Base) do
     self.table_name = hypertable.hypertable_name

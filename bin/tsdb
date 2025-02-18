@@ -6,17 +6,19 @@ require "pry"
 
 Timescaledb.establish_connection(ARGV[0])
 
-hypertables = Timescaledb.connection.query('SELECT * FROM timescaledb_information.hypertables')
+ActiveSupport.on_load(:active_record) { extend Timescaledb::ActsAsHypertable }
+
 
 if ARGV.index("--stats")
+  hypertables = Timescaledb::Hypertable.all
   if (only = ARGV.index("--only"))
     only_hypertables = ARGV[only+1].split(",")
 
-    hypertables.select! { |hypertable| only_hypertables.includes?(hypertable.hypertable_name) }
+    hypertables.select! { |hypertable| only_hypertables.include?(hypertable.hypertable_name) }
   elsif (except = ARGV.index("--except"))
     except_hypertables = ARGV[except+1].split(",")
 
-    hypertables.select! { |hypertable| except_hypertables.includes?(hypertable.hypertable_name) }
+    hypertables.select! { |hypertable| except_hypertables.include?(hypertable.hypertable_name) }
   end
 
   stats = Timescaledb::Stats.new(hypertables).to_h
@@ -25,25 +27,26 @@ if ARGV.index("--stats")
 end
 
 if ARGV.index("--console")
-  ActiveRecord::Base.establish_connection(ARGV[0])
-
   Timescaledb::Hypertable.find_each do |hypertable|
     class_name = hypertable.hypertable_name.singularize.camelize
     model = Class.new(ActiveRecord::Base) do
-      self.table_name = hypertable.hypertable_name
+      self.table_name = "#{hypertable.hypertable_schema}.#{hypertable.hypertable_name}"
+
       acts_as_hypertable time_column: hypertable.main_dimension.column_name
+    end
+
+    Timescaledb::ContinuousAggregate.where( hypertable_schema: hypertable.hypertable_schema, hypertable_name: hypertable.hypertable_name).hierarchical.find_each do |cagg|
+      cagg_model_name = cagg.view_name.singularize.camelize
+      cagg_model = Class.new(ActiveRecord::Base) do
+        self.table_name = cagg.view_name
+        self.schema_name = cagg.view_schema
+        acts_as_hypertable
+      end
+      model.const_set(cagg_model_name, cagg_model)
     end
     Timescaledb.const_set(class_name, model)
   end
 
-  Timescaledb::ContinuousAggregates.find_each do |cagg|
-    class_name = cagg.view_name.singularize.camelize
-    model = Class.new(ActiveRecord::Base) do
-      self.table_name = cagg.view_name
-      acts_as_hypertable
-    end
-    Timescaledb.const_set(class_name, model)
-  end
 
   Pry.start(Timescaledb)
 end
