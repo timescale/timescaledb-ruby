@@ -18,12 +18,18 @@ class Event < ActiveRecord::Base
   include Timescaledb::ContinuousAggregatesHelper
 
   acts_as_hypertable time_column: "time",
-    segment_by: "identifier"
+    segment_by: "identifier",
+    value_column: "cast(payload->>'price' as float)"
 
   scope :count_clicks, -> { select("count(*)").where(identifier: "click") }
   scope :count_views, -> { select("count(*)").where(identifier: "views") }
+  scope :purchase, -> { where(identifier: "purchase") }
+  scope :purchase_stats, -> { purchase.select("stats_agg(#{value_column}) as stats_agg") }
 
-  continuous_aggregates scopes: [:count_clicks, :count_views],
+  scope :stats, -> { select("average(stats_agg), stddev(stats_agg)") } # just for descendants aggregated classes
+
+
+  continuous_aggregates scopes: [:count_clicks, :count_views, :purchase_stats],
     timeframes: [:minute, :hour, :day],
     refresh_policy: {
       minute: {
