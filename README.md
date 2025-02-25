@@ -453,6 +453,8 @@ end
 
 If you want to learn more about TimescaleDB with Ruby code, you can check the [examples](examples) folder and videos below:
 
+- The [all in one](examples/all_in_one) shows a complete example of how to use the gem.
+
 ### Toolkit examples
 
 Check the [examples/toolkit-demo](examples/toolkit-demo) folder for more examples.
