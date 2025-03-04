@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    timescaledb (0.3.1)
+    timescaledb (0.3.2)
       activerecord
       activesupport
       ostruct

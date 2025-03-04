@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '3.1.2' ]
+        ruby: [ '3.3.3' ]
         gemfile: [ 'Gemfile', 'Gemfile.scenic' ]
         database:
           - 'pg17-ts2.17-all'

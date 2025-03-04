@@ -17,7 +17,7 @@ module Timescaledb
     end
 
     def update!
-      Timescaledb.connection.execute('ALTER EXTENSION timescaledb UPDATE')
+      Timescaledb.connection.query_first('ALTER EXTENSION timescaledb UPDATE')
     end
   end
 end
