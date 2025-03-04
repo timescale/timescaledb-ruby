@@ -449,6 +449,21 @@ config.before(:suite) do
 end
 ```
 
+## Updating the timescaledb extension
+
+The ActiveRecord migrations doesn't support Postgresql extension updates. You can load the timescaledb tasks to make it available on your environment.
+First, require it on the Rakefile:
+
+```ruby
+require 'timescaledb/tasks`
+```
+
+And then you can run the update_extension task:
+
+```bash
+ bundle exec rake timescaledb:update_extension
+```
+
 ## More resources
 
 If you want to learn more about TimescaleDB with Ruby code, you can check the [examples](examples) folder and videos below:
