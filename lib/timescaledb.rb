@@ -1,4 +1,5 @@
 require 'active_record'
+require 'uri'
 
 require_relative 'timescaledb/application_record'
 require_relative 'timescaledb/acts_as_hypertable'
