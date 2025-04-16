@@ -83,13 +83,13 @@ module Timescaledb
         end
       end
 
-      def create_continuous_aggregates(with_data: false)
+      def create_continuous_aggregates(with_data: false, materialized_only: true)
         @aggregates.each do |aggregate_name, config|
           @timeframes.each do |timeframe|
             klass = const_get("#{aggregate_name}_per_#{timeframe}".classify)
             connection.execute <<~SQL
               CREATE MATERIALIZED VIEW IF NOT EXISTS #{klass.table_name}
-              WITH (timescaledb.continuous) AS
+              WITH (timescaledb.continuous, timescaledb.materialized_only = #{materialized_only}) AS
               #{klass.base_query}
               #{with_data ? 'WITH DATA' : 'WITH NO DATA'};
             SQL

@@ -1,4 +1,5 @@
 require_relative './chunks'
+require 'active_support/core_ext/module/delegation'
 
 module Timescaledb
   class Stats
@@ -81,7 +82,11 @@ module Timescaledb
       end
 
       def hypertable_name_with_schema(hypertable)
-        [hypertable.hypertable_schema, hypertable.hypertable_name].compact.join('.')
+        if hypertable.is_a?(String)
+          hypertable
+        else
+          [hypertable.hypertable_schema, hypertable.hypertable_name].compact.join('.')
+        end
       end
 
       def humanize_bytes(bytes)

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'acts_as_hypertable/core'
+
 module Timescaledb
   # If you want your model to hook into its underlying hypertable
   # as well as have access to TimescaleDB specific data, methods, and more,

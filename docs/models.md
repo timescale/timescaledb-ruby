@@ -76,6 +76,41 @@ end
 It will automatically rollup all materialized views for all timeframes and scopes.
 
 
+## The `belongs_to_with_counter_cache` macro
+
+You can set up a counter cache using TimescaleDB continuous aggregates by invoking the `belongs_to_with_counter_cache` macro. This macro extends the standard `belongs_to` association with TimescaleDB-specific counter cache functionality.
+
+```ruby
+class Comment < ActiveRecord::Base
+  include Timescaledb::CounterCache
+  
+  acts_as_hypertable time_column: "created_at", segment_by: "post_id"
+  
+  belongs_to_with_counter_cache :post, counter_cache: :timescaledb
+end
+```
+
+This setup will create continuous aggregates for counting comments per post over different timeframes (hour and day by default). You can then access these counts using methods like:
+
+```ruby
+post.comments_post_count_per_hour_total  # Count of comments in the last hour
+post.comments_post_count_per_day_total   # Count of comments in the last day
+```
+
+You can customize the timeframes and foreign key:
+
+```ruby
+# Override the default timeframes
+Comment.counter_cache_options[:post] = {
+  timeframes: [:minute, :hour, :day],
+  foreign_key: 'post_id'
+}
+
+Comment.setup_counter_aggregate(:post, [:minute, :hour, :day])
+```
+
+The counter cache is automatically updated via TimescaleDB refresh policies, so you don't need to worry about manually refreshing the aggregates.
+
 ## How rollup works
 
 The most important part of using multiple timeframes and scopes is to understand how the rollup works.

@@ -3,14 +3,13 @@ require 'uri'
 
 require_relative 'timescaledb/application_record'
 require_relative 'timescaledb/acts_as_hypertable'
-require_relative 'timescaledb/acts_as_hypertable/core'
-require_relative 'timescaledb/continuous_aggregates_helper'
 require_relative 'timescaledb/connection'
 require_relative 'timescaledb/toolkit'
 require_relative 'timescaledb/chunk'
 require_relative 'timescaledb/compression_settings'
 require_relative 'timescaledb/connection_handling'
 require_relative 'timescaledb/continuous_aggregates'
+require_relative 'timescaledb/continuous_aggregates_helper'
 require_relative 'timescaledb/dimensions'
 require_relative 'timescaledb/hypertable'
 require_relative 'timescaledb/job'
@@ -21,6 +20,13 @@ require_relative 'timescaledb/stats_report'
 require_relative 'timescaledb/migration_helpers'
 require_relative 'timescaledb/extension'
 require_relative 'timescaledb/version'
+require_relative 'timescaledb/railtie'
+require_relative 'timescaledb/counter_cache'
+
+# Start the integration if Rails is present
+if defined?(Rails)
+  Timescaledb::Railtie.start
+end
 
 module Timescaledb
   module_function

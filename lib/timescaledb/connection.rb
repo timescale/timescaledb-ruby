@@ -10,15 +10,15 @@ module Timescaledb
   class Connection
     include Singleton
 
-    attr_writer :config
+    attr_accessor :config
 
     # @param [String] query The SQL raw query.
     # @param [Array] params The SQL query parameters.
     # @return [Array<OpenStruct>] The SQL result.
     def query(query, params = [])
-      query = params.empty? ? connection.exec(query) : connection.exec_params(query, params)
+      result = params.empty? ? connection.exec(query) : connection.exec_params(query, params)
 
-      query.map(&OpenStruct.method(:new))
+      result.map(&OpenStruct.method(:new))
     end
 
     # @param [String] query The SQL raw query.
@@ -44,6 +44,11 @@ module Timescaledb
     # @param [PG::Connection] connection The raw PG connection.
     def use_connection connection
       @connection = connection
+    end
+
+    def config=(value)
+      @config = value
+      @connection = nil # Force connection to be re-established
     end
 
     private

@@ -104,6 +104,49 @@ class Event < Hypertable
 end
 ```
 
+### 3. Counter Cache with TimescaleDB
+
+The gem provides a counter cache implementation that uses TimescaleDB continuous aggregates for efficient counting of associated records. This is particularly useful for time-series data where you need to count records over different time periods.
+
+```ruby
+# app/models/comment.rb
+class Comment < ActiveRecord::Base
+  include Timescaledb::CounterCache
+  
+  acts_as_hypertable time_column: "created_at", segment_by: "post_id"
+  
+  belongs_to_with_counter_cache :post, counter_cache: :timescaledb
+end
+
+# app/models/post.rb
+class Post < ActiveRecord::Base
+  has_many :comments
+end
+```
+
+This setup will create continuous aggregates for counting comments per post over different timeframes (hour and day by default). You can then access these counts using methods like:
+
+```ruby
+post.comments_post_count_per_hour_total  # Count of comments in the last hour
+post.comments_post_count_per_day_total   # Count of comments in the last day
+```
+
+You can also customize the timeframes:
+
+```ruby
+# Override the default timeframes
+Comment.counter_cache_options[:post] = {
+  timeframes: [:minute, :hour, :day],
+  foreign_key: 'post_id'
+}
+
+Comment.setup_counter_aggregate(:post, [:minute, :hour, :day])
+```
+
+The counter cache is automatically updated via TimescaleDB refresh policies, so you don't need to worry about manually refreshing the aggregates.
+
+Read more https://www.timescale.com/blog/counter-analytics-in-postgresql-beyond-simple-data-denormalization
+
 ### Migrations
 
 Create table with the `hypertable` keyword will fully configure the hypertable through the `create_hypertable` function and also fully configure the data lifecycle policies.
