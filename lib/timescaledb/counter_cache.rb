@@ -77,24 +77,26 @@ module Timescaledb
           timeframes: [:hour, :day],
           foreign_key: "#{association_name}_id"
         }
-        setup_counter_aggregate(association_name)
-
-        # Note: Continuous aggregates are refreshed via policies to avoid blocking operations
-        # like record deletions. The refresh policies are set up automatically when creating
-        # the continuous aggregates.
+        
+        # Instead of calling setup_counter_aggregate immediately, we'll define a method
+        # that can be called after the tables are created
+        define_singleton_method(:setup_counter_cache) do
+          setup_counter_aggregate(association_name)
+        end
       end
 
       # Creates continuous aggregates for counting records over specified timeframes
       # @param association_name [Symbol] The name of the association to count
       # @param timeframes [Array<Symbol>] Array of timeframes (e.g., [:hour, :day])
       # @raise [ArgumentError] If the association or timeframes are invalid
-      def setup_counter_aggregate(association_name, timeframes = nil)
+      def setup_counter_aggregate(association_name)
         options = counter_cache_options[association_name]
         raise ArgumentError, "No counter cache options found for #{association_name}" unless options
 
         timeframes ||= options[:timeframes]
         scope_name = "count_by_#{self.name.demodulize.underscore}_#{association_name}"
 
+        puts scope_name, timeframes
         # Define the scope for counting
         scope scope_name, -> {
           select("count(*) as total")
@@ -102,7 +104,6 @@ module Timescaledb
           .group(options[:foreign_key])
         }
 
-        # Set up continuous aggregates
         continuous_aggregates(
           scopes: [scope_name],
           timeframes: timeframes,
@@ -118,6 +119,9 @@ module Timescaledb
         self_class = self
         timeframes.each do |timeframe|
           method_name = "#{association_name}_#{prefix}_count_per_#{timeframe}_total"
+          puts ">>>>>>>>>>>>>>>>>yyj"
+          puts target_class, 'defining', method_name
+          puts ">>>>>>>>>>>>>>>>>yyj"
           target_class.define_method(method_name) do
             klass = "CountBy#{prefix.to_s.classify}#{association_name.to_s.classify}Per#{timeframe.to_s.classify}"
             self_class.const_get(klass).where(options[:foreign_key] => id).sum(:total)&.to_i || 0

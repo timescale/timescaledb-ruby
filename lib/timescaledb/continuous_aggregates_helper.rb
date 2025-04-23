@@ -84,6 +84,7 @@ module Timescaledb
       end
 
       def create_continuous_aggregates(with_data: false, materialized_only: true)
+        return unless @aggregates&.any?
         @aggregates.each do |aggregate_name, config|
           @timeframes.each do |timeframe|
             klass = const_get("#{aggregate_name}_per_#{timeframe}".classify)

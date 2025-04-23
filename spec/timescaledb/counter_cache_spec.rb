@@ -61,6 +61,10 @@ RSpec.describe Timescaledb::CounterCache do
   end
 
   describe 'counter cache setup' do
+    before(:each) do
+      Comment.setup_counter_aggregate(:post)
+    end
+
     it 'sets up counter cache options' do
       expect(Comment.counter_cache_options[:post]).to include(
         timeframes: [:hour, :day],
@@ -87,6 +91,7 @@ RSpec.describe Timescaledb::CounterCache do
     around(:each) do |example|
       DatabaseCleaner.strategy = :truncation
       DatabaseCleaner.start
+      Comment.setup_counter_aggregate(:post)
       example.run
       DatabaseCleaner.clean
     end
