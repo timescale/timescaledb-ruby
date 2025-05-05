@@ -99,6 +99,8 @@ module Timescaledb
     #   SQL
     #
     def create_continuous_aggregate(table_name, query, **options)
+      raise ArgumentError, 'query must be a string' unless query.is_a?(String)
+
       execute <<~SQL
         CREATE MATERIALIZED VIEW #{table_name}
         WITH (
@@ -107,7 +109,7 @@ module Timescaledb
           #{build_with_clause_option_string(:create_group_indexes, options)}
           #{build_with_clause_option_string(:finalized, options)}
         ) AS
-        #{query.respond_to?(:to_sql) ? query.to_sql : query}
+        #{query}
         WITH #{'NO' unless options[:with_data]} DATA;
       SQL
 
