@@ -166,7 +166,7 @@ module Timescaledb
       options << 'timescaledb.compress'
       options << "timescaledb.compress_orderby = '#{orderby}'" if orderby
       options << "timescaledb.compress_segmentby = '#{segmentby}'" if segmentby
-      options << "timescaledb.compression_chunk_time_interval = INTERVAL '#{compression_chunk_time_interval}'" if compression_chunk_time_interval
+      options << "timescaledb.compression_chunk_time_interval = '#{compression_chunk_time_interval}'" if compression_chunk_time_interval
       execute <<~SQL
         ALTER TABLE #{table_name} SET (
           #{options.join(',')}
