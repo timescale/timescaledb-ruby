@@ -33,4 +33,5 @@ nav:
   - Zooming with High Resolution: toolkit_lttb_zoom.md
   - Toolkit Candlesticks tutorial: toolkit_candlestick.md
   - Command Line: command_line.md
+  - Testing: development/testing.md
   - Videos: videos.md
