@@ -71,7 +71,13 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
 
   let(:dump_output) do
     stream = StringIO.new
-    ActiveRecord::SchemaDumper.dump(con, stream)
+    # Rails 8+ uses connection_pool, older versions use connection
+    connection_arg = if ActiveRecord::VERSION::MAJOR >= 8
+      ActiveRecord::Base.connection_pool
+    else
+      ActiveRecord::Base.connection
+    end
+    ActiveRecord::SchemaDumper.dump(connection_arg, stream)
     stream.string
   end
 
