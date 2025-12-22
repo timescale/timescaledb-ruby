@@ -27,7 +27,6 @@ require_relative 'timescaledb/version'
 module Timescaledb
   class << self
     def configure
-      self.configuration ||= Configuration.new
       yield(configuration) if block_given?
     end
 
