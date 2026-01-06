@@ -157,6 +157,10 @@ If you see errors about TimescaleDB functions not being available:
 - Ensure the extension is enabled on your test database
 - Check that your PostgreSQL version is compatible with your TimescaleDB version
 
+### Timescale Toolkit Not Installed
+
+Occasionally you may see numerous failures related to functions being undefined within TimescaleDB. To resolve this, ensure you have the [TimescaleDB Toolkit](https://github.com/timescale/timescaledb-toolkit) plugin installed and enabled
+
 ## Continuous Integration
 
 The test suite is designed to work in CI environments. Make sure your CI configuration:
