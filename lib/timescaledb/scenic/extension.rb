@@ -26,6 +26,7 @@ module Timescaledb
       # @override Scenic::Adapters::Postgres#create_view
       # to add the `with: ` keyword that can be used for such option.
       def create_view(name, version: nil, with: nil, sql_definition: nil, materialized: false, no_data: false)
+
         if version.present? && sql_definition.present?
           raise(
             ArgumentError,
@@ -47,7 +48,7 @@ module Timescaledb
             with: with
           )
         else
-          ::Scenic.database.create_view(name, sql_definition, with: with)
+          ::Scenic.database.create_view(name, sql_definition: sql_definition, with: with)
         end
       end
 
@@ -68,4 +69,4 @@ end
 
 
 Scenic::Adapters::Postgres.include(Timescaledb::Scenic::Extension)
-ActiveRecord::ConnectionAdapters::AbstractAdapter.prepend(Timescaledb::Scenic::MigrationHelpers)
+ActiveRecord::ConnectionAdapters::AbstractAdapter.include(Timescaledb::Scenic::MigrationHelpers)
