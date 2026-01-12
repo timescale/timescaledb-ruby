@@ -36,6 +36,10 @@ def setup_tables
 end
 
 def teardown_tables
+  Timescaledb::ContinuousAggregates.all.each do |continuous_aggregate|
+    ActiveRecord::Base.connection.execute("DROP MATERIALIZED VIEW IF EXISTS #{continuous_aggregate.view_name} CASCADE")
+  end
+
   ActiveRecord::Base.connection.tables.each do |table|
     ActiveRecord::Base.connection.drop_table(table, force: :cascade)
   end

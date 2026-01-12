@@ -31,10 +31,27 @@ gem install timescaledb
 
 ## Quick Start
 
+### 1. Configuration
+
+Configuration options can be optionally passed in using an initializer.
+
+```ruby
+# config/initializers/timescaledb.rb
+Timescaledb.configure do |config|
+  # config.some_option = true
+end
+```
+
+The following table includes all currently available configuration options:
+
+| Option               | Supported Values          | Default Value | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|----------------------|---------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `scenic_integration` | `:enabled`<br>`:disabled` | `:enabled`    | Controls whether the gem automatically integrates with the Scenic gem for managing database views. When set to :enabled (default), the gem will auto-detect if Scenic is available and configure it to work with TimescaleDB continuous aggregates. Set to :disabled to prevent automatic Scenic integration.<br><br>**Warning:** This integration may cause issues when used with multiple databases and one of the databases does not support TimescaleDB |
+
+### 2. Create Hypertables in the Active Record Migrations
+
 The timescaledb gem provides helpers for creating hypertables, configuring compression, retention policies, and more.
 After adding the gem to your Gemfile, you can create hypertables in your migrations.
-
-### 1. Create Hypertables in the Active Record Migrations
 
 ```ruby
 class CreateEvents < ActiveRecord::Migration[7.0]
@@ -61,7 +78,7 @@ class CreateEvents < ActiveRecord::Migration[7.0]
 end
 ```
 
-### 2. Enable TimescaleDB in Your Models
+### 3. Enable TimescaleDB in Your Models
 
 You can enable TimescaleDB in your models by adding the `acts_as_hypertable` macro to your model. This macro extends your existing model with timescaledb-related functionality.
 

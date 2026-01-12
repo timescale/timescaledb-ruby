@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'active_record'
 
+require_relative 'timescaledb/configuration'
 require_relative 'timescaledb/application_record'
 require_relative 'timescaledb/acts_as_hypertable'
 require_relative 'timescaledb/acts_as_hypertable/core'
@@ -22,6 +25,39 @@ require_relative 'timescaledb/extension'
 require_relative 'timescaledb/version'
 
 module Timescaledb
+  class << self
+    def configure
+      yield(configuration) if block_given?
+    end
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def setup_scenic_integration
+      return unless configuration.enable_scenic_integration?
+      return if @scenic_integration_setup
+
+      begin
+        require 'scenic'
+        require_relative 'timescaledb/scenic/adapter'
+        require_relative 'timescaledb/scenic/extension'
+
+        ::Scenic.configure do |config|
+          config.database = Timescaledb::Scenic::Adapter.new
+        end
+
+        ::Scenic::Adapters::Postgres.include(Timescaledb::Scenic::Extension)
+        ::ActiveRecord::ConnectionAdapters::AbstractAdapter.prepend(Timescaledb::Scenic::MigrationHelpers)
+
+        @scenic_integration_setup = true
+      rescue LoadError
+        # This is expected when the scenic gem is not being used
+        @scenic_integration_setup = false
+      end
+    end
+  end
+
   module_function
 
   def connection
@@ -65,15 +101,12 @@ module Timescaledb
   end
 end
 
-begin
-  require 'scenic'
-  require_relative 'timescaledb/scenic/adapter'
-  require_relative 'timescaledb/scenic/extension'
-
-  Scenic.configure do |config|
-    config.database = Timescaledb::Scenic::Adapter.new
+# Delay scenic integration setup to respect user configuration when using Rails
+if defined?(ActiveSupport) && ActiveSupport.respond_to?(:on_load)
+  ActiveSupport.on_load(:active_record) do
+    Timescaledb.setup_scenic_integration
   end
-
-rescue LoadError
-  # This is expected when the scenic gem is not being used
+else
+  # For non-Rails usage, setup immediately
+  Timescaledb.setup_scenic_integration
 end

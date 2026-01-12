@@ -48,7 +48,7 @@ module Timescaledb
                           **hypertable_options)
 
       original_logger = ActiveRecord::Base.logger
-      ActiveRecord::Base.logger = Logger.new(STDOUT)
+      ActiveRecord::Base.logger = Logger.new(STDOUT) unless original_logger.nil?
 
       dimension = "by_range(#{quote(time_column)}, #{parse_interval(chunk_time_interval)})"
 
