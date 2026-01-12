@@ -11,12 +11,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '3.1.2' ]
-        gemfile: [ 'Gemfile', 'Gemfile.scenic' ]
+        ruby: ["3.1.2"]
+        gemfile: ["Gemfile", "Gemfile.scenic"]
         database:
-          - 'pg17-ts2.17-all'
-          - 'pg16-ts2.17-all'
-          - 'pg15-ts2.17-all'
+          - "pg17-ts2.24-all"
+          - "pg16-ts2.24-all"
+          - "pg15-ts2.24-all"
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
 
@@ -33,41 +33,39 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-
     runs-on: ubuntu-latest
     name: OS Ruby ${{matrix.ruby}} (${{matrix.gemfile}}) database ${{matrix.database}}
     container: ruby:${{matrix.ruby}}
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Show Ruby Version
-      run: |
-        ruby -v
+      - name: Show Ruby Version
+        run: |
+          ruby -v
 
-    - name: Install psql
-      run: |
-        apt-get update
-        apt-get install -y postgresql-client
+      - name: Install psql
+        run: |
+          apt-get update
+          apt-get install -y postgresql-client
 
-    - name: Show PostgreSQL version and time
-      env:
-        PGPASSWORD: secret
-      run: |
-        echo "SELECT version()" | psql -h database -U username testdb
-        echo "SELECT CURRENT_TIME" | psql -h database -U username testdb
+      - name: Show PostgreSQL version and time
+        env:
+          PGPASSWORD: secret
+        run: |
+          echo "SELECT version()" | psql -h database -U username testdb
+          echo "SELECT CURRENT_TIME" | psql -h database -U username testdb
 
-    - run: bundle install
+      - run: bundle install
 
-    - name: run tsdb
-      run: ./bin/tsdb postgres://username:secret@database:5432/testdb --stats
+      - name: run tsdb
+        run: ./bin/tsdb postgres://username:secret@database:5432/testdb --stats
 
-    - name: Test setup
-      run: |
-        echo PG_URI_TEST="postgres://username:secret@database:5432/testdb" > .env
-        cat .env
-        bundle exec rake test:setup
+      - name: Test setup
+        run: |
+          echo PG_URI_TEST="postgres://username:secret@database:5432/testdb" > .env
+          cat .env
+          bundle exec rake test:setup
 
-    - name: Test
-      run: bundle exec rake spec
-
+      - name: Test
+        run: bundle exec rake spec
