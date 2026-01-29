@@ -84,7 +84,9 @@ module Timescaledb
     # @option refresh_policies [String] schedule_interval: INTERVAL
     # @option materialized_only [Boolean] Override the WITH clause 'timescaledb.materialized_only'
     # @option create_group_indexes [Boolean] Override the WITH clause 'timescaledb.create_group_indexes'
-    # @option finalized [Boolean] Override the WITH clause 'timescaledb.finalized'
+    # @option finalized [Boolean] Set to false for legacy (non-finalized) format. Note: the finalized
+    #   parameter was removed in TimescaleDB 2.14+ where all aggregates are finalized by default.
+    #   Only use finalized: false on TimescaleDB 2.7-2.13 for legacy compatibility.
     #
     # @see https://docs.timescale.com/api/latest/continuous-aggregates/create_materialized_view/
     # @see https://docs.timescale.com/api/latest/continuous-aggregates/add_continuous_aggregate_policy/
@@ -99,13 +101,17 @@ module Timescaledb
     #   SQL
     #
     def create_continuous_aggregate(table_name, query, **options)
+      # Only include finalized when explicitly false (legacy format).
+      # The parameter was removed in TimescaleDB 2.14+ where all aggregates are finalized by default.
+      finalized_clause = options[:finalized] == false ? ",timescaledb.finalized=false" : ""
+
       execute <<~SQL
         CREATE MATERIALIZED VIEW #{table_name}
         WITH (
           timescaledb.continuous
           #{build_with_clause_option_string(:materialized_only, options)}
           #{build_with_clause_option_string(:create_group_indexes, options)}
-          #{build_with_clause_option_string(:finalized, options)}
+          #{finalized_clause}
         ) AS
         #{query.respond_to?(:to_sql) ? query.to_sql : query}
         WITH #{'NO' unless options[:with_data]} DATA;

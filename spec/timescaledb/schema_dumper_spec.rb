@@ -96,7 +96,9 @@ RSpec.describe Timescaledb::SchemaDumper, database_cleaner_strategy: :truncation
     dump = dump_output
 
     expect(dump).to include 'create_continuous_aggregate("event_counts"'
-    expect(dump).to include 'materialized_only: true, finalized: true'
+    # finalized: true is no longer output (deprecated in TimescaleDB 2.14+)
+    expect(dump).to include 'materialized_only: true'
+    expect(dump).not_to include 'finalized: true'
 
     expect(dump).not_to include ', ,'
     expect(dump).not_to include 'create_view "event_counts"' # Verify Scenic ignored this view
