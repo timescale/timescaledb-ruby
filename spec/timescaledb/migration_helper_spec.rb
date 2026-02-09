@@ -136,8 +136,7 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
       let(:options) do
         {
           materialized_only: true,
-          create_group_indexes: true,
-          finalized: true
+          create_group_indexes: true
         }
       end
 
@@ -178,15 +177,32 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
       end
 
       context 'when overriding WITH clause timescaledb.finalized' do
+        # finalized: true is no longer output (deprecated in TimescaleDB 2.14+)
+        # Only finalized: false is output for legacy compatibility with 2.7-2.13
+        let(:options) do
+          {
+            finalized: false
+          }
+        end
+
+        specify do
+          skip "TimescaleDB 2.14+ no longer supports partial (non-finalized) continuous aggregates" if Gem::Version.new(Timescaledb.extension.version) >= Gem::Version.new("2.14")
+
+          create_caggs
+          expect(ActiveRecord::Base.connection).to have_received(:execute).with(include('timescaledb.finalized=false'))
+        end
+      end
+
+      context 'when finalized: true (default)' do
         let(:options) do
           {
             finalized: true
           }
         end
 
-        specify do
+        specify 'does not include finalized parameter' do
           create_caggs
-          expect(ActiveRecord::Base.connection).to have_received(:execute).with(include('timescaledb.finalized=true'))
+          expect(ActiveRecord::Base.connection).not_to have_received(:execute).with(include('timescaledb.finalized'))
         end
       end
     end

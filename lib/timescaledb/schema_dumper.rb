@@ -162,7 +162,10 @@ module Timescaledb
           ""
         end
 
-        with_clause_opts = "materialized_only: #{aggregate[:materialized_only]}, finalized: #{aggregate[:finalized]}"
+        # Only output finalized when false (legacy format) - the parameter was
+        # removed in TimescaleDB 2.14+ where all aggregates are finalized by default
+        with_clause_opts = "materialized_only: #{aggregate[:materialized_only]}"
+        with_clause_opts += ", finalized: false" if aggregate[:finalized] == false
         stream.puts <<~AGG.indent(2)
           create_continuous_aggregate("#{aggregate.view_name}", <<-SQL, #{refresh_policies_opts}#{with_clause_opts})
             #{aggregate.view_definition.strip.gsub(/;$/, '')}
