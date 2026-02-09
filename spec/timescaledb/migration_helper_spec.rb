@@ -186,6 +186,8 @@ RSpec.describe Timescaledb::MigrationHelpers, database_cleaner_strategy: :trunca
         end
 
         specify do
+          skip "TimescaleDB 2.14+ no longer supports partial (non-finalized) continuous aggregates" if Gem::Version.new(Timescaledb.extension.version) >= Gem::Version.new("2.14")
+
           create_caggs
           expect(ActiveRecord::Base.connection).to have_received(:execute).with(include('timescaledb.finalized=false'))
         end
